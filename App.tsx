@@ -1,4 +1,4 @@
-import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet } from "react-native";
@@ -9,7 +9,8 @@ import {
   CustomDefaultTheme,
   CustomPaperDarkTheme,
   CustomPaperDefaultTheme,
-} from "./components/Theme";
+} from "./components/common/Theme";
+
 import RootNavigation from "./navigation/RootNavigation";
 
 export default function App() {
