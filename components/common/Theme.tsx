@@ -27,7 +27,7 @@ export const CustomDefaultTheme = {
     primary: "#FFFFFF",
     background: "#FFFFFF",
     card: "#FFFFFF",
-    text: "#00000",
+    text: "#0000",
     border: "#FFFFFF",
     notification: "#FFFFFF",
   },
