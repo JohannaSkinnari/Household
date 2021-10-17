@@ -7,49 +7,77 @@ import {
   DefaultTheme as PaperDefaultTheme,
   DarkTheme as PaperDarkTheme,
 } from "react-native-paper";
+import merge from 'deepmerge';
+
+declare global {
+  namespace ReactNativePaper {
+    interface ThemeColors {
+      orange: string;
+      pink: string;
+      green: string;
+      yellow: string;
+      darkPink: string;
+      blue: string;
+      brown: string;
+      purple: string;
+    }
+  }
+}
 
 // för navigationen
-export const CustomDarkTheme = {
+const CustomDarkTheme = {
+  ...NavigationDarkTheme,
   dark: true,
   colors: {
-    primary: "#9933FF",
-    background: "#000023",
-    card: "#000028",
-    text: "#ffffff",
-    border: "#000028",
-    notification: "#9933FF",
+    ...NavigationDarkTheme.colors,
   },
 };
 
-export const CustomDefaultTheme = {
+const CustomDefaultTheme = {
+  ...NavigationDefaultTheme,
   dark: false,
   colors: {
-    primary: "#FFFFFF",
-    background: "#FFFFFF",
-    card: "#FFFFFF",
-    text: "#0000",
-    border: "#FFFFFF",
-    notification: "#FFFFFF",
+    ...NavigationDefaultTheme.colors,
+
   },
 };
 
 // för Paper componenter
-export const CustomPaperDarkTheme = {
+const CustomPaperDarkTheme: ReactNativePaper.Theme  = {
   ...PaperDarkTheme,
   dark: true,
   colors: {
     ...PaperDarkTheme.colors,
-    primary: "#3498db",
-    accent: "#f1c40f",
+    orange: "#E86D14",
+    pink: "#E4A2AE",
+    green: "#6BB255",
+    yellow: "#F3C224",
+    darkPink: "#C75267",
+    blue: "#37B2D3",
+    brown: "#9D7862",
+    purple: "#AC8DCE",
   },
 };
 
-export const CustomPaperDefaultTheme = {
+const CustomPaperDefaultTheme: ReactNativePaper.Theme  = {
   ...PaperDefaultTheme,
   dark: false,
   colors: {
     ...PaperDefaultTheme.colors,
-    primary: "#3498db",
-    accent: "#f1c40f",
+    orange: "#FF7E46",
+    pink: "#F4A9BB",
+    green: "#73C858",
+    yellow: "#FCD933",
+    darkPink: "#CD5D6F",
+    blue: "#58D9ED",
+    brown: "#CDAE8A",
+    purple: "#B3A3D5",
   },
 };
+
+const CombinedDefaultTheme = merge(  CustomPaperDefaultTheme, CustomDefaultTheme);
+const CombinedDarkTheme = merge(  CustomPaperDarkTheme, CustomDarkTheme);
+
+export const getTheme = (dark:boolean) => {
+  return dark ? CombinedDarkTheme : CombinedDefaultTheme;
+}
