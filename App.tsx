@@ -4,26 +4,21 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { Provider as PaperProvider } from "react-native-paper";
-import {
-  CustomDarkTheme,
-  CustomDefaultTheme,
-  CustomPaperDarkTheme,
-  CustomPaperDefaultTheme,
-} from "./components/common/Theme";
+import { getTheme } from "./components/common/Theme";
 
 import RootNavigation from "./navigation/RootNavigation";
 
 export default function App() {
   const scheme = useColorScheme();
+  const isDarkTheme = scheme === "dark";
+  const theme = getTheme(isDarkTheme);
   return (
     <AppearanceProvider>
       <NavigationContainer
-        theme={scheme === "dark" ? CustomDarkTheme : CustomDefaultTheme}
+        theme={theme}
       >
         <PaperProvider
-          theme={
-            scheme === "dark" ? CustomPaperDarkTheme : CustomPaperDefaultTheme
-          }
+          theme={theme}
         >
           <StatusBar style="auto" />
           <RootNavigation />
@@ -33,11 +28,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
