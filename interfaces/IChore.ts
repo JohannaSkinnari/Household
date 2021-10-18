@@ -4,5 +4,5 @@ export interface IChore {
   description: string;
   interval: number;
   weight: number;
-  lastCompleted: Date;
+  lastCompleted?: Date;
 }
