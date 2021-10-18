@@ -6,7 +6,7 @@ export default function MemberScreen() {
   const { colors } = useTheme();
   return (
     <View>
-      <Text style={{ color: colors.text }}>Hello from LoginScreen</Text>
+      <Text style={{ color: colors.text }}>Hello from MemberScreen</Text>
     </View>
   );
 }
