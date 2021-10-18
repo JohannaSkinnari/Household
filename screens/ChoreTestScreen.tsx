@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Text, View } from "react-native";
 import { IChore } from "../interfaces/IChore";
+import { IHouseHold } from "../interfaces/IHouseHold";
 import { addChore, deleteChore, editChore } from "../redux/chore/choreSlice";
+import { addHouseHold } from "../redux/houseHold/houseHoldSlice";
 import { useAppSelector } from "../redux/reduxHooks";
 import { useAppDispatch } from "../redux/reduxStore";
 
@@ -12,8 +14,15 @@ import { useAppDispatch } from "../redux/reduxStore";
 export default function testScreen() {
   const dispatch = useAppDispatch();
   const chores = useAppSelector((state) => state.choresList.chores);
+  // ----------------------------------------------
+  const houseList = useAppSelector(
+    (state) => state.houseHoldList.houseHoldList
+  );
 
   console.log(chores);
+  console.log("amount of households: " + houseList.length);
+  console.log("All Household codes: " + houseList.map((i) => i.houseHoldCode));
+
   const onSave = () => {
     const dummyChore: IChore = {
       id: Math.random().toString(),
@@ -34,10 +43,25 @@ export default function testScreen() {
   const editItem = (t: IChore) => {
     dispatch(editChore({ ...t, name: "städa" }));
   };
+  // ---------------------------------------
+
+  const addhousehold = () => {
+    const fakehousehold: IHouseHold = {
+      id: Math.random(),
+      name: "Fritzl Basement",
+      members: [],
+      chores: [],
+      completedChores: [],
+      houseHoldCode: 0,
+    };
+    dispatch(addHouseHold(fakehousehold));
+  };
+
   return (
     <View
       style={{ width: "100%", justifyContent: "center", alignItems: "center" }}
     >
+      {/* for Chores */}
       <View>
         {chores.map((choreItem) => (
           <View style={{ width: 150, paddingVertical: 10 }} key={choreItem.id}>
@@ -50,6 +74,10 @@ export default function testScreen() {
       </View>
       <View>
         <Button title="AddChore" onPress={onSave} />
+      </View>
+      {/* for household */}
+      <View style={{ paddingHorizontal: 50 }}>
+        <Button title="AddHouse" onPress={addhousehold} />
       </View>
     </View>
   );
