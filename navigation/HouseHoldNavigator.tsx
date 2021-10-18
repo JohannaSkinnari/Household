@@ -1,11 +1,10 @@
-import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import ChoresScreen from "../screens/HouseholdScreens/ChoresScreen";
-import MemberScreen from "../screens/HouseholdScreens/MemberScreen";
-import CurrentWeekStatisticScreen from "../screens/HouseholdScreens/CurrentWeekStatisticScreen";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import PreviousWeekStatisticScreen from "../screens/HouseholdScreens/PreviousWeekStatisticScreen";
-import { ProfileStackScreenProps } from "./ProfileNavigator";
+import React from "react";
+import ChoresScreen from "../screens/HouseHoldScreens/ChoresScreen";
+import CurrentWeekStatisticScreen from "../screens/HouseHoldScreens/CurrentWeekStatisticScreen";
+import MemberScreen from "../screens/HouseHoldScreens/MemberScreen";
+import PreviousWeekStatisticScreen from "../screens/HouseHoldScreens/PreviousWeekStatisticScreen";
 
 type HouseholdStackParamList = {
   // Om navigationsproblem uppstår utforska nedan utkommenterad Chores

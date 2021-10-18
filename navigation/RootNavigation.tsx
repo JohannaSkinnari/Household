@@ -1,10 +1,8 @@
-import React from "react";
-import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
-import HouseholdNavigator from "./HouseholdNavigator";
-import SignupScreen from "../screens/AuthScreens/SignupScreen";
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
+import SignupScreen from "../screens/AuthScreens/SignupScreen";
 import ProfileNavigator from "./ProfileNavigator";
 
 type RootStackParamList = {
