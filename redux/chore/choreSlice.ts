@@ -9,6 +9,15 @@ const choreSlice = createSlice({
     addChore(state, action: PayloadAction<IChore>) {
       state.chores.push(action.payload);
     },
+    editChore(state, action: PayloadAction<IChore>) {
+      const index = state.chores.findIndex(
+        (chore) => chore.id === action.payload.id
+      );
+      state.chores[index] = {
+        ...state.chores[index],
+        ...action.payload,
+      };
+    },
   },
 });
 
