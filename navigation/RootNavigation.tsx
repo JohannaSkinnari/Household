@@ -21,11 +21,21 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 export default function RootNavigation() {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="SignIn" component={SignInScreen} />
-      <Stack.Screen name="SignUp" component={SignupScreen} />
-      <Stack.Screen name="ProfileNav" component={ProfileNavigator} />
-      {/* <Stack.Screen name="Chores" component={HouseHoldNavigator} /> */}
+    <Stack.Navigator 
+      screenOptions={{headerShown: false}}
+    >
+      <Stack.Screen 
+        name="SignIn" 
+        component={SignInScreen} 
+      />
+      <Stack.Screen 
+        name="SignUp" 
+        component={SignupScreen} 
+      />
+      <Stack.Screen 
+        name="ProfileNav" 
+        component={ProfileNavigator} 
+      />
     </Stack.Navigator>
   );
 }

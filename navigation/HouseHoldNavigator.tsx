@@ -27,10 +27,26 @@ export default function HouseholdNavigator() {
     <Tab.Navigator
       initialRouteName="Chores"
     >
-      <Tab.Screen name="Chores" component={ChoresScreen}  options={{title: "Dagens Sysslor"}}/>
-      <Tab.Screen name="Members" component={MemberScreen} options={{title: "Medlemmar"}}/>
-      <Tab.Screen name="CurrentWeek" component={CurrentWeekStatisticScreen} options={{title: "Veckan"}}/>
-      <Tab.Screen name="PreviousWeek" component={PreviousWeekStatisticScreen} options={{title: "Förra veckan"}}/>
+      <Tab.Screen 
+        name="Chores" 
+        component={ChoresScreen}  
+        options={{title: "Dagens Sysslor"}}
+      />
+      <Tab.Screen 
+        name="Members" 
+        component={MemberScreen} 
+        options={{title: "Medlemmar"}}
+      />
+      <Tab.Screen 
+        name="CurrentWeek" 
+        component={CurrentWeekStatisticScreen} 
+        options={{title: "Veckan"}}
+      />
+      <Tab.Screen 
+        name="PreviousWeek" 
+        component={PreviousWeekStatisticScreen} 
+        options={{title: "Förra veckan"}}
+      />
     </Tab.Navigator>
   );
 }
