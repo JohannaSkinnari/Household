@@ -1,22 +1,51 @@
-import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import React from "react";
 import ChoresScreen from "../screens/HouseHoldScreens/ChoresScreen";
-import LastWeekStatisticScreen from "../screens/HouseHoldScreens/LastWeekStatisticScreen";
+import CurrentWeekStatisticScreen from "../screens/HouseHoldScreens/CurrentWeekStatisticScreen";
 import MemberScreen from "../screens/HouseHoldScreens/MemberScreen";
-import ThisWeekStatisticScreen from "../screens/HouseHoldScreens/ThisWeekStatisticScreen";
+import PreviousWeekStatisticScreen from "../screens/HouseHoldScreens/PreviousWeekStatisticScreen";
 
-const Tab = createMaterialTopTabNavigator();
+type HouseholdStackParamList = {
+  // Om navigationsproblem uppstår utforska nedan utkommenterad Chores
+  // Chores: ProfileStackScreenProps<"Profile">;
+  Chores: undefined;
+  Members: undefined;
+  CurrentWeek: undefined;
+  PreviousWeek: undefined;
+};
 
-export default function HouseHoldNavigator() {
+export type HouseholdStackScreenProps<
+  Screen extends keyof HouseholdStackParamList
+> = NativeStackScreenProps<HouseholdStackParamList, Screen>;
+
+const Tab = createMaterialTopTabNavigator<HouseholdStackParamList>();
+
+export default function HouseholdNavigator() {
   return (
     <Tab.Navigator
-      // screenOptions={{ tabBarShowLabel: false }}
       initialRouteName="Chores"
     >
-      <Tab.Screen name="Chores" component={ChoresScreen} />
-      <Tab.Screen name="Members" component={MemberScreen} />
-      <Tab.Screen name="ThisW" component={ThisWeekStatisticScreen} />
-      <Tab.Screen name="LastW" component={LastWeekStatisticScreen} />
+      <Tab.Screen 
+        name="Chores" 
+        component={ChoresScreen}  
+        options={{title: "Dagens Sysslor"}}
+      />
+      <Tab.Screen 
+        name="Members" 
+        component={MemberScreen} 
+        options={{title: "Medlemmar"}}
+      />
+      <Tab.Screen 
+        name="CurrentWeek" 
+        component={CurrentWeekStatisticScreen} 
+        options={{title: "Veckan"}}
+      />
+      <Tab.Screen 
+        name="PreviousWeek" 
+        component={PreviousWeekStatisticScreen} 
+        options={{title: "Förra veckan"}}
+      />
     </Tab.Navigator>
   );
 }
