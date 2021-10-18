@@ -8,6 +8,7 @@ export default function ProfileScreen({navigation}: ProfileStackScreenProps<"Pro
   return (
     <View>
       <Text>Hello from ProfileScreen</Text>
+      {/* använd custom component för knapp*/}
       <Button onPress={() => navigation.navigate("JoinHousehold")}>Join Household</Button>
       <Button onPress={() => navigation.navigate("CreateHousehold")}>Create Household</Button>
       <Button onPress={() => navigation.navigate("Household")}>Household</Button>

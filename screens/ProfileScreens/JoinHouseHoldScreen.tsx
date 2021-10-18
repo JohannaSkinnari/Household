@@ -9,6 +9,7 @@ export default function JoinHouseholdScreen({navigation}: ProfileStackScreenProp
   return (
     <View>
       <Text style={{ color: colors.text }}>Hello from JoinHouseholdScreen</Text>
+      {/* använd custom component för knapp*/}
       <Button onPress={() => navigation.navigate("Profile")}>Gå med i hushåll/ profil</Button>
     </View>
   );

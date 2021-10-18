@@ -9,6 +9,7 @@ export default function SignInScreen({navigation}: RootStackScreenProps<"SignIn"
   return (
     <View style={styles.headerStandInFix}>
       <Text style={{ color: colors.text }}>Hello from LoginScreen</Text>
+      {/* använd custom component för knapp*/}
       <Button onPress={() => navigation.navigate("ProfileNav")}>Sign In</Button>
       <Button onPress={() => navigation.navigate("SignUp")}>Sign Up</Button>
     </View>

@@ -15,6 +15,7 @@ export default function ChoresScreen({navigation}: Props) {
   return (
     <View>
       <Text style={{ color: colors.text }}>Hello from ChoresScreen</Text>
+      {/* använd custom component för knapp*/}
       <Button onPress={() => navigation.navigate("Profile")}>Profile</Button>
     </View>
   );

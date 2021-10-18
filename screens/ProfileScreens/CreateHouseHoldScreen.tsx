@@ -11,6 +11,7 @@ export default function CreateHouseholdScreen({navigation}: ProfileStackScreenPr
       <Text style={{ color: colors.text }}>
         Hello from CreateHouseHoldScreen
       </Text>
+      {/* använd custom component för knapp*/}
       <Button onPress={() => navigation.navigate("Profile")}>Spara / profil</Button>
     </View>
   );
