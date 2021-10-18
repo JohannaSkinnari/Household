@@ -1,6 +1,6 @@
 import { CompositeScreenProps, useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";

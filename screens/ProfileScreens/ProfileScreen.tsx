@@ -1,8 +1,7 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-
 
 export default function ProfileScreen({navigation}: ProfileStackScreenProps<"Profile">) {
   return (

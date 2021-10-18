@@ -1,6 +1,6 @@
 import { useTheme } from "@react-navigation/native";
-import React, { useState } from "react";
-import { View, Text, Modal } from "react-native";
+import React from "react";
+import { Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 
