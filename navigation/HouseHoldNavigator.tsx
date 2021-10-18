@@ -5,13 +5,15 @@ import MemberScreen from "../screens/HouseholdScreens/MemberScreen";
 import CurrentWeekStatisticScreen from "../screens/HouseholdScreens/CurrentWeekStatisticScreen";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import PreviousWeekStatisticScreen from "../screens/HouseholdScreens/PreviousWeekStatisticScreen";
+import { ProfileStackScreenProps } from "./ProfileNavigator";
 
 type HouseholdStackParamList = {
+  // Om navigationsproblem uppstår utforska nedan utkommenterad Chores
+  // Chores: ProfileStackScreenProps<"Profile">;
   Chores: undefined;
   Members: undefined;
   CurrentWeek: undefined;
   PreviousWeek: undefined;
-  
 };
 
 export type HouseholdStackScreenProps<
