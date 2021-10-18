@@ -1,11 +1,13 @@
 import React from "react";
 import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack";
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
 import JoinHouseholdScreen from "../screens/ProfileScreens/JoinHouseholdScreen";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseholdScreen";
 import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseholdSettingsScreen";
 import HouseholdNavigator from "./HouseholdNavigator";
+
+
 
 type ProfileStackParamList = {
   Profile: undefined;
