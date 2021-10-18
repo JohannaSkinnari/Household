@@ -11,7 +11,6 @@ export default function HouseholdSettingsScreen({navigation}: ProfileStackScreen
       <Text style={{ color: colors.text }}>
         Hello from HouseHoldSettingsScreen
       </Text>
-      <Button onPress={() => navigation.navigate("Profile")}>Tillbaka / profil</Button>
     </View>
   );
 }

@@ -15,7 +15,7 @@ export default function ChoresScreen({navigation}: Props) {
   return (
     <View>
       <Text style={{ color: colors.text }}>Hello from ChoresScreen</Text>
-      <Button onPress={() => navigation.navigate("Profile")}>Household</Button>
+      <Button onPress={() => navigation.navigate("Profile")}>Profile</Button>
     </View>
   );
 }

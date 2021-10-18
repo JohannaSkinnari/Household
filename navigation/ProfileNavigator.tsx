@@ -24,11 +24,11 @@ const Stack = createStackNavigator<ProfileStackParamList>();
 export default function ProfileNavigation() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={ProfileScreen} options={{title: "user.name"}}/>
+      <Stack.Screen name="Profile" component={ProfileScreen} options={{title: "user.name", headerLeft: () => null}}/>
       <Stack.Screen name="JoinHousehold" component={JoinHouseholdScreen} options={{title: "Gå med i hushåll"}}/>
       <Stack.Screen name="CreateHousehold" component={CreateHouseholdScreen} options={{title: "Skapa ett hushåll"}}/>
       <Stack.Screen name="HouseholdSettings" component={HouseholdSettingsScreen} options={{title: "Inställningar"}}/>
-      <Stack.Screen name="Household" component={HouseholdNavigator} />
+      <Stack.Screen name="Household" component={HouseholdNavigator} options={{ headerLeft: () => null}}/>
     </Stack.Navigator>
   );
 }
