@@ -38,6 +38,7 @@ const CustomDefaultTheme = {
   dark: false,
   colors: {
     ...NavigationDefaultTheme.colors,
+
   },
 };
 
