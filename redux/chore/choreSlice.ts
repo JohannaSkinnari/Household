@@ -18,6 +18,11 @@ const choreSlice = createSlice({
         ...action.payload,
       };
     },
+    deleteChore(state, action: PayloadAction<string>) {
+      state.chores = state.chores.filter(
+        (chore) => chore.id !== action.payload
+      );
+    },
   },
 });
 
