@@ -1,23 +1,19 @@
 import { useTheme } from "@react-navigation/native";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Text } from "react-native";
 import { Button } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 
-export default function SignupScreen({navigation}: RootStackScreenProps<"SignUp">) {
+export default function SignupScreen({
+  navigation,
+}: RootStackScreenProps<"SignUp">) {
   const { colors } = useTheme();
   return (
-    <View style={styles.headerStandInFix}>
+    <SafeAreaView>
       <Text style={{ color: colors.text }}>Hello from SignupScreen</Text>
       {/* använd custom component för knapp*/}
       <Button onPress={() => navigation.navigate("SignIn")}>Register</Button>
-      
-    </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  headerStandInFix: {
-    marginTop: 50
-  }
-})
