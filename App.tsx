@@ -15,7 +15,9 @@ import store from "./redux/reduxStore";
 export default function App() {
   
   // Initialize firebase...
-  firebase.initializeApp(ApiKeys.FirebaseConfig);
+if (!firebase.apps.length) { // check if initialized 
+    firebase.initializeApp(ApiKeys.FirebaseConfig)
+} 
 
   const scheme = useColorScheme();
   const isDarkTheme = scheme === "dark";
