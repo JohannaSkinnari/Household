@@ -29,6 +29,12 @@ const choreSlice = createSlice({
     builder.addCase(getChores.fulfilled, (state, { payload }) => {
       state.chores.push(...payload);
     });
+    builder.addCase(getChores.rejected, (state, { payload }) => {
+      state.error = "No data found";
+    });
+    builder.addCase(getChores.pending, (state, { payload }) => {
+      state.loading = true;
+    });
   },
 });
 

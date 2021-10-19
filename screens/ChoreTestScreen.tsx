@@ -31,6 +31,7 @@ export default function testScreen() {
       interval: 1,
       weight: 1,
       lastCompleted: undefined,
+      householdId: 1,
     };
     dispatch(addChore(dummyChore));
     console.log(chores);
@@ -49,9 +50,6 @@ export default function testScreen() {
     const fakehousehold: IHouseHold = {
       id: Math.random(),
       name: "Fritzl Basement",
-      members: [],
-      chores: [],
-      completedChores: [],
       houseHoldCode: 0,
     };
     dispatch(addHouseHold(fakehousehold));

@@ -3,7 +3,7 @@ import { IHouseHold } from "../../interfaces/IHouseHold";
 import { initialState } from "./houseHoldState";
 
 const houseHoldSlice = createSlice({
-  name: "household",
+  name: "households",
   initialState,
   reducers: {
     addHouseHold(state, action: PayloadAction<IHouseHold>) {
