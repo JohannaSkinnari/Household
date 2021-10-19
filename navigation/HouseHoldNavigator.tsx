@@ -1,6 +1,8 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
+import { TabBar } from "react-native-tab-view";
+import CustomTabBar from "../components/CustomTabBar";
 import ChoresScreen from "../screens/HouseHoldScreens/ChoresScreen";
 import CurrentWeekStatisticScreen from "../screens/HouseHoldScreens/CurrentWeekStatisticScreen";
 import MemberScreen from "../screens/HouseHoldScreens/MemberScreen";
@@ -19,12 +21,15 @@ export type HouseholdStackScreenProps<
   Screen extends keyof HouseholdStackParamList
 > = NativeStackScreenProps<HouseholdStackParamList, Screen>;
 
+export type HouseholdAllStackScreenProps = NativeStackScreenProps<HouseholdStackParamList>;
+
 const Tab = createMaterialTopTabNavigator<HouseholdStackParamList>();
 
 export default function HouseholdNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Chores"
+      // tabBar={props => <CustomTabBar {...props}/>}
     >
       <Tab.Screen 
         name="Chores" 
