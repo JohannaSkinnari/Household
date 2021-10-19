@@ -4,6 +4,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { Provider as PaperProvider } from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { getTheme } from "./components/common/Theme";
 import { Provider as ReduxProvider } from "react-redux";
 import RootNavigation from "./navigation/RootNavigation";
@@ -16,12 +17,14 @@ export default function App() {
   return (
     <ReduxProvider store={store}>
       <AppearanceProvider>
-        <NavigationContainer theme={theme}>
-          <PaperProvider theme={theme}>
-            <StatusBar style="auto" />
-            <RootNavigation />
-          </PaperProvider>
-        </NavigationContainer>
+        <SafeAreaProvider>
+          <NavigationContainer theme={theme}>
+            <PaperProvider theme={theme}>
+              <StatusBar style="auto" />
+              <RootNavigation />
+            </PaperProvider>
+          </NavigationContainer>
+        </SafeAreaProvider>
       </AppearanceProvider>
     </ReduxProvider>
   );
