@@ -1,7 +1,7 @@
 export interface IChore {
   id: string;
   name: string;
-  householdId: number;
+  householdId: string;
   description: string;
   interval: number;
   weight: number;

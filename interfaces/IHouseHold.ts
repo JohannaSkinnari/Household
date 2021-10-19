@@ -1,5 +1,5 @@
 export interface IHouseHold {
-  id: number;
+  id: string;
   name: string;
   houseHoldCode: number;
 }
