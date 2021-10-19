@@ -1,24 +1,33 @@
 // import { Button, useTheme } from "react-native-paper";
 import React from "react";
-import { Button, StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+import { Button, useTheme } from "react-native-paper";
+import { color } from "react-native-reanimated";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import { HouseholdAllStackScreenProps } from "../navigation/HouseHoldNavigator";
 
 
-export default function CustomTabBar({navigation}: HouseholdAllStackScreenProps) {
-  // const { colors } = useTheme();
+export default function CustomTabBar({navigation, route}: HouseholdAllStackScreenProps) {
+  const { colors } = useTheme();
+  // const title = route.name;
   return (
-    <View style={{display: 'flex', flexDirection: 'row'}}>
-      <Button title={"<"} onPress={() => navigation.navigate("Chores")}/>
-      <Text>Header</Text>
-      <Button title={">"} onPress={() => navigation.navigate("Chores")}/>
+    <View style={[styles.container, {backgroundColor: colors.surface}]}>
+      {/* <Button color={colors.surface} title={"<"} onPress={() => navigation.navigate("Chores")}/> */}
+      <Button  onPress={() => navigation.navigate("PreviousWeek")}> {"<"} </Button>
+      <Text style={{color: colors.text}}>Hej</Text>
+      {/* <Button color={colors.surface} title={">"} onPress={() => navigation.navigate("Members")}/> */}
+      <Button  onPress={() => navigation.navigate("Members")}> {">"} </Button>
+      
       
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
-    padding: 5,
-    borderRadius: 20,
+  container: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 })

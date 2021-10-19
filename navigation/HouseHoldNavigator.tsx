@@ -29,12 +29,16 @@ export default function HouseholdNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Chores"
-      // tabBar={props => <CustomTabBar {...props}/>}
+      // tabBar={(props: HouseholdAllStackScreenProps) => <CustomTabBar {...props}/>}
+      screenOptions={{
+        tabBarItemStyle: {width: "100%"}
+      }}
     >
       <Tab.Screen 
         name="Chores" 
         component={ChoresScreen}  
-        options={{title: "Dagens Sysslor"}}
+        options={{title: "Dagens Sysslor", tabBarItemStyle: {width: "100%"}}}
+
       />
       <Tab.Screen 
         name="Members" 
