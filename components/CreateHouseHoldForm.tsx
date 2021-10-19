@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import { addHouseHold } from "../redux/houseHold/houseHoldSlice";
 import { TextInput, View, StyleSheet, Text } from "react-native";
 import { useTheme } from "react-native-paper";
+import AvatarList from "./AvatarList";
 
 type validationSchema = Record<
   keyof Omit<IHouseHold, "id" | "houseHoldCode">,
@@ -20,9 +21,8 @@ export default function CreateHouseHoldForm() {
   const { colors } = useTheme();
   const styles = StyleSheet.create({
     root: {
-      flexGrow: 1,
-      height: "100%",
-      width: "80%",
+      justifyContent: "center",
+      alignItems: "center",
     },
     errors: {
       fontSize: 14,
@@ -41,9 +41,10 @@ export default function CreateHouseHoldForm() {
       paddingHorizontal: 16,
     },
   });
+
   //const dispatch = useAppDispatch();
   const defaultFormData: IHouseHold = {
-    id: "", //Math.random().toString(),
+    id: Math.random().toString(),
     name: "",
     houseHoldCode: 0,
   };
@@ -66,18 +67,23 @@ export default function CreateHouseHoldForm() {
         errors,
         isValid,
       }) => (
-        <View>
-          <TextInput
-            style={styles.inputText}
-            placeholder="hushållets namn"
-            onChangeText={handleChange("name")}
-            onBlur={handleBlur("name")}
-            value={values.name}
-            clearTextOnFocus={true}
-          />
-          {errors.name && touched.name && (
-            <Text style={styles.errors}>{errors.name}</Text>
-          )}
+        <View style={styles.root}>
+          <View>
+            <TextInput
+              style={styles.inputText}
+              placeholder="hushållets namn"
+              onChangeText={handleChange("name")}
+              onBlur={handleBlur("name")}
+              value={values.name}
+              clearTextOnFocus={true}
+            />
+            {errors.name && touched.name && (
+              <Text style={styles.errors}>{errors.name}</Text>
+            )}
+          </View>
+          <View style={{ marginHorizontal: 25, marginVertical: 50 }}>
+            <AvatarList />
+          </View>
         </View>
       )}
     </Formik>
