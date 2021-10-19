@@ -1,5 +1,7 @@
 export interface IMember {
-  id: number;
+  id: string;
+  userId: string;
+  householdId: string;
   isAdmin: boolean;
   avatarId: number;
 }
