@@ -2,6 +2,7 @@ import { CompositeScreenProps, useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
+import AdminChoreModal from "../../components/modals/adminChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 
@@ -16,6 +17,7 @@ export default function ChoresScreen({ navigation }: Props) {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const { colors } = useTheme();
+  const [value, setValue] = useState(1);
 
   return (
     <>
@@ -31,13 +33,22 @@ export default function ChoresScreen({ navigation }: Props) {
         <Button onPress={() => setOpenAdd(true)}>Lägg till Syssla</Button>
       </View>
       {openAdd && (
-        <Modal visible={openAdd} onDismiss={() => setOpenAdd(false)}>
-          <Text style={{ color: colors.text }}>
+        <Modal contentContainerStyle={{justifyContent: "center"}} visible={openAdd} onDismiss={() => setOpenAdd(false)}>
+          <AdminChoreModal 
+            onSave={() => setOpenAdd(false)} 
+            onClose={() => setOpenAdd(false)}
+            // onSelectValueOne={() => console.log("one")}
+            // onSelectValueTwo={() => console.log("two")}
+            // onSelectValueFour={() => console.log("four")}
+            // onSelectValueSix={() => console.log("Six")}
+            // onSelectValueEight={() => console.log("Eight")}
+          />
+          {/* <Text style={{ color: colors.text }}>
             Exampel Modal för lägga till syssla. Click outside this area to
             dismiss.
-          </Text>
-          <Button onPress={() => setOpenAdd(false)}>Spara</Button>
-          <Button onPress={() => setOpenAdd(false)}>Stäng</Button>
+          </Text> */}
+          {/* <Button onPress={() => setOpenAdd(false)}>Spara</Button>
+          <Button onPress={() => setOpenAdd(false)}>Stäng</Button> */}
         </Modal>
       )}
       {openChore && (
