@@ -32,7 +32,7 @@ export default function HouseholdNavigator() {
       <Tab.Screen 
         name="Chores" 
         component={ChoresScreen}  
-        options={{title: "Dagens Sysslor", tabBarItemStyle: {width: "100%"}}}
+        options={{title: "Dagens Sysslor"}}
 
       />
       <Tab.Screen 
