@@ -1,26 +1,32 @@
-import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
-import * as yup from "yup";
-import { ICreateHouseHold, IHouseHold } from "../interfaces/IHouseHold";
-import React from "react";
 import { Formik } from "formik";
-import { TextInput, View, StyleSheet, Text } from "react-native";
+import React from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { useTheme } from "react-native-paper";
+import * as yup from "yup";
+import { ICreateHouseHold } from "../interfaces/IHouseHold";
+import { ICreateMember } from "../interfaces/IMember";
+import { createHouseHold } from "../redux/houseHold/houseHoldThunk";
+import { useAppDispatch } from "../redux/reduxHooks";
 import AvatarList from "./AvatarList";
 import CustomButton from "./common/CustomButton";
-import { ICreateMember, IMember } from "../interfaces/IMember";
-import { createHouseHold } from "../redux/houseHold/houseHoldThunk";
-import { createMember } from "../redux/member/memberThunk";
 
 type RootValidationSchema = Record<keyof FormData, yup.AnySchema>;
 type HouseValidationSchema = Record<keyof FormData["house"], yup.AnySchema>;
-type MemberValidationSchema = Record<keyof FormData["member"], yup.AnySchema>;
+type MemberValidationSchema = Record<
+  keyof FormData["member"],
+  yup.NumberSchema
+>;
 
 const validationSchema = yup.object().shape<RootValidationSchema>({
   house: yup.object().shape<HouseValidationSchema>({
-    name: yup.string().required().min(3).max(25),
+    name: yup
+      .string()
+      .required("Namnge ditt hushåll")
+      .min(3, "Namnet är för kort")
+      .max(25, "Namnet är för långt"),
   }),
   member: yup.object().shape<MemberValidationSchema>({
-    avatarId: yup.number().required(),
+    avatarId: yup.number().min(1, "Välj en avatar"),
   }),
 });
 
@@ -29,9 +35,12 @@ type FormData = {
   member: Omit<ICreateMember, "householdId">;
 };
 
-export default function CreateHouseHoldForm() {
+interface Props {
+  onSubmitSuccess: () => void;
+}
+
+export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.userList.user);
 
   const { colors } = useTheme();
   const styles = StyleSheet.create({
@@ -46,26 +55,30 @@ export default function CreateHouseHoldForm() {
       paddingHorizontal: 10,
     },
     inputText: {
-      backgroundColor: colors.textInput,
+      backgroundColor: colors.surface,
       color: colors.onSurface,
       fontSize: 16,
-      alignItems: "center",
+      textAlign: "center",
       borderRadius: 8,
       height: 40,
       width: 200,
       paddingHorizontal: 16,
+      marginVertical: 4,
     },
   });
 
   const defaultFormData: FormData = {
     house: { name: "" },
     member: {
-      avatarId: 1,
+      avatarId: 0,
     },
   };
 
-  function handleOnSubmit(values: FormData) {
-    dispatch(createHouseHold(values));
+  async function handleOnSubmit(values: FormData) {
+    const response = await dispatch(createHouseHold(values));
+    if (response) {
+      onSubmitSuccess();
+    }
   }
 
   return (
@@ -85,7 +98,7 @@ export default function CreateHouseHoldForm() {
         isValid,
       }) => (
         <View style={styles.root}>
-          <View>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
             <TextInput
               style={styles.inputText}
               placeholder={"hushållets namn"}
@@ -94,17 +107,22 @@ export default function CreateHouseHoldForm() {
               value={values.house.name}
               clearTextOnFocus={true}
             />
-            {errors.house?.name && touched.house?.name && (
+            {errors.house && touched.house && (
               <Text style={styles.errors}>{errors.house.name}</Text>
             )}
           </View>
           <View style={{ marginHorizontal: 25, marginVertical: 30 }}>
             <AvatarList
               value={values.member.avatarId}
-              onChange={(value) => setFieldValue("avatarId", parseFloat(value))}
+              onChange={(value) =>
+                setFieldValue("member.avatarId", parseFloat(value))
+              }
             />
           </View>
-          <View>
+          {errors.member && touched.member && (
+            <Text style={styles.errors}>{errors.member.avatarId}</Text>
+          )}
+          <View style={{ marginVertical: 100 }}>
             <CustomButton
               icon={"plus-circle-outline"}
               title={"Spara"}

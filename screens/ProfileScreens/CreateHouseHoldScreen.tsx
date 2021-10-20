@@ -1,19 +1,22 @@
-import { useTheme } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Button } from "react-native-paper";
 import CreateHouseHoldForm from "../../components/CreateHouseHoldForm";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function CreateHouseholdScreen({
   navigation,
 }: ProfileStackScreenProps<"CreateHousehold">) {
-  const { colors } = useTheme();
+  const households = useAppSelector((s) => s.houseHoldList);
+
+  const toggleSuccess = () => {
+    if (households.isCreatedSuccess == true) {
+      navigation.navigate("Profile");
+    }
+  };
+
   return (
     <View style={styles.root}>
-      {/* <Text style={{ color: colors.text }}>
-        Hello from CreateHouseHoldScreen
-      </Text> */}
       <View style={styles.imageContainer}>
         <Image
           style={{
@@ -23,13 +26,9 @@ export default function CreateHouseholdScreen({
           source={require("../../assets/images/Logo.png")}
         />
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <CreateHouseHoldForm />
+          <CreateHouseHoldForm onSubmitSuccess={toggleSuccess} />
         </View>
       </View>
-      {/* använd custom component för knapp*/}
-      <Button onPress={() => navigation.navigate("Profile")}>
-        Spara / profil
-      </Button>
     </View>
   );
 }

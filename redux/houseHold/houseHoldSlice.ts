@@ -20,10 +20,12 @@ const houseHoldSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createHouseHold.fulfilled, (state, { payload }) => {
       state.loading = false;
+      state.isCreatedSuccess = true;
       state.houseHoldList.push(payload);
     });
     builder.addCase(createHouseHold.rejected, (state, { payload }) => {
       state.loading = false;
+      state.isCreatedSuccess = false;
       state.error = "No data found";
     });
     builder.addCase(createHouseHold.pending, (state, { payload }) => {

@@ -1,5 +1,6 @@
-import React from "react";
-import { FlatList, Image, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { FlatList, Image, Pressable, View } from "react-native";
+import { useTheme } from "react-native-paper";
 import { avatars } from "../assets/AvatarData/data";
 
 interface Props {
@@ -8,19 +9,32 @@ interface Props {
 }
 
 export default function AvatarList({ onChange }: Props) {
+  const { colors } = useTheme();
+  const [selectedAvatar, setSelectedAvatar] = useState<number>();
   return (
     <View style={{ height: 65 }}>
       <FlatList
         data={avatars}
         horizontal={true}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => onChange(String(item.id))}>
+          <Pressable
+            onPress={() => {
+              onChange(String(item.id)), setSelectedAvatar(item.id);
+            }}
+          >
             <Image
               key={item.id}
-              style={{ marginHorizontal: 10, height: 60, width: 60 }}
+              style={{
+                borderRadius: 5,
+                borderColor: colors.darkPink,
+                borderWidth: item.id === selectedAvatar ? 1 : 0,
+                marginHorizontal: 10,
+                height: 60,
+                width: 60,
+              }}
               source={item.icon}
             />
-          </TouchableOpacity>
+          </Pressable>
         )}
         keyExtractor={(item) => item.id.toString()}
         // onEndReached={onEnd}
