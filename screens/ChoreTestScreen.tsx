@@ -3,7 +3,7 @@ import { Button, Text, View } from "react-native";
 import { IChore } from "../interfaces/IChore";
 import { IHouseHold } from "../interfaces/IHouseHold";
 import { addChore, deleteChore, editChore } from "../redux/chore/choreSlice";
-import { addHouseHold } from "../redux/houseHold/houseHoldSlice";
+//import { addHouseHold } from "../redux/houseHold/houseHoldSlice";
 import { useAppSelector } from "../redux/reduxHooks";
 import { useAppDispatch } from "../redux/reduxStore";
 
@@ -52,7 +52,7 @@ export default function testScreen() {
       name: "Fritzl Basement",
       houseHoldCode: 0,
     };
-    dispatch(addHouseHold(fakehousehold));
+    // dispatch(addHouseHold(fakehousehold));
   };
 
   return (

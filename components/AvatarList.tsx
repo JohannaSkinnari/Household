@@ -3,6 +3,7 @@ import { FlatList, Image, TouchableOpacity, View } from "react-native";
 import { avatars } from "../assets/AvatarData/data";
 
 interface Props {
+  value: number;
   onChange: (id: string) => void;
 }
 
@@ -21,7 +22,7 @@ export default function AvatarList({ onChange }: Props) {
             />
           </TouchableOpacity>
         )}
-        //keyExtractor={(t) => t.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
         // onEndReached={onEnd}
         // onEndReachedThreshold={0.5}
       />

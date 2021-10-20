@@ -1,35 +1,38 @@
 import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 import * as yup from "yup";
-import { IHouseHold } from "../interfaces/IHouseHold";
+import { ICreateHouseHold, IHouseHold } from "../interfaces/IHouseHold";
 import React from "react";
 import { Formik } from "formik";
-import { addHouseHold } from "../redux/houseHold/houseHoldSlice";
 import { TextInput, View, StyleSheet, Text } from "react-native";
 import { useTheme } from "react-native-paper";
 import AvatarList from "./AvatarList";
 import CustomButton from "./common/CustomButton";
-import { IMember } from "../interfaces/IMember";
-import { IUser } from "../interfaces/IUser";
+import { ICreateMember, IMember } from "../interfaces/IMember";
+import { createHouseHold } from "../redux/houseHold/houseHoldThunk";
+import { createMember } from "../redux/member/memberThunk";
 
-type houseValidationSchema = Record<
-  keyof Omit<IHouseHold, "id" | "houseHoldCode">,
-  yup.AnySchema
->;
+type RootValidationSchema = Record<keyof FormData, yup.AnySchema>;
+type HouseValidationSchema = Record<keyof FormData["house"], yup.AnySchema>;
+type MemberValidationSchema = Record<keyof FormData["member"], yup.AnySchema>;
 
-type memberValidationSchema = Record<
-  keyof Omit<IMember, "id" | "userId" | "householdId" | "isAdmin">,
-  yup.AnySchema
->;
-
-const householdValidation = yup.object().shape<houseValidationSchema>({
-  name: yup.string().min(3).max(15).required("namn behövs..."),
+const validationSchema = yup.object().shape<RootValidationSchema>({
+  house: yup.object().shape<HouseValidationSchema>({
+    name: yup.string().required().min(3).max(25),
+  }),
+  member: yup.object().shape<MemberValidationSchema>({
+    avatarId: yup.number().required(),
+  }),
 });
 
-const memberValidation = yup.object().shape<memberValidationSchema>({
-  avatarId: yup.number().required(),
-});
+type FormData = {
+  house: ICreateHouseHold;
+  member: Omit<ICreateMember, "householdId">;
+};
 
 export default function CreateHouseHoldForm() {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.userList.user);
+
   const { colors } = useTheme();
   const styles = StyleSheet.create({
     root: {
@@ -54,30 +57,22 @@ export default function CreateHouseHoldForm() {
     },
   });
 
-  interface FormData {
-    house: Omit<IHouseHold, "id" | "houseHoldCode">;
-    member: Omit<IMember, "id">;
-    user: Omit<IUser, "name" | "email" | "password">;
-  }
-
   const defaultFormData: FormData = {
     house: { name: "" },
     member: {
-      userId: "vårtuserid",
-      householdId: "house.id",
-      isAdmin: true,
-      avatarId: 0,
+      avatarId: 1,
     },
-    user: { id: "hämta in id" },
   };
+
+  function handleOnSubmit(values: FormData) {
+    dispatch(createHouseHold(values));
+  }
 
   return (
     <Formik
       initialValues={defaultFormData}
-      validationSchema={[householdValidation, memberValidation]}
-      onSubmit={(values) => {
-        //dispatch(addHouseHold(values));
-      }}
+      validationSchema={validationSchema}
+      onSubmit={handleOnSubmit}
     >
       {({
         setFieldValue,
@@ -93,9 +88,9 @@ export default function CreateHouseHoldForm() {
           <View>
             <TextInput
               style={styles.inputText}
-              placeholder="hushållets namn"
-              onChangeText={handleChange("name")}
-              onBlur={handleBlur("name")}
+              placeholder={"hushållets namn"}
+              onChangeText={handleChange("house.name")}
+              onBlur={handleBlur("house.name")}
               value={values.house.name}
               clearTextOnFocus={true}
             />
@@ -104,10 +99,17 @@ export default function CreateHouseHoldForm() {
             )}
           </View>
           <View style={{ marginHorizontal: 25, marginVertical: 30 }}>
-            <AvatarList onChange={handleChange("avatarId")} />
+            <AvatarList
+              value={values.member.avatarId}
+              onChange={(value) => setFieldValue("avatarId", parseFloat(value))}
+            />
           </View>
           <View>
-            <CustomButton title={"Spara"} onPress={handleSubmit} />
+            <CustomButton
+              icon={"plus-circle-outline"}
+              title={"Spara"}
+              onPress={handleSubmit}
+            />
           </View>
         </View>
       )}
