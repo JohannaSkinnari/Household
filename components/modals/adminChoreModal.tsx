@@ -2,6 +2,7 @@ import { Button, Card, Paragraph, Title, useTheme } from "react-native-paper";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, TextInput, Text, View } from "react-native";
 import { useStore } from "react-redux";
+import { color } from "react-native-reanimated";
 
 interface Props {
   onSave: () => void;
@@ -59,9 +60,17 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
           <Text style={[styles.boldText, {color: colors.onSurface}]}>
             Återkommande: 
           </Text>
-          <Text style={[styles.normalText, {color: colors.onSurface}]}>
-            var 7 dag
-          </Text>
+          <View style={{flexDirection: "row", alignItems: "center"}}>
+            <Text style={[styles.normalText, {color: colors.onSurface}]}>
+              var 
+            </Text>
+              <View style={[styles.litleCircle, {backgroundColor: colors.darkPink}]}> 
+                <Text style={{color: colors.background}}>7</Text>
+              </View>
+            <Text style={[styles.normalText, {color: colors.onSurface}]}>
+              dag
+            </Text>
+          </View>
         </Pressable>) :
         (<View
           style={[styles.input, styles.interval, {backgroundColor: colors.surface}]}
@@ -84,9 +93,11 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
               Hur energikrävande är sysslan?
             </Text>
           </View>
-          <Text style={[styles.normalText, {color: colors.onSurface}]}>
-            2
-          </Text>
+          <View style={[styles.litleCircle, {backgroundColor: colors.valueTwo}]}>
+            <Text style={[styles.subText, {color: colors.onSurface}]}>
+              2
+            </Text>
+          </View>
         </Pressable>) :
         (<View
           style={[styles.input, styles.value, {backgroundColor: colors.surface}]}
@@ -263,6 +274,14 @@ const styles = StyleSheet.create({
   },
   marginRight5: {
     marginRight: 5,
-    
-  }
+  },
+  litleCircle: {
+    borderRadius: 50, 
+    width: 25, 
+    height: 25, 
+    // backgroundColor: colors.disabled, 
+    justifyContent: "center", 
+    alignItems: "center",
+    marginHorizontal: 8,
+  },
 })
