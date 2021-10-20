@@ -1,24 +1,46 @@
-// import { Button, useTheme } from "react-native-paper";
+import { MaterialTopTabNavigationProp } from "@react-navigation/material-top-tabs/lib/typescript/src/types";
+import { NavigationState } from "@react-navigation/routers";
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { Button, useTheme } from "react-native-paper";
-import { color } from "react-native-reanimated";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { HouseholdAllStackScreenProps } from "../navigation/HouseHoldNavigator";
+import { StyleSheet, View, Text, Pressable } from "react-native";
+import { useTheme } from "react-native-paper";
+import { HouseholdStackParamList } from "../navigation/HouseHoldNavigator";
+import { Entypo } from '@expo/vector-icons';
 
+interface Props {
+  state: NavigationState;
+  navigation: MaterialTopTabNavigationProp<HouseholdStackParamList>;
+}
 
-export default function CustomTabBar({navigation, route}: HouseholdAllStackScreenProps) {
+export default function CustomTabBar({state, navigation }: Props) {
   const { colors } = useTheme();
-  // const title = route.name;
+  const activeRoute = state.routes[state.index];
+  const prevRoute = state.routes[state.index - 1];
+  const nextRoute = state.routes[state.index + 1];
   return (
     <View style={[styles.container, {backgroundColor: colors.surface}]}>
-      {/* <Button color={colors.surface} title={"<"} onPress={() => navigation.navigate("Chores")}/> */}
-      <Button  onPress={() => navigation.navigate("PreviousWeek")}> {"<"} </Button>
-      <Text style={{color: colors.text}}>Hej</Text>
-      {/* <Button color={colors.surface} title={">"} onPress={() => navigation.navigate("Members")}/> */}
-      <Button  onPress={() => navigation.navigate("Members")}> {">"} </Button>
-      
-      
+      <Pressable 
+        disabled={!prevRoute}  
+        onPress={() => navigation.navigate(prevRoute.name  as keyof HouseholdStackParamList)}
+        style={styles.menuArrow}
+      >
+        <Entypo 
+          name="chevron-left" 
+          size={24} 
+          color={!prevRoute ? colors.disabled : colors.primary} 
+        />
+      </Pressable>
+      <Text style={{color: colors.text}}>{activeRoute.name}</Text>
+      <Pressable  
+        disabled={!nextRoute} 
+        onPress={() => navigation.navigate(nextRoute.name as keyof HouseholdStackParamList)}
+        style={styles.menuArrow}
+      >
+        <Entypo 
+          name="chevron-right" 
+          size={24} 
+          color={!nextRoute ? colors.disabled : colors.primary}
+        />
+      </Pressable>
     </View>
   )
 }
@@ -28,6 +50,9 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+  },
+  menuArrow: {
+    padding: 8
   }
 })

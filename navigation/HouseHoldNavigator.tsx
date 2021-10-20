@@ -8,7 +8,7 @@ import CurrentWeekStatisticScreen from "../screens/HouseHoldScreens/CurrentWeekS
 import MemberScreen from "../screens/HouseHoldScreens/MemberScreen";
 import PreviousWeekStatisticScreen from "../screens/HouseHoldScreens/PreviousWeekStatisticScreen";
 
-type HouseholdStackParamList = {
+export type HouseholdStackParamList = {
   // Om navigationsproblem uppstår utforska nedan utkommenterad Chores
   // Chores: ProfileStackScreenProps<"Profile">;
   Chores: undefined;
@@ -21,18 +21,13 @@ export type HouseholdStackScreenProps<
   Screen extends keyof HouseholdStackParamList
 > = NativeStackScreenProps<HouseholdStackParamList, Screen>;
 
-export type HouseholdAllStackScreenProps = NativeStackScreenProps<HouseholdStackParamList>;
-
 const Tab = createMaterialTopTabNavigator<HouseholdStackParamList>();
 
 export default function HouseholdNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Chores"
-      // tabBar={(props: HouseholdAllStackScreenProps) => <CustomTabBar {...props}/>}
-      screenOptions={{
-        tabBarItemStyle: {width: "100%"}
-      }}
+      tabBar={(props: any) => <CustomTabBar {...props}/>}
     >
       <Tab.Screen 
         name="Chores" 
