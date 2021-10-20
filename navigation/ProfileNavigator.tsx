@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import { useAppSelector } from "../redux/reduxHooks";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
 import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettingsScreen";
@@ -24,6 +25,7 @@ export type ProfileStackScreenProps<
 const Stack = createStackNavigator<ProfileStackParamList>();
 
 export default function ProfileNavigation() {
+  // useAppSelector till att ta ut hushålls namnet
   return (
     <Stack.Navigator 
       screenOptions={{headerTitleAlign: "center" }}
