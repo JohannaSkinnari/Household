@@ -19,7 +19,34 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
   const [discription, setDiscription] = useState("");
   const [showInterval, setShowInterval] = useState(false);
   const [showValue, setShowValue] = useState(false);
-  // const [value, setValue] = useState(1);
+  const [value, setValue] = useState(1);
+  const [colorValue, setColorValue] = useState(colors.valueOne);
+
+  const selectValue = (value: number) => {
+    setValue(value);
+    // console.log(value);
+    switch (value) {
+      case 1:
+        setColorValue(colors.valueOne)
+        break;
+      case 2:
+        setColorValue(colors.valueTwo)
+        break;
+      case 4:
+        setColorValue(colors.valueFour)
+        break;
+      case 6:
+        setColorValue(colors.valueSix)
+        break;
+      case 8:
+        setColorValue(colors.valueEight)
+        break;
+      default:
+        setColorValue(colors.valueOne)
+        break;
+    }
+    setShowValue(false);
+  }
 
   return (
     <Card style={styles.card}>
@@ -93,9 +120,9 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
               Hur energikrävande är sysslan?
             </Text>
           </View>
-          <View style={[styles.litleCircle, {backgroundColor: colors.valueTwo}]}>
+          <View style={[styles.litleCircle, {backgroundColor: colorValue}]}>
             <Text style={[styles.subText, {color: colors.onSurface}]}>
-              2
+              {value}
             </Text>
           </View>
         </Pressable>) :
@@ -106,7 +133,7 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
             <View style={[styles.valueInnerContainer, {borderRightColor: colors.darkPink}]}>
               <Pressable 
                 style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueOne}]} 
-                onPress={() =>  setShowValue(false)}
+                onPress={() => selectValue(1)}
               >
                 <Text style={[{color: colors.text}]}>
                   1
@@ -116,7 +143,7 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
             <View style={[styles.valueInnerContainer, {borderRightColor: colors.darkPink}]}>
               <Pressable 
                  style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueTwo}]}
-                onPress={() => setShowValue(false)}
+                onPress={() => selectValue(2)}
               >
                 <Text style={[{color: colors.text}]}>
                   2
@@ -126,7 +153,7 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
             <View style={[styles.valueInnerContainer, {borderRightColor: colors.darkPink}]}>
               <Pressable 
                  style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueFour}]} 
-                onPress={() => setShowValue(false)}
+                onPress={() => selectValue(4)}
               >
                 <Text style={[{color: colors.text}]}>
                   4
@@ -136,7 +163,7 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
             <View style={[styles.valueInnerContainer, {borderRightColor: colors.darkPink}]}>
               <Pressable 
                  style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueSix}]}  
-                onPress={() => setShowValue(false)}
+                onPress={() => selectValue(6)}
               >
                 <Text style={[{color: colors.text}]}>
                   6
@@ -146,7 +173,7 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
             <View style={styles.valueLastInnerContainer}>
               <Pressable 
                  style={[styles.valueCircle, {backgroundColor: colors.valueEight}]}
-                onPress={() => setShowValue(false)}
+                onPress={() => selectValue(8)}
               >
                 <Text style={[{color: colors.text}]}>
                   8
@@ -194,7 +221,7 @@ const styles = StyleSheet.create({
     // borderRadius: 20,
   },
   input: {
-    // width: "100%",
+    width: "100%",
     marginTop: 15,
     borderBottomWidth: 0,
     fontSize: 18,
@@ -210,7 +237,7 @@ const styles = StyleSheet.create({
 
     // flex: 0,
     // order: 0,
-    alignSelf: "stretch",
+    // alignSelf: "stretch",
     // flexGrow: 0,
   },
   textInput: {
@@ -218,8 +245,8 @@ const styles = StyleSheet.create({
     height: 55,
   },
   descriptionInput: {
-    // alignItems: "flex-start",
-    // justifyContent: "flex-start",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
     height: 125,
   },
   interval: {
