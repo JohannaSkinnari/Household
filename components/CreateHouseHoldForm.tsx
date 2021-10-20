@@ -7,14 +7,26 @@ import { addHouseHold } from "../redux/houseHold/houseHoldSlice";
 import { TextInput, View, StyleSheet, Text } from "react-native";
 import { useTheme } from "react-native-paper";
 import AvatarList from "./AvatarList";
+import CustomButton from "./common/CustomButton";
+import { IMember } from "../interfaces/IMember";
+import { IUser } from "../interfaces/IUser";
 
-type validationSchema = Record<
+type houseValidationSchema = Record<
   keyof Omit<IHouseHold, "id" | "houseHoldCode">,
   yup.AnySchema
 >;
 
-const householdValidation = yup.object().shape<validationSchema>({
+type memberValidationSchema = Record<
+  keyof Omit<IMember, "id" | "userId" | "householdId" | "isAdmin">,
+  yup.AnySchema
+>;
+
+const householdValidation = yup.object().shape<houseValidationSchema>({
   name: yup.string().min(3).max(15).required("namn behövs..."),
+});
+
+const memberValidation = yup.object().shape<memberValidationSchema>({
+  avatarId: yup.number().required(),
 });
 
 export default function CreateHouseHoldForm() {
@@ -42,17 +54,27 @@ export default function CreateHouseHoldForm() {
     },
   });
 
-  //const dispatch = useAppDispatch();
-  const defaultFormData: IHouseHold = {
-    id: Math.random().toString(),
-    name: "",
-    houseHoldCode: 0,
+  interface FormData {
+    house: Omit<IHouseHold, "id" | "houseHoldCode">;
+    member: Omit<IMember, "id">;
+    user: Omit<IUser, "name" | "email" | "password">;
+  }
+
+  const defaultFormData: FormData = {
+    house: { name: "" },
+    member: {
+      userId: "vårtuserid",
+      householdId: "house.id",
+      isAdmin: true,
+      avatarId: 0,
+    },
+    user: { id: "hämta in id" },
   };
 
   return (
     <Formik
       initialValues={defaultFormData}
-      validationSchema={householdValidation}
+      validationSchema={[householdValidation, memberValidation]}
       onSubmit={(values) => {
         //dispatch(addHouseHold(values));
       }}
@@ -74,15 +96,18 @@ export default function CreateHouseHoldForm() {
               placeholder="hushållets namn"
               onChangeText={handleChange("name")}
               onBlur={handleBlur("name")}
-              value={values.name}
+              value={values.house.name}
               clearTextOnFocus={true}
             />
-            {errors.name && touched.name && (
-              <Text style={styles.errors}>{errors.name}</Text>
+            {errors.house?.name && touched.house?.name && (
+              <Text style={styles.errors}>{errors.house.name}</Text>
             )}
           </View>
-          <View style={{ marginHorizontal: 25, marginVertical: 50 }}>
-            <AvatarList />
+          <View style={{ marginHorizontal: 25, marginVertical: 30 }}>
+            <AvatarList onChange={handleChange("avatarId")} />
+          </View>
+          <View>
+            <CustomButton title={"Spara"} onPress={handleSubmit} />
           </View>
         </View>
       )}
