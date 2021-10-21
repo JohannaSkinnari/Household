@@ -7,7 +7,7 @@ import {
   DefaultTheme as PaperDefaultTheme,
   DarkTheme as PaperDarkTheme,
 } from "react-native-paper";
-import merge from 'deepmerge';
+import merge from "deepmerge";
 
 declare global {
   namespace ReactNativePaper {
@@ -25,6 +25,7 @@ declare global {
       valueFour: string;
       valueSix: string;
       valueEight: string;
+      textInput: string;
     }
   }
 }
@@ -43,12 +44,11 @@ const CustomDefaultTheme = {
   dark: false,
   colors: {
     ...NavigationDefaultTheme.colors,
-
   },
 };
 
 // för Paper componenter
-const CustomPaperDarkTheme: ReactNativePaper.Theme  = {
+const CustomPaperDarkTheme: ReactNativePaper.Theme = {
   ...PaperDarkTheme,
   dark: true,
   colors: {
@@ -66,10 +66,11 @@ const CustomPaperDarkTheme: ReactNativePaper.Theme  = {
     valueFour: "#999",
     valueSix: "#888",
     valueEight: "#777",
+    textInput: "#C75267",
   },
 };
 
-const CustomPaperDefaultTheme: ReactNativePaper.Theme  = {
+const CustomPaperDefaultTheme: ReactNativePaper.Theme = {
   ...PaperDefaultTheme,
   dark: false,
   colors: {
@@ -87,12 +88,13 @@ const CustomPaperDefaultTheme: ReactNativePaper.Theme  = {
     valueFour: "#E9E7E7",
     valueSix: "#E1E1E1",
     valueEight: "#D9D9D9",
+    textInput: "#FFFFFA",
   },
 };
 
-const CombinedDefaultTheme = merge(  CustomPaperDefaultTheme, CustomDefaultTheme);
-const CombinedDarkTheme = merge(  CustomPaperDarkTheme, CustomDarkTheme);
+const CombinedDefaultTheme = merge(CustomPaperDefaultTheme, CustomDefaultTheme);
+const CombinedDarkTheme = merge(CustomPaperDarkTheme, CustomDarkTheme);
 
-export const getTheme = (dark:boolean) => {
+export const getTheme = (dark: boolean) => {
   return dark ? CombinedDarkTheme : CombinedDefaultTheme;
-}
+};

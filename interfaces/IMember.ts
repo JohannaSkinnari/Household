@@ -5,3 +5,5 @@ export interface IMember {
   isAdmin: boolean;
   avatarId: number;
 }
+
+export type ICreateMember = Omit<IMember, "id" | "userId" | "isAdmin">;
