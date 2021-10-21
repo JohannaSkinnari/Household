@@ -4,17 +4,14 @@ import { Pressable, StyleSheet, TextInput, Text, View } from "react-native";
 import { useStore } from "react-redux";
 import { color } from "react-native-reanimated";
 import ValuePicker from "../ValuePicker";
+import CustomButton from "../common/CustomButton";
 
 interface Props {
   onSave: () => void;
   onClose: () => void;
-  // onSelectValueOne: () => void;
-  // onSelectValueTwo: () => void;
-  // onSelectValueFour: () => void;
-  // onSelectValueSix: () => void;
-  // onSelectValueEight: () => void;
 }
-export default function AdminChoreModal({ onSave, onClose}: Props) {
+
+export default function AdminChoreModal({ onSave, onClose }: Props) {
   const { colors } = useTheme();
   const [name, setName] = useState("");
   const [discription, setDiscription] = useState("");
@@ -118,7 +115,7 @@ export default function AdminChoreModal({ onSave, onClose}: Props) {
         </Pressable>) :
         (<ValuePicker selectValue={selectValue} />)}
       </Card.Content>
-      <Card.Actions style={styles.cardAction}>
+      <Card.Actions style={styles.cardAction} >
         <Button icon={"plus-circle-outline"} color={colors.text} onPress={onSave}>Spara</Button>
         <Button icon={"close-circle-outline"} color={colors.text} onPress={onClose}>Stäng</Button>
       </Card.Actions>
@@ -130,11 +127,12 @@ const styles = StyleSheet.create({
   card: {
     // flex: 1,
     height: "95%",
+    // minHeight: 450,
     // width: "95%",
     borderRadius: 10,
     justifyContent: "space-between",
     // margin: 5,
-    marginHorizontal: 5,
+    marginHorizontal: 10,
     // marginTop: -30,
     // marginBottom: 17
   },
@@ -144,9 +142,11 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     height: "76%",
+    justifyContent: "space-evenly",
     // height: 381,
     // backgroundColor: "red",
-    paddingVertical: 5,
+    // paddingVertical: 5,
+    paddingHorizontal: 10,
   },
   cardAction: {
     justifyContent: "space-around",
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    marginTop: 15,
+    // marginTop: 15,
     borderBottomWidth: 0,
     fontSize: 18,
     borderRadius: 10,

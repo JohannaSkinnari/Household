@@ -37,11 +37,6 @@ export default function ChoresScreen({ navigation }: Props) {
           <AdminChoreModal 
             onSave={() => setOpenAdd(false)} 
             onClose={() => setOpenAdd(false)}
-            // onSelectValueOne={() => console.log("one")}
-            // onSelectValueTwo={() => console.log("two")}
-            // onSelectValueFour={() => console.log("four")}
-            // onSelectValueSix={() => console.log("Six")}
-            // onSelectValueEight={() => console.log("Eight")}
           />
           {/* <Text style={{ color: colors.text }}>
             Exampel Modal för lägga till syssla. Click outside this area to

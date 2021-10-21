@@ -12,8 +12,8 @@ export default function ValuePicker({ selectValue }: Props) {
     <View
       style={[styles.input, styles.value, {backgroundColor: colors.surface}]}
     >
-      <View style={[styles.valueContainer, {borderLeftColor: colors.darkPink, borderRightColor: colors.darkPink}]}>
-        <View style={[styles.valueInnerContainer, {borderRightColor: colors.darkPink}]}>
+      <View style={[styles.valueContainer]}>
+        <View style={[styles.valueInnerContainer]}>
           <Pressable 
             style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueOne}]} 
             onPress={() => selectValue(1)}
@@ -23,7 +23,7 @@ export default function ValuePicker({ selectValue }: Props) {
             </Text>
           </Pressable>
         </View>
-        <View style={[styles.valueInnerContainer, {borderRightColor: colors.darkPink}]}>
+        <View style={[styles.valueInnerContainer]}>
           <Pressable 
               style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueTwo}]}
             onPress={() => selectValue(2)}
@@ -33,7 +33,7 @@ export default function ValuePicker({ selectValue }: Props) {
             </Text>
           </Pressable>
         </View>
-        <View style={[styles.valueInnerContainer, {borderRightColor: colors.darkPink}]}>
+        <View style={[styles.valueInnerContainer]}>
           <Pressable 
               style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueFour}]} 
             onPress={() => selectValue(4)}
@@ -43,7 +43,7 @@ export default function ValuePicker({ selectValue }: Props) {
             </Text>
           </Pressable>
         </View>
-        <View style={[styles.valueInnerContainer, {borderRightColor: colors.darkPink}]}>
+        <View style={[styles.valueInnerContainer]}>
           <Pressable 
               style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueSix}]}  
             onPress={() => selectValue(6)}
@@ -71,7 +71,7 @@ export default function ValuePicker({ selectValue }: Props) {
 const styles = StyleSheet.create({
   input: {
     width: "100%",
-    marginTop: 15,
+    // marginTop: 15,
     borderBottomWidth: 0,
     fontSize: 18,
     borderRadius: 10,
@@ -91,17 +91,17 @@ const styles = StyleSheet.create({
     height: 80,
   },
   valueContainer: {
-    borderLeftWidth: 0.5, 
+    // borderLeftWidth: 0.5, 
     flexDirection: "row", 
     justifyContent: "space-evenly", 
     width: "100%", 
     // borderRightColor: "red", 
-    borderRightWidth: 0.5,
+    // borderRightWidth: 0.5,
     padding: 0,
     height: "100%"
   },
   valueInnerContainer: {
-    borderRightWidth: 0.5, 
+    // borderRightWidth: 0.5, 
     justifyContent: "center", 
     alignItems: "center",
   },
