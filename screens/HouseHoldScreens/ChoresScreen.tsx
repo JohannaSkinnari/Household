@@ -33,7 +33,7 @@ export default function ChoresScreen({ navigation }: Props) {
         <Button onPress={() => setOpenAdd(true)}>Lägg till Syssla</Button>
       </View>
       {openAdd && (
-        <Modal contentContainerStyle={{justifyContent: "center"}} visible={openAdd} onDismiss={() => setOpenAdd(false)}>
+        <Modal contentContainerStyle={{justifyContent: "center", flex: 1,}} visible={openAdd} onDismiss={() => setOpenAdd(false)}>
           <AdminChoreModal 
             onSave={() => setOpenAdd(false)} 
             onClose={() => setOpenAdd(false)}

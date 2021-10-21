@@ -1,6 +1,6 @@
 import { Button, Card, Paragraph, Title, useTheme } from "react-native-paper";
 import React, { useState } from "react";
-import { Pressable, StyleSheet, TextInput, Text, View } from "react-native";
+import { Pressable, StyleSheet, TextInput, Text, View, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useStore } from "react-redux";
 import { color } from "react-native-reanimated";
 import ValuePicker from "../ValuePicker";
@@ -47,6 +47,11 @@ export default function AdminChoreModal({ onSave, onClose }: Props) {
   }
 
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <Card style={styles.card}>
       <Card.Title title="Skapa en ny syssla" style={styles.cardTitle}/>
       <Card.Content style={[styles.cardContent, {backgroundColor: colors.background}]}>
@@ -120,11 +125,17 @@ export default function AdminChoreModal({ onSave, onClose }: Props) {
         <Button icon={"close-circle-outline"} color={colors.text} onPress={onClose}>Stäng</Button>
       </Card.Actions>
     </Card>
+    </TouchableWithoutFeedback>
+  </KeyboardAvoidingView>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   card: {
+    // zIndex: 3000,
     // flex: 1,
     height: "95%",
     // minHeight: 450,
