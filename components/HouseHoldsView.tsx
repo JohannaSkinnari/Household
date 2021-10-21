@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
-  onSelectedHouse: () => void;
+  onSelectedHouse: (id: string) => void;
 }
 
 export default function HouseHoldView({ onSelectedHouse }: Props) {
@@ -13,9 +14,13 @@ export default function HouseHoldView({ onSelectedHouse }: Props) {
   return (
     <>
       {houseList.map((house) => (
-        <Pressable key={house.id} style={[styles.input, styles.textInput]}>
+        <TouchableOpacity
+          onPress={() => onSelectedHouse(house.id)}
+          key={house.id}
+          style={[styles.input, styles.textInput]}
+        >
           <Text>{house.name}</Text>
-        </Pressable>
+        </TouchableOpacity>
       ))}
     </>
   );
