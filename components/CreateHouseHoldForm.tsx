@@ -108,7 +108,7 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
               {errors.member.avatarId}
             </Text>
           )}
-          <View style={{ marginVertical: 100 }}>
+          <View style={{ marginVertical: 80 }}>
             <CustomButton
               icon={"plus-circle-outline"}
               title={"Spara"}
