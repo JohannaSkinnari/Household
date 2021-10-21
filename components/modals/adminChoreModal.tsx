@@ -10,6 +10,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 import { createChore } from "../../redux/chore/choreThunk";
+import IntervalPicker from "../IntervalPicker";
 // import { addChore } from "../../redux/chore/choreSlice";
 
 type ChoreValidationSchema = Record<
@@ -145,22 +146,32 @@ export default function AdminChoreModal({ onSave, onClose }: Props) {
                 var 
               </Text>
                 <View style={[styles.litleCircle, {backgroundColor: colors.darkPink}]}> 
-                  <Text style={{color: colors.background}}>7</Text>
+                  <Text style={{color: colors.background}}>
+                    {interval}
+                  </Text>
                 </View>
               <Text style={[styles.normalText, {color: colors.onSurface}]}>
                 dag
               </Text>
             </View>
           </Pressable>) :
-          (<View
-            style={[styles.input, styles.interval, {backgroundColor: colors.surface}]}
-          >
-            <Pressable onPress={() => setShowInterval(false)}>
-              <Text style={[styles.boldText, {color: colors.onSurface}]}>
-                Gå tillbaka 1 2 3 4 5 6
-              </Text>
-            </Pressable>
-          </View>)}
+          (
+            <IntervalPicker value={values.interval}
+            selectPickerIntervalValue={(value) => {
+              setFieldValue("interval", value),
+              setShowInterval(false);
+              setInterval(value)
+            }} />
+          // <View
+          //   style={[styles.input, styles.interval, {backgroundColor: colors.surface}]}
+          // >
+          //   <Pressable onPress={() => setShowInterval(false)}>
+          //     <Text style={[styles.boldText, {color: colors.onSurface}]}>
+          //       Gå tillbaka 1 2 3 4 5 6
+          //     </Text>
+          //   </Pressable>
+          // </View>
+          )}
           {!showValue ? (<Pressable
             style={[styles.input, styles.value, {backgroundColor: colors.surface}]}
             onPress={() => setShowValue(true)}
