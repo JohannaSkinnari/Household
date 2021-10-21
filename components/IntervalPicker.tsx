@@ -10,11 +10,6 @@ interface Props {
 
 export default function IntervalPicker({ selectPickerIntervalValue }: Props) {
   const { colors } = useTheme();
-  // function range(start: number, end: number) {
-  //   return Array(end - start + 1).fill().map((_, idx) => start + idx)
-  // }
-  // var intervalNumbers = range(1, 30); // [9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-  // const intervalNumbers: number[] = Array.from(Array(31).keys());
   return (
     <View
       style={[styles.input, styles.interval, {backgroundColor: colors.surface}]}
@@ -32,20 +27,13 @@ export default function IntervalPicker({ selectPickerIntervalValue }: Props) {
         )}
         keyExtractor={(item) => item.id.toString()}
       />
-      {/* <Pressable onPress={() => selectPickerIntervalValue(2)}>
-        <Text style={[styles.boldText, {color: colors.onSurface}]}>
-          Gå tillbaka 1 2 3 4 5 6
-        </Text>
-      </Pressable> */}
     </View>
-    
   );
 }
 
 const styles = StyleSheet.create({
   input: {
     width: "100%",
-    // marginTop: 15,
     borderBottomWidth: 0,
     fontSize: 18,
     borderRadius: 10,
@@ -70,11 +58,8 @@ const styles = StyleSheet.create({
   },
   numbers: {
     paddingHorizontal: 8,
-    // fontSize: 18,
-    // fontWeight: "bold",
   },
   number: {
-    // paddingHorizontal: 5,
     fontSize: 18,
     fontWeight: "bold",
   },

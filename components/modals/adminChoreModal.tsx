@@ -29,8 +29,8 @@ interface Props {
 }
 
 export default function AdminChoreModal({ onSave, onClose }: Props) {
-  const household = {id: "1"}
   const { colors } = useTheme();
+  const household = {id: "1"}
   const dispatch = useAppDispatch();
   const [showInterval, setShowInterval] = useState(false);
   const [showValue, setShowValue] = useState(false);

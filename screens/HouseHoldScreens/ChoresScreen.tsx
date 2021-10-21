@@ -17,7 +17,6 @@ export default function ChoresScreen({ navigation }: Props) {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const { colors } = useTheme();
-  const [value, setValue] = useState(1);
 
   return (
     <>
@@ -33,17 +32,14 @@ export default function ChoresScreen({ navigation }: Props) {
         <Button onPress={() => setOpenAdd(true)}>Lägg till Syssla</Button>
       </View>
       {openAdd && (
-        <Modal contentContainerStyle={{justifyContent: "center", flex: 1,}} visible={openAdd} onDismiss={() => setOpenAdd(false)}>
+        <Modal 
+          contentContainerStyle={{justifyContent: "center", flex: 1,}} 
+          visible={openAdd} onDismiss={() => setOpenAdd(false)}
+        >
           <AdminChoreModal 
             onSave={() => setOpenAdd(false)} 
             onClose={() => setOpenAdd(false)}
           />
-          {/* <Text style={{ color: colors.text }}>
-            Exampel Modal för lägga till syssla. Click outside this area to
-            dismiss.
-          </Text> */}
-          {/* <Button onPress={() => setOpenAdd(false)}>Spara</Button>
-          <Button onPress={() => setOpenAdd(false)}>Stäng</Button> */}
         </Modal>
       )}
       {openChore && (
