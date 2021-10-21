@@ -3,10 +3,11 @@ import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
 
 interface Props {
-  selectValue: (value: number) => void;
+  value: number;
+  selectPickerWeightValue: (value: number) => void;
 }
 
-export default function ValuePicker({ selectValue }: Props) {
+export default function WeightPicker({ selectPickerWeightValue }: Props) {
   const { colors } = useTheme();
   return (
     <View
@@ -16,7 +17,7 @@ export default function ValuePicker({ selectValue }: Props) {
         <View style={[styles.valueInnerContainer]}>
           <Pressable 
             style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueOne}]} 
-            onPress={() => selectValue(1)}
+            onPress={() => selectPickerWeightValue(1)}
           >
             <Text style={[{color: colors.text}]}>
               1
@@ -26,7 +27,7 @@ export default function ValuePicker({ selectValue }: Props) {
         <View style={[styles.valueInnerContainer]}>
           <Pressable 
               style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueTwo}]}
-            onPress={() => selectValue(2)}
+            onPress={() => selectPickerWeightValue(2)}
           >
             <Text style={[{color: colors.text}]}>
               2
@@ -36,7 +37,7 @@ export default function ValuePicker({ selectValue }: Props) {
         <View style={[styles.valueInnerContainer]}>
           <Pressable 
               style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueFour}]} 
-            onPress={() => selectValue(4)}
+            onPress={() => selectPickerWeightValue(4)}
           >
             <Text style={[{color: colors.text}]}>
               4
@@ -46,7 +47,7 @@ export default function ValuePicker({ selectValue }: Props) {
         <View style={[styles.valueInnerContainer]}>
           <Pressable 
               style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueSix}]}  
-            onPress={() => selectValue(6)}
+            onPress={() => selectPickerWeightValue(6)}
           >
             <Text style={[{color: colors.text}]}>
               6
@@ -56,7 +57,7 @@ export default function ValuePicker({ selectValue }: Props) {
         <View style={styles.valueLastInnerContainer}>
           <Pressable 
               style={[styles.valueCircle, {backgroundColor: colors.valueEight}]}
-            onPress={() => selectValue(8)}
+            onPress={() => selectPickerWeightValue(8)}
           >
             <Text style={[{color: colors.text}]}>
               8

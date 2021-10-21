@@ -3,8 +3,29 @@ import React, { useState } from "react";
 import { Pressable, StyleSheet, TextInput, Text, View, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useStore } from "react-redux";
 import { color } from "react-native-reanimated";
-import ValuePicker from "../ValuePicker";
+import WeightPicker from "../WeightPicker";
 import CustomButton from "../common/CustomButton";
+import { IChore, ICreateChore } from "../../interfaces/IChore";
+import { Formik } from "formik";
+import * as yup from "yup";
+import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
+import { createChore } from "../../redux/chore/choreThunk";
+// import { addChore } from "../../redux/chore/choreSlice";
+
+type ChoreValidationSchema = Record<
+  keyof Omit<ICreateChore, "lastCompleted" | "householdId" | "interval" | "weight">,
+  yup.AnySchema
+>;
+
+
+const choreValidation = yup.object().shape<ChoreValidationSchema>({
+  name: yup
+    .string()
+    .required("Du behöver ett namn"),
+  description: yup.string().required("Du behöver en text"),
+  // interval: yup.number().required("Du behöver en text"),
+  // weight: yup.number().required("Du behöver en text"),
+});
 
 interface Props {
   onSave: () => void;
@@ -12,18 +33,40 @@ interface Props {
 }
 
 export default function AdminChoreModal({ onSave, onClose }: Props) {
+  const household = {id: "1"}
   const { colors } = useTheme();
-  const [name, setName] = useState("");
-  const [discription, setDiscription] = useState("");
+  const dispatch = useAppDispatch();
+  const chores = useAppSelector((state) => state.choresList.chores);
+  // const [name, setName] = useState("");
+  // const [discription, setDiscription] = useState("");
   const [showInterval, setShowInterval] = useState(false);
   const [showValue, setShowValue] = useState(false);
-  const [value, setValue] = useState(1);
+  const [weight, setWeight] = useState(1);
+  const [interval, setInterval] = useState(7);
   const [colorValue, setColorValue] = useState(colors.valueOne);
 
-  const selectValue = (value: number) => {
-    setValue(value);
-    console.log(value);
-    switch (value) {
+  const defaultFormData: ICreateChore = {
+    name: "",
+    householdId: household.id,
+    description: "",
+    interval: 7,
+    weight: 1,
+  }
+
+  async function handleOnSubmit(values: ICreateChore) {
+    const response = await dispatch(createChore(values));
+    if (response) {
+      onSave();
+      console.log(chores);
+      
+      
+    }
+  }
+
+  const selectWeightValue = (weightValue: number) => {
+    setWeight(weightValue);
+    console.log(weightValue); //glöm inte ta bort
+    switch (weightValue) {
       case 1:
         setColorValue(colors.valueOne)
         break;
@@ -47,87 +90,115 @@ export default function AdminChoreModal({ onSave, onClose }: Props) {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
+    <Formik
+      initialValues={defaultFormData}
+      validationSchema={choreValidation}
+      onSubmit={handleOnSubmit}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <Card style={styles.card}>
-      <Card.Title title="Skapa en ny syssla" style={styles.cardTitle}/>
-      <Card.Content style={[styles.cardContent, {backgroundColor: colors.background}]}>
-        <TextInput
-          style={[styles.input, styles.textInput, {backgroundColor: colors.surface, color: colors.onSurface}]}
-          placeholder="Titel"
-          placeholderTextColor={colors.placeholder}
-          onChangeText={(name: string) => setName(name)}
-          value={name}
-          // clearTextOnFocus={true}
-        />
-        <TextInput
-          style={[styles.input, styles.descriptionInput, {backgroundColor: colors.surface, color: colors.onSurface}]}
-          multiline={true}
-          placeholder="Beskrivning"
-          placeholderTextColor={colors.placeholder}
-          onChangeText={(discription: string) => setDiscription(discription)}
-          value={discription}
-          // clearTextOnFocus={true}
-        />
-        {!showInterval ? (<Pressable
-          style={[styles.input, styles.interval, {backgroundColor: colors.surface}]}
-          onPress={() => setShowInterval(true)}
-        >
-          <Text style={[styles.boldText, {color: colors.onSurface}]}>
-            Återkommande: 
-          </Text>
-          <View style={{flexDirection: "row", alignItems: "center"}}>
-            <Text style={[styles.normalText, {color: colors.onSurface}]}>
-              var 
-            </Text>
-              <View style={[styles.litleCircle, {backgroundColor: colors.darkPink}]}> 
-                <Text style={{color: colors.background}}>7</Text>
-              </View>
-            <Text style={[styles.normalText, {color: colors.onSurface}]}>
-              dag
-            </Text>
-          </View>
-        </Pressable>) :
-        (<View
-          style={[styles.input, styles.interval, {backgroundColor: colors.surface}]}
-        >
-          <Pressable onPress={() => setShowInterval(false)}>
+      {({
+        setFieldValue,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        touched,
+        errors,
+        isValid,
+      }) => (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Card style={styles.card}>
+        <Card.Title title="Skapa en ny syssla" style={styles.cardTitle}/>
+        <Card.Content style={[styles.cardContent, {backgroundColor: colors.background}]}>
+          <TextInput
+            style={[styles.input, styles.textInput, {backgroundColor: colors.surface, color: colors.onSurface}]}
+            placeholder="Titel"
+            placeholderTextColor={colors.placeholder}
+            onChangeText={handleChange("name")}
+            onBlur={handleBlur("name")}
+            value={values.name}
+            // clearTextOnFocus={true}
+          />
+          <TextInput
+            style={[styles.input, styles.descriptionInput, {backgroundColor: colors.surface, color: colors.onSurface}]}
+            multiline={true}
+            placeholder="Beskrivning"
+            placeholderTextColor={colors.placeholder}
+            onChangeText={handleChange("description")}
+            onBlur={handleBlur("description")}
+            value={values.description}
+            textAlignVertical={"top"}
+            // clearTextOnFocus={true}
+          />
+          {!showInterval ? (<Pressable
+            style={[styles.input, styles.interval, {backgroundColor: colors.surface}]}
+            onPress={() => setShowInterval(true)}
+          >
             <Text style={[styles.boldText, {color: colors.onSurface}]}>
-              Gå tillbaka 1 2 3 4 5 6
+              Återkommande: 
             </Text>
-          </Pressable>
-        </View>)}
-        {!showValue ? (<Pressable
-          style={[styles.input, styles.value, {backgroundColor: colors.surface}]}
-          onPress={() => setShowValue(true)}
-        >
-          <View>
-            <Text style={[styles.boldText, {color: colors.onSurface}]}>
-              Värde: 
-            </Text>
-            <Text style={[styles.subText, {color: colors.disabled}]}>
-              Hur energikrävande är sysslan?
-            </Text>
-          </View>
-          <View style={[styles.litleCircle, {backgroundColor: colorValue}]}>
-            <Text style={[styles.subText, {color: colors.onSurface}]}>
-              {value}
-            </Text>
-          </View>
-        </Pressable>) :
-        (<ValuePicker selectValue={selectValue} />)}
-      </Card.Content>
-      <Card.Actions style={styles.cardAction} >
-        <Button icon={"plus-circle-outline"} color={colors.text} onPress={onSave}>Spara</Button>
-        <Button icon={"close-circle-outline"} color={colors.text} onPress={onClose}>Stäng</Button>
-      </Card.Actions>
-    </Card>
-    </TouchableWithoutFeedback>
-  </KeyboardAvoidingView>
-  )
+            <View style={{flexDirection: "row", alignItems: "center"}}>
+              <Text style={[styles.normalText, {color: colors.onSurface}]}>
+                var 
+              </Text>
+                <View style={[styles.litleCircle, {backgroundColor: colors.darkPink}]}> 
+                  <Text style={{color: colors.background}}>7</Text>
+                </View>
+              <Text style={[styles.normalText, {color: colors.onSurface}]}>
+                dag
+              </Text>
+            </View>
+          </Pressable>) :
+          (<View
+            style={[styles.input, styles.interval, {backgroundColor: colors.surface}]}
+          >
+            <Pressable onPress={() => setShowInterval(false)}>
+              <Text style={[styles.boldText, {color: colors.onSurface}]}>
+                Gå tillbaka 1 2 3 4 5 6
+              </Text>
+            </Pressable>
+          </View>)}
+          {!showValue ? (<Pressable
+            style={[styles.input, styles.value, {backgroundColor: colors.surface}]}
+            onPress={() => setShowValue(true)}
+          >
+            <View>
+              <Text style={[styles.boldText, {color: colors.onSurface}]}>
+                Värde: 
+              </Text>
+              <Text style={[styles.subText, {color: colors.disabled}]}>
+                Hur energikrävande är sysslan?
+              </Text>
+            </View>
+            <View style={[styles.litleCircle, {backgroundColor: colorValue}]}>
+              <Text style={[styles.subText, {color: colors.onSurface}]}>
+                {weight}
+              </Text>
+            </View>
+          </Pressable>) :
+          (<WeightPicker
+            // selectValue={selectValue}
+            value={values.weight}
+            selectPickerWeightValue={(value) => {
+              setFieldValue("weight", value),
+              setShowValue(false);
+              selectWeightValue(value)
+            }} 
+          />)}
+        </Card.Content>
+        <Card.Actions style={styles.cardAction} >
+          <Button icon={"plus-circle-outline"} color={colors.text} onPress={handleSubmit}>Spara</Button>
+          <Button icon={"close-circle-outline"} color={colors.text} onPress={onClose}>Stäng</Button>
+        </Card.Actions>
+      </Card>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+    )}
+  </Formik>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -189,6 +260,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     height: 125,
+    paddingTop: 8
   },
   interval: {
     flexDirection: "row",
