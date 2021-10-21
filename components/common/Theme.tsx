@@ -1,4 +1,4 @@
-4; // ifall vi behöver customize:a mer med defaultheme från navigator
+// ifall vi behöver customize:a mer med defaultheme från navigator
 import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
