@@ -1,13 +1,19 @@
 import { IUser } from "../../interfaces/IUser";
 
 export interface UserState {
-  users: IUser[];
+  user: IUser;
   loading: boolean;
   error: string;
 }
 
 export const initialState: UserState = {
-  users: [],
+  user: {
+    id: "1",
+    name: "mrfejk",
+    email: "egc@fogjs.com",
+    password: "password",
+  },
+
   loading: false,
   error: "",
 };
