@@ -11,6 +11,40 @@ interface Props {
 export default function AvatarList({ onChange }: Props) {
   const { colors } = useTheme();
   const [selectedAvatar, setSelectedAvatar] = useState<number>();
+  const [colorValue, setColorValue] = useState<string>();
+
+  const selectValue = (value: number) => {
+    switch (value) {
+      case 1:
+        setColorValue(colors.yellow);
+        break;
+      case 2:
+        setColorValue(colors.blue);
+        break;
+      case 3:
+        setColorValue(colors.orange);
+        break;
+      case 4:
+        setColorValue(colors.green);
+        break;
+      case 5:
+        setColorValue(colors.darkPink);
+        break;
+      case 6:
+        setColorValue(colors.brown);
+        break;
+      case 7:
+        setColorValue(colors.pink);
+        break;
+      case 8:
+        setColorValue(colors.purple);
+        break;
+      default:
+        setColorValue(colors.textInput);
+        break;
+    }
+  };
+
   return (
     <View style={{ height: 65 }}>
       <FlatList
@@ -19,14 +53,16 @@ export default function AvatarList({ onChange }: Props) {
         renderItem={({ item }) => (
           <Pressable
             onPress={() => {
-              onChange(String(item.id)), setSelectedAvatar(item.id);
+              onChange(String(item.id)),
+                setSelectedAvatar(item.id),
+                selectValue(item.id);
             }}
           >
             <Image
               key={item.id}
               style={{
-                borderRadius: 5,
-                borderColor: colors.darkPink,
+                borderRadius: 15,
+                borderColor: colorValue,
                 borderWidth: item.id === selectedAvatar ? 1 : 0,
                 marginHorizontal: 10,
                 height: 60,
@@ -37,8 +73,6 @@ export default function AvatarList({ onChange }: Props) {
           </Pressable>
         )}
         keyExtractor={(item) => item.id.toString()}
-        // onEndReached={onEnd}
-        // onEndReachedThreshold={0.5}
       />
     </View>
   );

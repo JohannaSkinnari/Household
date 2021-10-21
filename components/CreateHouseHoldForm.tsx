@@ -23,7 +23,7 @@ const validationSchema = yup.object().shape<RootValidationSchema>({
       .string()
       .required("Namnge ditt hushåll")
       .min(3, "Namnet är för kort")
-      .max(25, "Namnet är för långt"),
+      .max(18, "Namnet är för långt"),
   }),
   member: yup.object().shape<MemberValidationSchema>({
     avatarId: yup.number().min(1, "Välj en avatar"),
@@ -41,31 +41,7 @@ interface Props {
 
 export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
   const dispatch = useAppDispatch();
-
   const { colors } = useTheme();
-  const styles = StyleSheet.create({
-    root: {
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    errors: {
-      fontSize: 14,
-      color: colors.darkPink,
-      fontWeight: "500",
-      paddingHorizontal: 10,
-    },
-    inputText: {
-      backgroundColor: colors.surface,
-      color: colors.onSurface,
-      fontSize: 16,
-      textAlign: "center",
-      borderRadius: 8,
-      height: 40,
-      width: 200,
-      paddingHorizontal: 16,
-      marginVertical: 4,
-    },
-  });
 
   const defaultFormData: FormData = {
     house: { name: "" },
@@ -95,12 +71,18 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
         values,
         touched,
         errors,
-        isValid,
       }) => (
         <View style={styles.root}>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <View style={styles.container}>
             <TextInput
-              style={styles.inputText}
+              style={[
+                [
+                  styles.input,
+                  styles.textInput,
+                  { backgroundColor: colors.surface, color: colors.onSurface },
+                ],
+              ]}
+              placeholderTextColor={colors.placeholder}
               placeholder={"hushållets namn"}
               onChangeText={handleChange("house.name")}
               onBlur={handleBlur("house.name")}
@@ -108,10 +90,12 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
               clearTextOnFocus={true}
             />
             {errors.house && touched.house && (
-              <Text style={styles.errors}>{errors.house.name}</Text>
+              <Text style={[styles.errors, { color: colors.darkPink }]}>
+                {errors.house.name}
+              </Text>
             )}
           </View>
-          <View style={{ marginHorizontal: 25, marginVertical: 30 }}>
+          <View style={styles.avatarStyle}>
             <AvatarList
               value={values.member.avatarId}
               onChange={(value) =>
@@ -120,7 +104,9 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
             />
           </View>
           {errors.member && touched.member && (
-            <Text style={styles.errors}>{errors.member.avatarId}</Text>
+            <Text style={[styles.errors, { color: colors.darkPink }]}>
+              {errors.member.avatarId}
+            </Text>
           )}
           <View style={{ marginVertical: 100 }}>
             <CustomButton
@@ -134,3 +120,42 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
     </Formik>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  avatarStyle: {
+    marginHorizontal: 25,
+    marginVertical: 30,
+  },
+  errors: {
+    fontSize: 14,
+    fontWeight: "500",
+    paddingHorizontal: 10,
+  },
+  input: {
+    marginTop: 15,
+    borderBottomWidth: 0,
+    fontSize: 18,
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+    width: 200,
+  },
+  textInput: {
+    textAlign: "center",
+    height: 55,
+  },
+});
