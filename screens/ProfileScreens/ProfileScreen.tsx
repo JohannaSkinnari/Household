@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useTheme } from "react-native-paper";
 import CustomButton from "../../components/common/CustomButton";
 import HouseHoldView from "../../components/HouseHoldsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function ProfileScreen({
   navigation,
@@ -16,21 +16,14 @@ export default function ProfileScreen({
   }
 
   return (
-    <View style={styles.root}>
-      <View
-        style={[styles.houseList, { flex: 3, backgroundColor: colors.blue }]}
-      >
-        <HouseHoldView onSelectedHouse={navigateTo} />
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}></View>
+      <View style={[styles.houseList, { flex: 6 }]}>
+        <ScrollView>
+          <HouseHoldView onSelectedHouse={navigateTo} />
+        </ScrollView>
       </View>
-      <View
-        style={[
-          {
-            justifyContent: "flex-end",
-            flex: 1,
-            backgroundColor: colors.brown,
-          },
-        ]}
-      >
+      <View style={[{ justifyContent: "flex-end", flex: 2 }]}>
         <View
           style={{
             justifyContent: "space-evenly",
@@ -57,14 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   houseList: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
 });
-
-// <Button onPress={() => navigation.navigate("Household")}>
-//   Household
-// </Button>
-// <Button onPress={() => navigation.navigate("HouseholdSettings")}>
-//   HouseholdSettings
-// </Button>

@@ -33,7 +33,7 @@ export default function HouseHoldView({ onSelectedHouse }: Props) {
             </Text>
             <View style={styles.iconsContainer}>
               <Image
-                style={[styles.crown, { height: member?.isAdmin ? 40 : 0 }]}
+                style={[styles.crown, { height: member?.isAdmin ? 30 : 0 }]}
                 source={require("../assets/images/crown.png")}
               />
               <Image style={styles.avatar} source={avatar?.icon} />
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   householdCard: {
     margin: 10,
     height: 60,
-    width: 250,
+    width: 330,
     borderRadius: 12,
     paddingLeft: 5,
     flexDirection: "row",
@@ -64,11 +64,11 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   avatar: {
-    height: 40,
-    width: 40,
+    height: 30,
+    width: 30,
   },
   crown: {
-    width: 40,
+    width: 30,
     marginRight: 8,
     alignItems: "center",
   },
