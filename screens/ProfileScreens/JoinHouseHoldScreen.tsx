@@ -10,15 +10,17 @@ export default function JoinHouseholdScreen({
   const { colors } = useTheme();
   // const [openAvatarPicker, setOpenAvatarPicker] = useState(false);
   return (
-    <View style={[styles.root, { backgroundColor: colors.primary }]}>
-      <Image
-        style={{
-          height: 250,
-          width: 250,
-        }}
-        source={require("../../assets/images/Logo.png")}
-      />
-      <View style={{ justifyContent: "flex-end" }}>
+    <View style={[styles.root]}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Image
+          style={{
+            height: 250,
+            width: 250,
+          }}
+          source={require("../../assets/images/Logo.png")}
+        />
+      </View>
+      <View style={{ flex: 1 }}>
         <JoinHouseHoldForm
           onSubmitSuccess={function (): void {
             throw new Error("Function not implemented.");
@@ -31,12 +33,9 @@ export default function JoinHouseholdScreen({
 
 const styles = StyleSheet.create({
   root: {
-    flex: 6,
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  imageContainer: {
-    alignItems: "center",
   },
 });
 

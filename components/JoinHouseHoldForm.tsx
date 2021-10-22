@@ -49,8 +49,8 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
         touched,
         errors,
       }) => (
-        <View style={[styles.root, { backgroundColor: colors.green }]}>
-          <View style={[{ justifyContent: "flex-start" }]}>
+        <View>
+          <View style={[{ flex: 1 }]}>
             <TextInput
               style={[
                 [
@@ -72,7 +72,7 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
               </Text>
             )}
           </View>
-          <View style={{ justifyContent: "flex-end" }}>
+          <View style={styles.buttonStyle}>
             <CustomButton title={"Gå med i Hushåll"} onPress={handleSubmit} />
           </View>
         </View>
@@ -82,13 +82,6 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
 }
 
 const styles = StyleSheet.create({
-  root: {
-    justifyContent: "space-between",
-  },
-  //   container: {
-  //     justifyContent: "center",
-  //     alignItems: "center",
-  //   },
   input: {
     marginTop: 1,
     borderBottomWidth: 0,
@@ -109,8 +102,15 @@ const styles = StyleSheet.create({
     height: 55,
   },
   errors: {
-    fontSize: 14,
+    marginTop: 8,
+    textAlign: "center",
+    fontSize: 16,
     fontWeight: "500",
     paddingHorizontal: 10,
+  },
+  buttonStyle: {
+    paddingBottom: 15,
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
 });
