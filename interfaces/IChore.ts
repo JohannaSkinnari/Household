@@ -7,3 +7,4 @@ export interface IChore {
   weight: number;
   lastCompleted?: Date;
 }
+export type ICreateChore = Omit<IChore, "id">;

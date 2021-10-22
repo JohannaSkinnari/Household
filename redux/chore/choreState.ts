@@ -3,7 +3,8 @@ import { IChore } from "../../interfaces/IChore";
 export interface ChoresState {
   chores: IChore[];
   loading: boolean;
-  error: string;
+  error?: string;
+  isCreatedSuccess: boolean;
 }
 
 export const initialState: ChoresState = {
@@ -58,5 +59,5 @@ export const initialState: ChoresState = {
     },
   ],
   loading: false,
-  error: "",
+  isCreatedSuccess: true,
 };
