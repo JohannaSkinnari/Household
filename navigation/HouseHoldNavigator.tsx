@@ -1,14 +1,12 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { TabBar } from "react-native-tab-view";
-import CustomTabBar from "../components/CustomTabBar";
 import ChoresScreen from "../screens/HouseHoldScreens/ChoresScreen";
 import CurrentWeekStatisticScreen from "../screens/HouseHoldScreens/CurrentWeekStatisticScreen";
 import MemberScreen from "../screens/HouseHoldScreens/MemberScreen";
 import PreviousWeekStatisticScreen from "../screens/HouseHoldScreens/PreviousWeekStatisticScreen";
 
-export type HouseholdStackParamList = {
+type HouseholdStackParamList = {
   // Om navigationsproblem uppstår utforska nedan utkommenterad Chores
   // Chores: ProfileStackScreenProps<"Profile">;
   Chores: undefined;
@@ -27,13 +25,11 @@ export default function HouseholdNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Chores"
-      tabBar={(props: any) => <CustomTabBar {...props}/>}
     >
       <Tab.Screen 
         name="Chores" 
         component={ChoresScreen}  
         options={{title: "Dagens Sysslor"}}
-
       />
       <Tab.Screen 
         name="Members" 

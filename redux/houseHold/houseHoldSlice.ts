@@ -1,12 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IHouseHold } from "../../interfaces/IHouseHold";
 import { initialState } from "./houseHoldState";
-import { createHouseHold } from "./houseHoldThunk";
 
 const houseHoldSlice = createSlice({
   name: "households",
   initialState,
   reducers: {
+    addHouseHold(state, action: PayloadAction<IHouseHold>) {
+      const randomNumber = Math.floor(Math.random() * 90000) + 10000;
+      let newHousehold = action.payload;
+      newHousehold.houseHoldCode = randomNumber;
+      state.houseHoldList.push(newHousehold);
+    },
     editHouseHold(state, action: PayloadAction<IHouseHold>) {
       const index = state.houseHoldList.findIndex(
         (house) => house.id === action.payload.id
@@ -17,23 +22,8 @@ const houseHoldSlice = createSlice({
       };
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(createHouseHold.fulfilled, (state, { payload }) => {
-      state.loading = false;
-      state.isCreatedSuccess = true;
-      state.houseHoldList.push(payload);
-    });
-    builder.addCase(createHouseHold.rejected, (state, { payload }) => {
-      state.loading = false;
-      state.isCreatedSuccess = false;
-      state.error = "No data found";
-    });
-    builder.addCase(createHouseHold.pending, (state, { payload }) => {
-      state.loading = true;
-    });
-  },
 });
 
-export const { editHouseHold } = houseHoldSlice.actions;
+export const { addHouseHold } = houseHoldSlice.actions;
 
 export default houseHoldSlice.reducer;

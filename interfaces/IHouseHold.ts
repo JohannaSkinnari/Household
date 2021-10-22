@@ -3,5 +3,3 @@ export interface IHouseHold {
   name: string;
   houseHoldCode: number;
 }
-
-export type ICreateHouseHold = Omit<IHouseHold, "id" | "houseHoldCode">;

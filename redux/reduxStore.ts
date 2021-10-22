@@ -7,12 +7,6 @@ import houseHoldSlice from "./houseHold/houseHoldSlice";
 import memberSlice from "./member/memberSlice";
 import userSlice from "./user/userSlice";
 
-export interface ThunkApi {
-  state: RootState;
-  dispatch: AppDispatch;
-  rejectValue: string;
-}
-
 const rootReducer = combineReducers({
   choresList: choreSlice,
   houseHoldList: houseHoldSlice,
