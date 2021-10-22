@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IChore } from "../../interfaces/IChore";
+import { IChore, ICreateChore } from "../../interfaces/IChore";
+import { ThunkApi } from "../reduxStore";
 // useEffect för huvudsida kanske ?  i samband med att du loggar in sig. Som en usedatafetcher custom hook => datafetcher useEffecter kör dessa functioner.
 export const getChores = createAsyncThunk<IChore[]>(
   "chores/getChores",
@@ -12,3 +13,22 @@ export const getChores = createAsyncThunk<IChore[]>(
     return data;
   }
 );
+
+
+type ThunkParam = ICreateChore;
+
+export const createChore = createAsyncThunk<
+  IChore,
+  ThunkParam,
+  ThunkApi
+>("chore/createChore", async (createData, { dispatch }) => {
+  // servern ska lösa det här istället.
+  const chore: IChore = {
+    ...createData,
+    id: Math.random().toString(),
+  };
+  // dispatch(createMember({ ...createData.member, householdId: household.id }));
+  console.log("thunk: " +chore);
+  
+  return chore;
+});

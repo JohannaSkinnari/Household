@@ -2,6 +2,7 @@ import { CompositeScreenProps, useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
+import AdminChoreModal from "../../components/modals/adminChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 
@@ -31,13 +32,14 @@ export default function ChoresScreen({ navigation }: Props) {
         <Button onPress={() => setOpenAdd(true)}>Lägg till Syssla</Button>
       </View>
       {openAdd && (
-        <Modal visible={openAdd} onDismiss={() => setOpenAdd(false)}>
-          <Text style={{ color: colors.text }}>
-            Exampel Modal för lägga till syssla. Click outside this area to
-            dismiss.
-          </Text>
-          <Button onPress={() => setOpenAdd(false)}>Spara</Button>
-          <Button onPress={() => setOpenAdd(false)}>Stäng</Button>
+        <Modal 
+          contentContainerStyle={{justifyContent: "center", flex: 1,}} 
+          visible={openAdd} onDismiss={() => setOpenAdd(false)}
+        >
+          <AdminChoreModal 
+            onSave={() => setOpenAdd(false)} 
+            onClose={() => setOpenAdd(false)}
+          />
         </Modal>
       )}
       {openChore && (
