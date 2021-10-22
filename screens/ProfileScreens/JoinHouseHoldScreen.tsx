@@ -1,14 +1,31 @@
 import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, Alert } from "react-native";
 import { useTheme } from "react-native-paper";
 import JoinHouseHoldForm from "../../components/JoinHouseHoldForm";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function JoinHouseholdScreen({
   navigation,
 }: ProfileStackScreenProps<"JoinHousehold">) {
   const { colors } = useTheme();
   // const [openAvatarPicker, setOpenAvatarPicker] = useState(false);
+  const households = useAppSelector((state) =>
+    state.houseHoldList.houseHoldList.filter((house) => house.houseHoldCode)
+  );
+
+  function checkCode(code: number) {
+    const householdCode = households.some(
+      (house) => house.houseHoldCode == code
+    );
+
+    if (!householdCode) {
+      console.log("failure");
+    }
+    if (householdCode) {
+      console.log("found it!" + householdCode);
+    }
+  }
   return (
     <View style={[styles.root]}>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -21,11 +38,7 @@ export default function JoinHouseholdScreen({
         />
       </View>
       <View style={{ flex: 1 }}>
-        <JoinHouseHoldForm
-          onSubmitSuccess={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
+        <JoinHouseHoldForm onSubmitSuccess={checkCode} />
       </View>
     </View>
   );

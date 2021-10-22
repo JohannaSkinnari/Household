@@ -16,22 +16,22 @@ const validationSchema = yup.object().shape<RootValidationSchema>({
 });
 
 type FormData = {
-  houseHoldCode: string;
+  houseHoldCode: number;
 };
 
 interface Props {
-  onSubmitSuccess: () => void;
+  onSubmitSuccess: (code: number) => void;
 }
 
 export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
   const { colors } = useTheme();
 
   const defaultFormData: FormData = {
-    houseHoldCode: "",
+    houseHoldCode: 0,
   };
 
   async function handleOnSubmit(values: FormData) {
-    onSubmitSuccess();
+    onSubmitSuccess(values.houseHoldCode);
   }
 
   return (
@@ -63,7 +63,7 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
               placeholder={"Ange Hushållskod"}
               onChangeText={handleChange("houseHoldCode")}
               onBlur={handleBlur("houseHoldCode")}
-              value={values.houseHoldCode}
+              //value={String(values.houseHoldCode)}
               clearTextOnFocus={true}
             />
             {errors.houseHoldCode && touched.houseHoldCode && (
