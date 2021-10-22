@@ -11,7 +11,8 @@ type Props = CompositeScreenProps<
   ProfileStackScreenProps<"Profile">
 >;
 
-export default function ChoresScreen({ navigation }: Props) {
+export default function ChoresScreen({ navigation, route }: Props) {
+  const householdId = route.params.id;
   const [openAdd, setOpenAdd] = useState(false);
   const [openChore, setOpenChore] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);

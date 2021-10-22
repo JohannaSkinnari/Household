@@ -14,7 +14,7 @@ type ProfileStackParamList = {
   JoinHousehold: undefined;
   CreateHousehold: undefined;
   HouseholdSettings: undefined;
-  Household: undefined;
+  Household: { id: string };
   HouseholdInfo: undefined;
 };
 
@@ -27,49 +27,48 @@ const Stack = createStackNavigator<ProfileStackParamList>();
 export default function ProfileNavigation() {
   // useAppSelector till att ta ut hushålls namnet
   return (
-    <Stack.Navigator 
-      screenOptions={{headerTitleAlign: "center" }}
-    >
+    <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
-        <Stack.Screen 
-          name="Profile" 
-          component={ProfileScreen} 
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
           options={{
-            title: "user.name", 
-            headerLeft: () => null
+            title: "user.name",
+            headerLeft: () => null,
           }}
         />
-        <Stack.Screen 
-          name="JoinHousehold" 
-          component={JoinHouseholdScreen} 
-          options={{title: "Gå med i hushåll"}}
+        <Stack.Screen
+          name="JoinHousehold"
+          component={JoinHouseholdScreen}
+          options={{ title: "Gå med i hushåll" }}
         />
-        <Stack.Screen 
-          name="CreateHousehold" 
-          component={CreateHouseholdScreen} 
-          options={{title: "Skapa ett hushåll"}}
+        <Stack.Screen
+          name="CreateHousehold"
+          component={CreateHouseholdScreen}
+          options={{ title: "Skapa ett hushåll" }}
         />
-        <Stack.Screen 
-          name="HouseholdSettings" 
-          component={HouseholdSettingsScreen} 
-          options={{title: "Inställningar"}}
+        <Stack.Screen
+          name="HouseholdSettings"
+          component={HouseholdSettingsScreen}
+          options={{ title: "Inställningar" }}
         />
-        <Stack.Screen 
-          name="Household" 
-          component={HouseholdNavigator} 
+        <Stack.Screen
+          name="Household"
+          component={HouseholdNavigator}
           options={{
-            title: "household.name"/**peta in state/prop här för att visa korrekt hushållsnamn */,
-            headerLeft: () => null
+            title:
+              "household.name" /**peta in state/prop här för att visa korrekt hushållsnamn */,
+            headerLeft: () => null,
           }}
         />
       </Stack.Group>
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen 
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Screen
           name="HouseholdInfo"
           component={HouseholdInfoScreen}
           options={{
-            title: "Hushålls.namn", 
-            headerLeft: () => null
+            title: "Hushålls.namn",
+            headerLeft: () => null,
           }}
         />
       </Stack.Group>
