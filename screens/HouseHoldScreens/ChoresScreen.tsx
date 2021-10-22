@@ -18,6 +18,14 @@ export default function ChoresScreen({ navigation }: Props) {
   const [openDelete, setOpenDelete] = useState(false);
   const { colors } = useTheme();
 
+  const chore = {
+    id: "1",
+    name: "Damsuga",
+    householdId: "1",
+    description: "Under sängen",
+    interval: 3,
+    weight: 6,
+  };
   return (
     <>
       <View>
@@ -32,12 +40,13 @@ export default function ChoresScreen({ navigation }: Props) {
         <Button onPress={() => setOpenAdd(true)}>Lägg till Syssla</Button>
       </View>
       {openAdd && (
-        <Modal 
-          contentContainerStyle={{justifyContent: "center", flex: 1,}} 
-          visible={openAdd} onDismiss={() => setOpenAdd(false)}
+        <Modal
+          contentContainerStyle={{ justifyContent: "center", flex: 1 }}
+          visible={openAdd}
+          onDismiss={() => setOpenAdd(false)}
         >
-          <AdminChoreModal 
-            onSave={() => setOpenAdd(false)} 
+          <AdminChoreModal
+            onSave={() => setOpenAdd(false)}
             onClose={() => setOpenAdd(false)}
           />
         </Modal>
@@ -54,23 +63,18 @@ export default function ChoresScreen({ navigation }: Props) {
             <Button onPress={() => setOpenChore(false)}>Klar</Button>
             <Button onPress={() => setOpenChore(false)}>Stäng</Button>
           </Modal>
-          {openEdit && (
+          {openEdit && chore && (
             <>
-              <Modal visible={openChore} onDismiss={() => setOpenEdit(false)}>
-                <Text style={{ color: colors.text }}>
-                  Exampel Modal för att ädra på vald syssla. Click outside this
-                  area to dismiss.
-                </Text>
-                <Button
-                  onPress={() => {
-                    setOpenEdit(false);
-                    setOpenChore(false);
-                  }}
-                >
-                  Spara
-                </Button>
-                <Button onPress={() => setOpenEdit(false)}>Stäng</Button>
-                <Button onPress={() => setOpenDelete(true)}>Ta bort</Button>
+              <Modal
+                contentContainerStyle={{ justifyContent: "center", flex: 1 }}
+                visible={openChore}
+                onDismiss={() => setOpenEdit(false)}
+              >
+                <AdminChoreModal
+                  onSave={() => setOpenEdit(false)}
+                  onClose={() => setOpenEdit(false)}
+                  choreId={chore.id}
+                />
               </Modal>
               {openDelete && (
                 <Modal
