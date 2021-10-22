@@ -11,7 +11,8 @@ type Props = CompositeScreenProps<
   ProfileStackScreenProps<"Profile">
 >;
 
-export default function ChoresScreen({ navigation }: Props) {
+export default function ChoresScreen({ navigation, route }: Props) {
+  const householdId = route.params.id;
   const [openAdd, setOpenAdd] = useState(false);
   const [openChore, setOpenChore] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -32,12 +33,13 @@ export default function ChoresScreen({ navigation }: Props) {
         <Button onPress={() => setOpenAdd(true)}>Lägg till Syssla</Button>
       </View>
       {openAdd && (
-        <Modal 
-          contentContainerStyle={{justifyContent: "center", flex: 1,}} 
-          visible={openAdd} onDismiss={() => setOpenAdd(false)}
+        <Modal
+          contentContainerStyle={{ justifyContent: "center", flex: 1 }}
+          visible={openAdd}
+          onDismiss={() => setOpenAdd(false)}
         >
-          <AdminChoreModal 
-            onSave={() => setOpenAdd(false)} 
+          <AdminChoreModal
+            onSave={() => setOpenAdd(false)}
             onClose={() => setOpenAdd(false)}
           />
         </Modal>
