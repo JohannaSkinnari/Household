@@ -1,19 +1,9 @@
-import React, { memo, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Image,
-  ImageSourcePropType,
-} from "react-native";
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
+import { getUserHouseholds } from "../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../redux/reduxHooks";
-import { avatars } from "../assets/AvatarData/data";
-import { IHouseHold } from "../interfaces/IHouseHold";
-import { IMember } from "../interfaces/IMember";
-import { selectedhouseholdlist } from "../redux/houseHold/houseHoldSelector";
 
 interface Props {
   onSelectedHouse: (id: string) => void;
@@ -22,35 +12,32 @@ interface Props {
 export default function HouseHoldView({ onSelectedHouse }: Props) {
   const { colors } = useTheme();
 
-  const houseList = useAppSelector(selectedhouseholdlist);
+  const houseList = useAppSelector(getUserHouseholds);
 
   return (
     <>
-      {houseList.map(({ house, avatar }) => (
-        <View
-          key={house.id}
-          style={{
-            backgroundColor: colors.green,
-          }}
-        >
+      {houseList.map(({ house, member, avatar }) => (
+        <View key={house.id}>
           <TouchableOpacity
             onPress={() => onSelectedHouse(house.id)}
-            style={{
-              backgroundColor: colors.surface,
-              margin: 10,
-              height: 60,
-              width: 250,
-              borderRadius: 12,
-              paddingLeft: 5,
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "center",
-            }}
+            style={[styles.householdCard, { backgroundColor: colors.surface }]}
           >
-            <Text style={{ color: colors.onSurface, fontSize: 18 }}>
+            <Text
+              style={{
+                color: colors.onSurface,
+                fontWeight: "500",
+                fontSize: 18,
+              }}
+            >
               {house.name}
             </Text>
-            <Image style={{ height: 40, width: 40 }} source={avatar?.icon} />
+            <View style={styles.iconsContainer}>
+              <Image
+                style={[styles.crown, { height: member?.isAdmin ? 40 : 0 }]}
+                source={require("../assets/images/crown.png")}
+              />
+              <Image style={styles.avatar} source={avatar?.icon} />
+            </View>
           </TouchableOpacity>
         </View>
       ))}
@@ -58,4 +45,35 @@ export default function HouseHoldView({ onSelectedHouse }: Props) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  householdCard: {
+    margin: 10,
+    height: 60,
+    width: 250,
+    borderRadius: 12,
+    paddingLeft: 5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+  avatar: {
+    height: 40,
+    width: 40,
+  },
+  crown: {
+    width: 40,
+    marginRight: 8,
+    alignItems: "center",
+  },
+  iconsContainer: {
+    marginRight: 8,
+    flexDirection: "row",
+  },
+});

@@ -1,7 +1,7 @@
 import { avatars } from "../../assets/AvatarData/data";
 import { RootState } from "../reduxStore";
 
-export const selectedhouseholdlist = (state: RootState) =>
+export const getUserHouseholds = (state: RootState) =>
   state.houseHoldList.houseHoldList.map((house) => {
     const member = state.memberList.members.find(
       (member) => member.householdId === house.id
