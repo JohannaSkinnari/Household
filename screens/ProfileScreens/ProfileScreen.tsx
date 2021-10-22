@@ -1,8 +1,10 @@
 import firebase from "firebase";
 import React from "react";
-import { Text, View, Image, StyleSheet  } from "react-native";
-import { Button } from "react-native-paper";
+import { StyleSheet, View, Text } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useTheme } from "react-native-paper";
 import CustomButton from "../../components/common/CustomButton";
+import HouseHoldView from "../../components/HouseHoldsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 
@@ -22,18 +24,45 @@ const onSignOut =  () => {
 };
 
 
-export default function ProfileScreen({navigation}: ProfileStackScreenProps<"Profile">) {
+export default function ProfileScreen({
+  navigation,
+}: ProfileStackScreenProps<"Profile">) {
+  const { colors } = useTheme();
   const user = firebase.auth().currentUser;
+  
+  function navigateTo(id: string) {
+    navigation.navigate("Household", { id });
+  }
+
   return (
-    <View>
-       <Text> Hej {user?.displayName} profilsidan</Text>
+    <View style={{ flex: 1 }}>
+        <Text> Hej {user?.displayName} profilsidan</Text>
        <CustomButton onPress={onSignOut} title="Logga ut" />
      {/*  <Image source={{ uri: user.photoURL }} style={styles.image} /> */}
-      {/* använd custom component för knapp*/}
-      <Button onPress={() => navigation.navigate("JoinHousehold")}>Join Household</Button>
-      <Button onPress={() => navigation.navigate("CreateHousehold")}>Create Household</Button>
-      <Button onPress={() => navigation.navigate("Household")}>Household</Button>
-      <Button onPress={() => navigation.navigate("HouseholdSettings")}>HouseholdSettings</Button>
+      <View style={{ flex: 1 }}></View>
+      <View style={[styles.houseList, { flex: 6 }]}>
+        <ScrollView>
+          <HouseHoldView onSelectedHouse={navigateTo} />
+        </ScrollView>
+      </View>
+      <View style={[{ justifyContent: "flex-end", flex: 2 }]}>
+        <View
+          style={{
+            justifyContent: "space-evenly",
+            flexDirection: "row",
+            marginBottom: 20,
+          }}
+        >
+          <CustomButton
+            onPress={() => navigation.navigate("JoinHousehold")}
+            title={"Gå med i Hushåll"}
+          />
+          <CustomButton
+            onPress={() => navigation.navigate("CreateHousehold")}
+            title={"Skapa Hushåll"}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -43,5 +72,13 @@ const styles = StyleSheet.create({
     width: 250,
     height: 222,
     marginBottom: 20,
+  },
+
+  root: {
+    flex: 1,
+  },
+  houseList: {
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
 });
