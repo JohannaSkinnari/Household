@@ -6,7 +6,7 @@ import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { getTheme } from "./components/common/Theme";
-import ApiKeys from './database/ApiKeys';
+import firebaseConfig from './database/firebase';
 import firebase from 'firebase/app'
 import { Provider as ReduxProvider } from "react-redux";
 import RootNavigation from "./navigation/RootNavigation";
@@ -14,10 +14,13 @@ import store from "./redux/reduxStore";
 
 export default function App() {
   
-  // Initialize firebase...
-if (!firebase.apps.length) { // check if initialized 
-    firebase.initializeApp(ApiKeys.FirebaseConfig)
-} 
+  let Firebase:any;
+
+  if (firebase.apps.length === 0) {
+    Firebase = firebase.initializeApp(firebaseConfig);
+    console.log(firebase.app().options);
+  }
+
 
   const scheme = useColorScheme();
   const isDarkTheme = scheme === "dark";

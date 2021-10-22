@@ -1,12 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import SignInScreen from "../screens/AuthScreens/SignInScreen";
-import SignupScreen from "../screens/AuthScreens/SignupScreen";
 import ProfileNavigator from "./ProfileNavigator";
+import LoginScreen from "../screens/AuthScreens/LoginScreen"
+import SignupScreen from "../screens/AuthScreens/SignupScreen"
 
 type RootStackParamList = {
-  SignIn: undefined;
+  Login: undefined;
   ProfileNav: undefined;
   SignUp: undefined;
 };
@@ -23,8 +23,8 @@ export default function RootNavigation() {
       screenOptions={{headerShown: false}}
     >
       <Stack.Screen 
-        name="SignIn" 
-        component={SignInScreen} 
+        name="Login" 
+        component={LoginScreen} 
       />
       <Stack.Screen 
         name="SignUp" 

@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
+import firebase from "firebase";
 import React from "react";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
@@ -7,6 +8,7 @@ import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettings
 import JoinHouseholdScreen from "../screens/ProfileScreens/JoinHouseHoldScreen";
 import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
 import HouseholdNavigator from "./HouseHoldNavigator";
+import RootNavigation from "./RootNavigation";
 
 type ProfileStackParamList = {
   Profile: undefined;
@@ -15,6 +17,7 @@ type ProfileStackParamList = {
   HouseholdSettings: undefined;
   Household: undefined;
   HouseholdInfo: undefined;
+  Login: undefined;
 };
 
 export type ProfileStackScreenProps<
@@ -23,7 +26,10 @@ export type ProfileStackScreenProps<
 
 const Stack = createStackNavigator<ProfileStackParamList>();
 
+
 export default function ProfileNavigation() {
+  const user = firebase.auth().currentUser;
+const userName = user?.displayName
   return (
     <Stack.Navigator 
       screenOptions={{headerTitleAlign: "center" }}
@@ -33,7 +39,7 @@ export default function ProfileNavigation() {
           name="Profile" 
           component={ProfileScreen} 
           options={{
-            title: "user.name", 
+            title: "Profil sidan" , // userName istället
             headerLeft: () => null
           }}
         />

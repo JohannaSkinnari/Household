@@ -1,11 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import { StyleSheet, Text, View} from "react-native";
+import { StyleSheet, Text,View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
+import firebase from "firebase";
 import Logo from "../../components/Logo";
 
 const auth = Firebase.auth();
@@ -15,11 +16,10 @@ export default function LoginScreen({
 }: RootStackScreenProps<"Login">) {
   const { colors } = useTheme();
   const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState("eye");
-  const [signupError, setSignupError] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   const handlePasswordVisibility = () => {
     if (rightIcon === "eye") {
@@ -30,27 +30,18 @@ export default function LoginScreen({
       setPasswordVisibility(!passwordVisibility);
     }
   };
-
-  
-  const onHandleSignup = async () => {
+  const onLogin = async () => {
     try {
-      if (email !== "" && userName !== "" && password !== "") {
-        await auth.createUserWithEmailAndPassword(email, password);
-        
-        const user = Firebase.auth().currentUser;
-        user.updateProfile({
-          displayName: userName,
-          photoURL: "https://alextrenoweth.co.uk/wp-content/uploads/2015/11/rowan-atkinson.jpg"
-        }).then(() => {
-          navigation.navigate("ProfileNav");
-        })
+      if (email !== "" && password !== "") {
+        await auth.signInWithEmailAndPassword(email, password);
+        console.log(firebase.auth().currentUser);
+        navigation.navigate("ProfileNav");
       }
     } catch (error: unknown) {
       const er = error as Error;
-      setSignupError(er.message);
+      setLoginError(er.message);
     }
   };
-
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.logoContainer}>
@@ -58,9 +49,8 @@ export default function LoginScreen({
       </View>
 
       <View style={[styles.authContainer, { backgroundColor: colors.card }]}>
-        <Text style={styles.title}>Registrera nytt konto</Text>
-
-        <InputField
+        <Text style={styles.title}>Login</Text>
+        <InputField 
           inputContainerStyle={{
             marginBottom: 20,
           }}
@@ -76,24 +66,6 @@ export default function LoginScreen({
           handlePasswordVisibility={undefined}
           autoCorrect={false}
         />
-
-<InputField
-          inputContainerStyle={{
-            marginBottom: 20,
-          }}
-          leftIcon="account"
-          placeholder="Användarnamn"
-          autoCapitalize="none"
-          keyboardType={""}
-          textContentType="userName"
-          autoFocus={false}
-          value={userName}
-          onChangeText={(text: string) => setUserName(text)}
-          rightIcon={undefined}
-          handlePasswordVisibility={undefined}
-          autoCorrect={false}
-        />
-
         <InputField
           inputContainerStyle={{
             marginBottom: 20,
@@ -112,18 +84,16 @@ export default function LoginScreen({
           autoFocus={false}
         />
 
-        {signupError ? (
-          <ErrorMessage error={signupError} visible={true} />
-        ) : null}
+        {loginError ? <ErrorMessage error={loginError} visible={true} /> : null}
 
         <View style={styles.buttonField}>
-          <CustomButton onPress={onHandleSignup} title="Registrera" />
+          <CustomButton onPress={onLogin} title="Logga in" />
+          <CustomButton
+            onPress={() => navigation.navigate("SignUp")}
+            title="Registrera"
+          />
         </View>
-        <View>
-          <Text style={styles.footerText}>
-            När du registrerar dig kommer du samtidigt att loggas in !
-          </Text>
-        </View>
+        <View><Text style={styles.footerText}>Har du inte ett konto, gå till registrera, annars loggar du in med dina användar uppgifter.</Text></View>
       </View>
     </View>
   );
@@ -139,7 +109,7 @@ const styles = StyleSheet.create({
   authContainer: {
     marginHorizontal: 18,
     paddingHorizontal: 12,
-
+   
     borderRadius: 10,
     paddingVertical: 40,
     shadowColor: "rgba(0, 0, 0, 0.15)",
@@ -155,26 +125,26 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingBottom: 24,
   },
-
   footerText: {
     fontSize: 12,
     fontWeight: "600",
     color: "#c75267",
     alignSelf: "center",
-    marginHorizontal: 15,
-    marginVertical: 20,
+    marginHorizontal:15,
+    marginVertical:20,
   },
-
   buttonField: {
     padding: 5,
     marginTop: 4,
     flexDirection: "row",
     alignItems: "baseline",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
 
   logoContainer: {
     alignItems: "center",
     marginTop: 20,
   },
+
+
 });
