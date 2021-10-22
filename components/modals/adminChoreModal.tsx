@@ -17,10 +17,13 @@ type ChoreValidationSchema = Record<
 const choreValidation = yup.object().shape<ChoreValidationSchema>({
   name: yup
     .string()
-    .required("Du behöver ett namn"),
+    .required("Du behöver ett namn")
+    .max(18, "Namnet är för långt")
+    .min(3, "Namnet är för kort"),
   description: yup
     .string()
-    .required("Du behöver en text"),
+    .required("Du behöver en text")
+    .max(250, "Beskrivningen är för lång"),
 });
 
 interface Props {
