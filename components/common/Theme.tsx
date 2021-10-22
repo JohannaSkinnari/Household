@@ -20,6 +20,12 @@ declare global {
       blue: string;
       brown: string;
       purple: string;
+      valueOne: string;
+      valueTwo: string;
+      valueFour: string;
+      valueSix: string;
+      valueEight: string;
+      textInput: string;
     }
   }
 }
@@ -56,6 +62,12 @@ const CustomPaperDarkTheme: ReactNativePaper.Theme  = {
     blue: "#37B2D3",
     brown: "#9D7862",
     purple: "#AC8DCE",
+    valueOne: "#BBB",
+    valueTwo: "#AAA",
+    valueFour: "#999",
+    valueSix: "#888",
+    valueEight: "#777",
+    textInput: "#C75267",
   },
 };
 
@@ -72,6 +84,12 @@ const CustomPaperDefaultTheme: ReactNativePaper.Theme  = {
     blue: "#58D9ED",
     brown: "#CDAE8A",
     purple: "#B3A3D5",
+    valueOne: "#F2F2F2",
+    valueTwo: "#F1F0F0",
+    valueFour: "#E9E7E7",
+    valueSix: "#E1E1E1",
+    valueEight: "#D9D9D9",
+    textInput: "#FFFFFA",
   },
 };
 
