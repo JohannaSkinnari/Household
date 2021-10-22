@@ -1,7 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet } from "react-native";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -14,12 +13,12 @@ import store from "./redux/reduxStore";
 
 export default function App() {
   
-  let Firebase:any;
+ /*  let Firebase:any; // om inte den startar från databas 
 
   if (firebase.apps.length === 0) {
     Firebase = firebase.initializeApp(firebaseConfig);
     console.log(firebase.app().options);
-  }
+  } */
 
 
   const scheme = useColorScheme();
