@@ -12,16 +12,7 @@ import { RootStackScreenProps } from "../../navigation/RootNavigation";
 
 
 
-const onSignOut =  () => {
-  firebase.auth().signOut()
-.then(() => {
-  //navigation.navigate("LogIn")
-  console.log('Signed Out');
-})
-.catch(e=>{
- console.error('Sign Out Error', e);
-});
-};
+
 
 
 export default function ProfileScreen({
@@ -29,6 +20,18 @@ export default function ProfileScreen({
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
   const user = firebase.auth().currentUser;
+
+  const onSignOut =  () => {
+    firebase.auth().signOut()
+  .then(() => {
+    navigation.navigate("Login")
+    console.log('Signed Out');
+  })
+  .catch(e=>{
+   console.error('Sign Out Error', e);
+  });
+  };
+
 
   function navigateTo(id: string) {
     navigation.navigate("Household", { id });
