@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
+import { IChore } from "../../interfaces/IChore";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import { useAppSelector } from "../../redux/reduxHooks";
 
 type Props = CompositeScreenProps<
   HouseholdStackScreenProps<"Chores">,
@@ -19,13 +21,9 @@ export default function ChoresScreen({ navigation, route }: Props) {
   const [openDelete, setOpenDelete] = useState(false);
   const { colors } = useTheme();
 
+  // provisorisk data för att kunna öppna modalen edit innan vi renderar ut alla sysslor.
   const chore = {
     id: "1",
-    name: "Damsuga",
-    householdId: "1",
-    description: "Under sängen",
-    interval: 3,
-    weight: 6,
   };
   return (
     <>
@@ -49,6 +47,7 @@ export default function ChoresScreen({ navigation, route }: Props) {
           <AdminChoreModal
             onSave={() => setOpenAdd(false)}
             onClose={() => setOpenAdd(false)}
+            householdId={householdId}
           />
         </Modal>
       )}
@@ -72,9 +71,13 @@ export default function ChoresScreen({ navigation, route }: Props) {
                 onDismiss={() => setOpenEdit(false)}
               >
                 <AdminChoreModal
-                  onSave={() => setOpenEdit(false)}
+                  onSave={() => {
+                    setOpenEdit(false), setOpenChore(false);
+                  }}
                   onClose={() => setOpenEdit(false)}
                   choreId={chore.id}
+                  householdId={householdId}
+                  onRemove={() => setOpenDelete(true)}
                 />
               </Modal>
               {openDelete && (

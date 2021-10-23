@@ -16,6 +16,7 @@ import * as yup from "yup";
 import { IChore, IModefideChore } from "../../interfaces/IChore";
 import { createChore, editChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
+import CustomButton from "../common/CustomButton";
 import IntervalPicker from "../IntervalPicker";
 import WeightPicker from "../WeightPicker";
 
@@ -42,33 +43,35 @@ const choreValidation = yup.object().shape<ChoreValidationSchema>({
 interface Props {
   onSave: () => void;
   onClose: () => void;
+  onRemove?: () => void;
   choreId?: string;
+  householdId: string;
 }
 
-export default function AdminChoreModal({ onSave, onClose, choreId }: Props) {
+export default function AdminChoreModal({
+  onSave,
+  onClose,
+  onRemove,
+  choreId,
+  householdId,
+}: Props) {
   const { colors } = useTheme();
-  const household = { id: "1" };
-
   const dispatch = useAppDispatch();
   const [showInterval, setShowInterval] = useState(false);
   const [showValue, setShowValue] = useState(false);
   const [weight, setWeight] = useState(1);
   const [interval, setInterval] = useState(7);
   const [colorValue, setColorValue] = useState(colors.valueOne);
+  const [choreExist, setChoreExist] = useState(false);
+  const [title, setTitle] = useState("Skapa en ny syssla");
 
-  let defaultFormData: IModefideChore;
-  let chore: IChore;
-  if (choreId) {
-    // const chore = useAppSelector((state) => state.choresList.chores.find((chore) => chore.id == choreId));
-    chore = {
-      id: "1",
-      name: "Damsuga",
-      householdId: "1",
-      description: "Under sängen",
-      interval: 3,
-      weight: 6,
-    };
+  let defaultFormData: IChore;
+  let chore = useAppSelector((state) =>
+    state.choresList.chores.find((chore) => chore.id == choreId)
+  );
+  if (choreId && chore) {
     defaultFormData = {
+      id: chore.id,
       name: chore.name,
       householdId: chore.householdId,
       description: chore.description,
@@ -79,39 +82,19 @@ export default function AdminChoreModal({ onSave, onClose, choreId }: Props) {
       if (chore) {
         selectWeightValue(chore.weight);
         setInterval(chore.interval);
+        setChoreExist(true);
+        setTitle("Ändra syssla");
       }
     }, []);
   } else {
     defaultFormData = {
+      id: "",
       name: "",
-      householdId: household.id,
+      householdId: householdId,
       description: "",
       interval: 7,
       weight: 1,
     };
-  }
-
-  // få till så att det blir rätt färg på lilla cirkeln om det finns en syssla.
-
-  // TODO fylla i så att det finns sysslans info om sysslan finns
-  // const defaultFormData: IModefideChore = {
-  //   name: !chore ? "" : chore.name,
-  //   householdId: !chore ? household.id : chore.householdId,
-  //   description: !chore ? "" : chore.description,
-  //   interval: !chore ? 7 : chore.interval,
-  //   weight: !chore ? 1 : chore.weight,
-  // }
-
-  async function handleOnSubmit(values: IModefideChore) {
-    let response;
-    if (!choreId) {
-      response = await dispatch(createChore(values));
-    } else {
-      response = await dispatch(editChore(values));
-    }
-    if (response) {
-      onSave();
-    }
   }
 
   const selectWeightValue = (weightValue: number) => {
@@ -139,6 +122,29 @@ export default function AdminChoreModal({ onSave, onClose, choreId }: Props) {
     setShowValue(false);
   };
 
+  const removeButton = (props: { size: number }) => (
+    <CustomButton
+      title={"Ta bort"}
+      {...props}
+      icon="minus-circle-outline"
+      onPress={() => {
+        onRemove;
+      }}
+    />
+  );
+
+  async function handleOnSubmit(values: IChore) {
+    let response;
+    if (!choreId) {
+      response = await dispatch(createChore(values));
+    } else {
+      response = await dispatch(editChore(values));
+    }
+    if (response) {
+      onSave();
+    }
+  }
+
   return (
     <Formik
       initialValues={defaultFormData}
@@ -161,7 +167,11 @@ export default function AdminChoreModal({ onSave, onClose, choreId }: Props) {
         >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Card style={styles.card}>
-              <Card.Title title="Skapa en ny syssla" style={styles.cardTitle} />
+              <Card.Title
+                title={title}
+                style={styles.cardTitle}
+                right={choreExist ? removeButton : undefined}
+              />
               <Card.Content
                 style={[
                   styles.cardContent,
@@ -340,6 +350,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     height: "12%",
+    paddingRight: 5,
   },
   cardContent: {
     height: "76%",

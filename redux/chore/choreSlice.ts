@@ -7,18 +7,6 @@ const choreSlice = createSlice({
   name: "chores",
   initialState,
   reducers: {
-    // addChore(state, action: PayloadAction<IChore>) {
-    //   state.chores.push(action.payload);
-    // },
-    // editChore(state, action: PayloadAction<IModefideChore>) {
-    //   const index = state.chores.findIndex(
-    //     (chore) => chore.id === action.payload.id
-    //   );
-    //   state.chores[index] = {
-    //     ...state.chores[index],
-    //     ...action.payload,
-    //   };
-    // },
     deleteChore(state, action: PayloadAction<string>) {
       state.chores = state.chores.filter(
         (chore) => chore.id !== action.payload
@@ -43,7 +31,11 @@ const choreSlice = createSlice({
     builder.addCase(editChore.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.isCreatedSuccess = true;
-      state.chores.push(payload);
+      const index = state.chores.findIndex((chore) => chore.id === payload.id);
+      state.chores[index] = {
+        ...state.chores[index],
+        ...payload,
+      };
     });
     builder.addCase(editChore.rejected, (state, { payload }) => {
       state.loading = false;
