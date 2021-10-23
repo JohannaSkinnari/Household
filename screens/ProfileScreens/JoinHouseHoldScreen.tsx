@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Image, Alert } from "react-native";
 import { useTheme } from "react-native-paper";
 import JoinHouseHoldForm from "../../components/JoinHouseHoldForm";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import { getHouseholdCodes } from "../../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function JoinHouseholdScreen({
@@ -10,9 +11,7 @@ export default function JoinHouseholdScreen({
 }: ProfileStackScreenProps<"JoinHousehold">) {
   const { colors } = useTheme();
   // const [openAvatarPicker, setOpenAvatarPicker] = useState(false);
-  const households = useAppSelector((state) =>
-    state.houseHoldList.houseHoldList.filter((house) => house.houseHoldCode)
-  );
+  const households = useAppSelector(getHouseholdCodes);
 
   function checkCode(code: number) {
     const householdCode = households.some(

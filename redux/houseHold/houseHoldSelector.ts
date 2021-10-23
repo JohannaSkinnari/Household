@@ -12,3 +12,10 @@ export const getUserHouseholds = (state: RootState) =>
       avatar: avatars.find((avatar) => avatar.id === member?.avatarId),
     };
   });
+
+export const getHouseholdCodes = (state: RootState) => {
+  const householdCodes = state.houseHoldList.houseHoldList.filter(
+    (house) => house.houseHoldCode
+  );
+  return householdCodes;
+};
