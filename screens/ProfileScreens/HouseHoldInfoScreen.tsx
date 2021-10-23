@@ -1,11 +1,10 @@
 import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { StyleSheet, Text, View } from "react-native";
+import { useTheme } from "react-native-paper";
 import { avatars } from "../../assets/AvatarData/data";
+import AvatarList from "../../components/AvatarList";
 import CustomButton from "../../components/common/CustomButton";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import { getAvailableAvatars } from "../../redux/houseHold/houseHoldSelector";
-
 import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function HouseholdInfoScreen({
@@ -33,13 +32,13 @@ export default function HouseholdInfoScreen({
         </Text>
       </View>
       <View style={[styles.imageStyle, { backgroundColor: colors.green }]}>
-        {availableAvatars.map((avatar) => (
-          <Image
-            style={{ height: 50, width: 50 }}
-            key={avatar.id}
-            source={avatar.icon}
-          />
-        ))}
+        <AvatarList
+          value={0}
+          dataArray={availableAvatars}
+          onChange={function (id: string): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       </View>
       <View
         style={[styles.buttonsContainer, { backgroundColor: colors.orange }]}
@@ -86,3 +85,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
 });
+
+{
+  /* {availableAvatars.map((avatar) => (
+          <Image
+            style={{ height: 50, width: 50 }}
+            key={avatar.id}
+            source={avatar.icon}
+          />
+        ))} */
+}
