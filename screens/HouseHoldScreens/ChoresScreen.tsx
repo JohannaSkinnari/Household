@@ -3,21 +3,28 @@ import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
+import { IChore } from "../../interfaces/IChore";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import { useAppSelector } from "../../redux/reduxHooks";
 
 type Props = CompositeScreenProps<
   HouseholdStackScreenProps<"Chores">,
   ProfileStackScreenProps<"Profile">
 >;
 
-export default function ChoresScreen({ navigation }: Props) {
+export default function ChoresScreen({ navigation, route }: Props) {
+  const householdId = route.params.id;
   const [openAdd, setOpenAdd] = useState(false);
   const [openChore, setOpenChore] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const { colors } = useTheme();
 
+  // provisorisk data för att kunna öppna modalen edit innan vi renderar ut alla sysslor.
+  const chore = {
+    id: "1",
+  };
   return (
     <>
       <View>
@@ -32,13 +39,15 @@ export default function ChoresScreen({ navigation }: Props) {
         <Button onPress={() => setOpenAdd(true)}>Lägg till Syssla</Button>
       </View>
       {openAdd && (
-        <Modal 
-          contentContainerStyle={{justifyContent: "center", flex: 1,}} 
-          visible={openAdd} onDismiss={() => setOpenAdd(false)}
+        <Modal
+          contentContainerStyle={{ justifyContent: "center", flex: 1 }}
+          visible={openAdd}
+          onDismiss={() => setOpenAdd(false)}
         >
-          <AdminChoreModal 
-            onSave={() => setOpenAdd(false)} 
+          <AdminChoreModal
+            onSave={() => setOpenAdd(false)}
             onClose={() => setOpenAdd(false)}
+            householdId={householdId}
           />
         </Modal>
       )}
@@ -54,23 +63,22 @@ export default function ChoresScreen({ navigation }: Props) {
             <Button onPress={() => setOpenChore(false)}>Klar</Button>
             <Button onPress={() => setOpenChore(false)}>Stäng</Button>
           </Modal>
-          {openEdit && (
+          {openEdit && chore && (
             <>
-              <Modal visible={openChore} onDismiss={() => setOpenEdit(false)}>
-                <Text style={{ color: colors.text }}>
-                  Exampel Modal för att ädra på vald syssla. Click outside this
-                  area to dismiss.
-                </Text>
-                <Button
-                  onPress={() => {
-                    setOpenEdit(false);
-                    setOpenChore(false);
+              <Modal
+                contentContainerStyle={{ justifyContent: "center", flex: 1 }}
+                visible={openChore}
+                onDismiss={() => setOpenEdit(false)}
+              >
+                <AdminChoreModal
+                  onSave={() => {
+                    setOpenEdit(false), setOpenChore(false);
                   }}
-                >
-                  Spara
-                </Button>
-                <Button onPress={() => setOpenEdit(false)}>Stäng</Button>
-                <Button onPress={() => setOpenDelete(true)}>Ta bort</Button>
+                  onClose={() => setOpenEdit(false)}
+                  choreId={chore.id}
+                  householdId={householdId}
+                  onRemove={() => setOpenDelete(true)}
+                />
               </Modal>
               {openDelete && (
                 <Modal

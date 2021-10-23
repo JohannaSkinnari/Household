@@ -50,7 +50,7 @@ export const initialState: ChoresState = {
       weight: 2,
     },
     {
-      id: "5",
+      id: "6",
       name: "plocka upp",
       householdId: "2",
       description: "ställ saker på hyllan om ramlat ner",
