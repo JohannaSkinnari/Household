@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { StyleSheet, Text, View} from "react-native";
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 import Firebase from "../../database/firebase";
@@ -52,7 +52,12 @@ export default function LoginScreen({
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <View style={[styles.innerContainer, { backgroundColor: colors.background }]}>
       <View style={styles.logoContainer}>
         <Logo />
       </View>
@@ -118,7 +123,12 @@ export default function LoginScreen({
 
         <View style={styles.buttonField}>
           <CustomButton onPress={onHandleSignup} title="Registrera" />
+          
+          <CustomButton
+              onPress={() => navigation.navigate("Login")}
+              title="Logga in" />
         </View>
+        
         <View>
           <Text style={styles.footerText}>
             När du registrerar dig kommer du samtidigt att loggas in !
@@ -126,14 +136,22 @@ export default function LoginScreen({
         </View>
       </View>
     </View>
+    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
+    
+    
+  },
+
+  innerContainer: {
     paddingHorizontal: 12,
+    paddingTop: 50,
+    justifyContent: 'space-around',
   },
 
   authContainer: {
@@ -170,7 +188,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     flexDirection: "row",
     alignItems: "baseline",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
 
   logoContainer: {
