@@ -1,6 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, Image, Alert } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Alert, Image, StyleSheet, View } from "react-native";
 import JoinHouseHoldForm from "../../components/JoinHouseHoldForm";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import { getHouseholdCodes } from "../../redux/houseHold/houseHoldSelector";
@@ -9,22 +8,23 @@ import { useAppSelector } from "../../redux/reduxHooks";
 export default function JoinHouseholdScreen({
   navigation,
 }: ProfileStackScreenProps<"JoinHousehold">) {
-  const { colors } = useTheme();
-  // const [openAvatarPicker, setOpenAvatarPicker] = useState(false);
   const households = useAppSelector(getHouseholdCodes);
 
   function checkCode(code: number) {
-    const householdCode = households.some(
+    const householdCode: boolean = households.some(
       (house) => house.houseHoldCode == code
     );
+    const house = households.find((h) => (h.id, h.houseHoldCode == code));
 
     if (!householdCode) {
-      return Alert.alert("scheiße auch nichts gefunden");
+      // TODO should be a snackbar instead
+      return Alert.alert("Achtung!", "scheiße auch nichts gefunden");
     }
-    if (householdCode) {
-      navigation.navigate("HouseholdInfo");
+    if (householdCode && house) {
+      navigation.navigate("HouseholdInfo", { id: house.id });
     }
   }
+
   return (
     <View style={[styles.root]}>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -50,5 +50,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-//   <Button onPress={() => navigation.navigate("HouseholdInfo")}>Gå med i hushåll/ avatarmodal</Button>

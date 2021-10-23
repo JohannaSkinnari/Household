@@ -30,7 +30,7 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
     houseHoldCode: 0,
   };
 
-  async function handleOnSubmit(values: FormData) {
+  function handleOnSubmit(values: FormData) {
     onSubmitSuccess(values.houseHoldCode);
   }
 
