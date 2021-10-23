@@ -1,11 +1,15 @@
+import { Formik } from "formik";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
+import * as yup from "yup";
 import { avatars } from "../../assets/AvatarData/data";
 import AvatarList from "../../components/AvatarList";
 import CustomButton from "../../components/common/CustomButton";
+import { ICreateMember } from "../../interfaces/IMember";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import { useAppSelector } from "../../redux/reduxHooks";
+import { createMember } from "../../redux/member/memberThunk";
+import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 
 export default function HouseholdInfoScreen({
   navigation,
@@ -13,6 +17,7 @@ export default function HouseholdInfoScreen({
 }: ProfileStackScreenProps<"HouseholdInfo">) {
   const houseId = route.params.id;
   const { colors } = useTheme();
+  const dispatch = useAppDispatch();
 
   const members = useAppSelector((state) =>
     state.memberList.members.filter((s) => s.householdId === houseId)
@@ -21,40 +26,73 @@ export default function HouseholdInfoScreen({
     (avatar) => !members.some((member) => avatar.id === member.avatarId)
   );
 
+  type RootValidationSchema = Record<keyof FormData, yup.AnySchema>;
+
+  const validationSchema = yup.object().shape<RootValidationSchema>({
+    avatarId: yup.number().min(1, "Välj en avatar"),
+  });
+
+  type FormData = {
+    avatarId: number;
+  };
+
+  const defaultFormData: ICreateMember = {
+    avatarId: 0,
+    householdId: houseId,
+  };
+
+  async function handleOnSubmit(values: ICreateMember) {
+    const response = await dispatch(createMember(values));
+    if (response) {
+      navigation.navigate("Profile");
+    }
+  }
+
   return (
-    <View style={[styles.root]}>
-      <View style={[styles.infoStyle, { backgroundColor: colors.blue }]}>
-        <Text style={[styles.textStyle, { color: colors.onSurface }]}>
-          Välj din avatar
-        </Text>
-        <Text style={{ color: colors.onSurface }}>
-          (Tillgängliga avatarer i hushållet)
-        </Text>
-      </View>
-      <View style={[styles.imageStyle, { backgroundColor: colors.green }]}>
-        <AvatarList
-          value={0}
-          dataArray={availableAvatars}
-          onChange={function (id: string): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      </View>
-      <View
-        style={[styles.buttonsContainer, { backgroundColor: colors.orange }]}
-      >
-        <CustomButton
-          icon="plus-circle-outline"
-          title={"Spara"}
-          onPress={() => navigation.navigate("Profile")}
-        />
-        <CustomButton
-          icon="close-circle-outline"
-          title={"Stäng"}
-          onPress={() => navigation.navigate("Profile")}
-        />
-      </View>
-    </View>
+    <Formik
+      initialValues={defaultFormData}
+      validationSchema={validationSchema}
+      onSubmit={handleOnSubmit}
+    >
+      {({ setFieldValue, handleSubmit, values, touched, errors }) => (
+        <View style={styles.root}>
+          <View style={styles.infoStyle}>
+            <Text style={[styles.textStyle, { color: colors.onSurface }]}>
+              Välj din avatar
+            </Text>
+            <Text style={{ color: colors.onSurface }}>
+              (Tillgängliga avatarer i hushållet)
+            </Text>
+          </View>
+          <View style={styles.imageStyle}>
+            <AvatarList
+              value={values.avatarId}
+              onChange={(value) => setFieldValue("avatarId", parseFloat(value))}
+              dataArray={availableAvatars}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            {errors.avatarId && touched.avatarId && (
+              <Text style={[styles.errors, { color: colors.darkPink }]}>
+                {errors.avatarId}
+              </Text>
+            )}
+          </View>
+          <View style={styles.buttonsContainer}>
+            <CustomButton
+              icon="plus-circle-outline"
+              title={"Spara"}
+              onPress={handleSubmit}
+            />
+            <CustomButton
+              icon="close-circle-outline"
+              title={"Stäng"}
+              onPress={() => navigation.navigate("Profile")}
+            />
+          </View>
+        </View>
+      )}
+    </Formik>
   );
 }
 
@@ -63,12 +101,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   infoStyle: {
-    flex: 2,
+    flex: 3,
     justifyContent: "center",
     alignItems: "center",
   },
   imageStyle: {
-    flex: 2,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "flex-start",
@@ -79,19 +116,15 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     padding: 10,
-    flex: 1,
+    flex: 2,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
   },
+  errors: {
+    fontSize: 20,
+    fontWeight: "500",
+    paddingHorizontal: 10,
+    textAlign: "center",
+  },
 });
-
-{
-  /* {availableAvatars.map((avatar) => (
-          <Image
-            style={{ height: 50, width: 50 }}
-            key={avatar.id}
-            source={avatar.icon}
-          />
-        ))} */
-}
