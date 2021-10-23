@@ -20,10 +20,10 @@ export default function JoinHouseholdScreen({
     );
 
     if (!householdCode) {
-      console.log("failure");
+      return Alert.alert("scheiße auch nichts gefunden");
     }
     if (householdCode) {
-      console.log("found it!" + householdCode);
+      navigation.navigate("HouseholdInfo");
     }
   }
   return (
