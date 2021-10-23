@@ -1,24 +1,48 @@
 {
-    "env": {
-        "es2021": true,
-        "node": true
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "plugin:react/recommended",
-        "airbnb"
+    "ecmaVersion": 13,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "import"],
+  "rules": {
+    "quotes": ["error", "double"],
+    "linebreak-style": "off",
+    "no-use-before-define": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "error",
+    "import/no-cycle": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 13,
-        "sourceType": "module"
+    "react/jsx-no-bind": "off",
+    "no-empty-pattern": "off",
+    "no-param-reassign": "off",
+    "no-undef": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "global-require": "off",
+    "react/style-prop-object": "off"
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
-    "rules": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
+      }
     }
+  }
 }
