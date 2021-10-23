@@ -19,3 +19,11 @@ export const getHouseholdCodes = (state: RootState) => {
   );
   return householdCodes;
 };
+
+export const getAvailableAvatars = (state: RootState) => {
+  const availableAvatars = avatars.filter(
+    (avatar) =>
+      !state.memberList.members.some((member) => avatar.id === member.avatarId)
+  );
+  return availableAvatars;
+};
