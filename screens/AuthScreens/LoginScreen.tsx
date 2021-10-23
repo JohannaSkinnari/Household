@@ -35,6 +35,8 @@ export default function LoginScreen({
       if (email !== "" && password !== "") {
         await auth.signInWithEmailAndPassword(email, password);
         console.log(firebase.auth().currentUser);
+        setEmail('');
+        setPassword('');
         navigation.navigate("ProfileNav");
       }
     } catch (error: unknown) {
