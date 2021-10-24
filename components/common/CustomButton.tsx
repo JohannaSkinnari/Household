@@ -10,7 +10,7 @@ interface Props {
 export default function CustomButton({ icon, title, onPress }: Props) {
   const { colors } = useTheme();
   return (
-    <View style={{ display: "flex", flexDirection: "row" }}>
+    <View style={{ elevation: 0 }}>
       <Button
         style={[styles.button]}
         mode="contained"
