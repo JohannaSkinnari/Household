@@ -10,13 +10,14 @@ interface Props {
 export default function CustomButton({ icon, title, onPress }: Props) {
   const { colors } = useTheme();
   return (
-    <View style={{ display: "flex", flexDirection: "row", elevation: 0 }}>
+    <View style={{ display: "flex", flexDirection: "row" }}>
       <Button
         style={[styles.button]}
         mode="contained"
         color={colors.surface}
         icon={icon}
         onPress={onPress}
+        uppercase={false}
       >
         {title}
       </Button>
