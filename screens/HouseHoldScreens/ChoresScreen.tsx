@@ -152,8 +152,8 @@ const styles = StyleSheet.create({
   buttonView: {
     width: "100%",
     height: "15%",
-    paddingHorizontal: 10,
-    justifyContent: "space-between",
+    // paddingHorizontal: 10,
+    justifyContent: "space-evenly",
     alignItems: "center",
     flexDirection: "row",
     // marginBottom: 20,
