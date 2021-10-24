@@ -3,14 +3,14 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 interface Props {
-  icon?: string,
-  title: string,
+  icon?: string;
+  title: string;
   onPress: () => void;
 }
-export default function CustomButton({icon, title, onPress}: Props) {
+export default function CustomButton({ icon, title, onPress }: Props) {
   const { colors } = useTheme();
   return (
-    <View style={{display: 'flex', flexDirection: 'row'}}>
+    <View style={{ display: "flex", flexDirection: "row", elevation: 0 }}>
       <Button
         style={[styles.button]}
         mode="contained"
@@ -18,15 +18,15 @@ export default function CustomButton({icon, title, onPress}: Props) {
         icon={icon}
         onPress={onPress}
       >
-      {title}
+        {title}
       </Button>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   button: {
     padding: 5,
     borderRadius: 20,
-  }
-})
+  },
+});

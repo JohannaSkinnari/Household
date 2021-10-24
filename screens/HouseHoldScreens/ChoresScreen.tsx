@@ -2,14 +2,11 @@ import { CompositeScreenProps, useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
 import { ScrollView, Text, View, StyleSheet, Pressable } from "react-native";
 import { Button, Modal } from "react-native-paper";
-import { pink400 } from "react-native-paper/lib/typescript/styles/colors";
 import ChoreView from "../../components/ChoreView";
 import CustomButton from "../../components/common/CustomButton";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
-import { IChore } from "../../interfaces/IChore";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import { useAppSelector } from "../../redux/reduxHooks";
 
 type Props = CompositeScreenProps<
   HouseholdStackScreenProps<"Chores">,
@@ -154,9 +151,11 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     width: "100%",
+    height: "15%",
     paddingHorizontal: 10,
     justifyContent: "space-between",
+    alignItems: "center",
     flexDirection: "row",
-    marginBottom: 20,
+    // marginBottom: 20,
   },
 });
