@@ -1,7 +1,9 @@
 import { CompositeScreenProps, useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View, StyleSheet, Pressable } from "react-native";
 import { Button, Modal } from "react-native-paper";
+import ChoreView from "../../components/ChoreView";
+import CustomButton from "../../components/common/CustomButton";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
@@ -18,33 +20,61 @@ export default function ChoresScreen({ navigation, route }: Props) {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const { colors } = useTheme();
+  const [choreExist, setChoreExist] = useState(false);
+  const [choreId, setChoreId] = useState("");
+
+  function onSelectedChore(id: string) {
+    setChoreExist(true);
+    setChoreId(id);
+    setOpenChore(true);
+  }
 
   return (
     <>
-      <View>
-        <Text style={{ color: colors.text }}>Hello from ChoresScreen</Text>
-        {/* använd custom component för knapp*/}
-        <Button onPress={() => navigation.navigate("Profile")}>Profil</Button>
-
-        {/* 2 modaler, skapa ny syssla och visa information för vald syssla */}
-        {/* provisorisk knapp istället för syssla */}
-        <Button onPress={() => setOpenChore(true)}>Provisorisk syssla</Button>
-        {/* använd custom component för knapp*/}
-        <Button onPress={() => setOpenAdd(true)}>Lägg till Syssla</Button>
+      <View style={styles.choreList}>
+        <ScrollView>
+          <ChoreView
+            onSelectedChore={onSelectedChore}
+            householdId={householdId}
+          />
+        </ScrollView>
+        <View style={styles.buttonView}>
+          <CustomButton
+            onPress={() => setOpenAdd(true)}
+            title={"Lägg till syssla"}
+            icon={"plus-circle-outline"}
+          />
+          <CustomButton
+            onPress={() => navigation.navigate("Profile")}
+            title={"Profil"}
+            icon={"account-circle-outline"}
+          />
+          {/* <Pressable
+            style={{ height: 30, width: 60, backgroundColor: "pink" }}
+          ></Pressable>
+          <Pressable
+            style={{ height: 30, width: 60, backgroundColor: "pink" }}
+          ></Pressable> */}
+        </View>
       </View>
       {openAdd && (
         <Modal
-          contentContainerStyle={{ justifyContent: "center", flex: 1 }}
+          contentContainerStyle={{
+            justifyContent: "center",
+            flex: 1,
+          }}
+          style={{ elevation: 20 }}
           visible={openAdd}
           onDismiss={() => setOpenAdd(false)}
         >
           <AdminChoreModal
             onSave={() => setOpenAdd(false)}
             onClose={() => setOpenAdd(false)}
+            householdId={householdId}
           />
         </Modal>
       )}
-      {openChore && (
+      {openChore && choreExist && (
         <>
           <Modal visible={openChore} onDismiss={() => setOpenChore(false)}>
             <Text style={{ color: colors.text }}>
@@ -52,27 +82,33 @@ export default function ChoresScreen({ navigation, route }: Props) {
               area to dismiss.
             </Text>
             {/* använd custom component för knapp*/}
-            <Button onPress={() => setOpenEdit(true)}>Ändra</Button>
+            <Button
+              onPress={() => {
+                setOpenEdit(true);
+                setChoreExist(true);
+              }}
+            >
+              Ändra
+            </Button>
             <Button onPress={() => setOpenChore(false)}>Klar</Button>
             <Button onPress={() => setOpenChore(false)}>Stäng</Button>
           </Modal>
-          {openEdit && (
+          {openEdit && choreExist && (
             <>
-              <Modal visible={openChore} onDismiss={() => setOpenEdit(false)}>
-                <Text style={{ color: colors.text }}>
-                  Exampel Modal för att ädra på vald syssla. Click outside this
-                  area to dismiss.
-                </Text>
-                <Button
-                  onPress={() => {
-                    setOpenEdit(false);
-                    setOpenChore(false);
+              <Modal
+                contentContainerStyle={{ justifyContent: "center", flex: 1 }}
+                visible={openChore}
+                onDismiss={() => setOpenEdit(false)}
+              >
+                <AdminChoreModal
+                  onSave={() => {
+                    setOpenEdit(false), setOpenChore(false);
                   }}
-                >
-                  Spara
-                </Button>
-                <Button onPress={() => setOpenEdit(false)}>Stäng</Button>
-                <Button onPress={() => setOpenDelete(true)}>Ta bort</Button>
+                  onClose={() => setOpenEdit(false)}
+                  choreId={choreId}
+                  householdId={householdId}
+                  onRemove={() => setOpenDelete(true)}
+                />
               </Modal>
               {openDelete && (
                 <Modal
@@ -102,3 +138,24 @@ export default function ChoresScreen({ navigation, route }: Props) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+  choreList: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 10,
+  },
+  buttonView: {
+    width: "100%",
+    height: "15%",
+    // paddingHorizontal: 10,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    flexDirection: "row",
+    // marginBottom: 20,
+  },
+});
