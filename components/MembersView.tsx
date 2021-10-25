@@ -6,7 +6,6 @@ import { avatars } from "../assets/AvatarData/data";
 import { useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
-  // onSelectedChore: (id: string) => void;
   householdId: string;
 }
 
@@ -26,14 +25,11 @@ export default function MemberView({ householdId }: Props) {
       })
   );
 
-  // if(!MemberList) return (<View></View>);
-
   return (
     <>
       {MemberList.map(({ member, user, avatar }) => (
         <View key={member.id}>
           <TouchableOpacity
-            onPress={() => console.log("hej")}
             style={[styles.householdCard, { backgroundColor: colors.surface }]}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
