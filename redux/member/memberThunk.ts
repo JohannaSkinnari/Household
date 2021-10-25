@@ -10,6 +10,20 @@ export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
       ...createMember,
       id: Math.random().toString(),
       userId: state.userList.user.id,
+      isAdmin: false,
+    };
+    return member;
+  }
+);
+
+export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
+  "member/createOwner",
+  async (createMember, { getState }) => {
+    const state = getState();
+    const member: IMember = {
+      ...createMember,
+      id: Math.random().toString(),
+      userId: state.userList.user.id,
       isAdmin: true,
     };
     return member;
