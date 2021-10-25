@@ -8,6 +8,7 @@ import AdminChoreModal from "../../components/modals/adminChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import DetailsChoreModal from "../../components/modals/detailsChoreModal";
+import { useAppSelector } from "../../redux/reduxHooks";
 
 type Props = CompositeScreenProps<
   HouseholdStackScreenProps<"idag">,
@@ -30,6 +31,14 @@ export default function ChoresScreen({ navigation, route }: Props) {
     setOpenChore(true);
   }
 
+  const admin = useAppSelector((state) =>
+    state.memberList.members.find(
+      (m) =>
+        m.userId === state.userList.activeUser.id &&
+        m.householdId === householdId
+    )
+  );
+
   return (
     <>
       <View style={styles.choreList}>
@@ -39,12 +48,21 @@ export default function ChoresScreen({ navigation, route }: Props) {
             householdId={householdId}
           />
         </ScrollView>
-        <View style={styles.buttonView}>
-          <CustomButton
-            onPress={() => setOpenAdd(true)}
-            title={"Lägg till syssla"}
-            icon={"plus-circle-outline"}
-          />
+        <View
+          style={[
+            styles.buttonView,
+            { justifyContent: admin?.isAdmin ? "space-evenly" : "center" },
+          ]}
+        >
+          {admin?.isAdmin ? (
+            <CustomButton
+              onPress={() => setOpenAdd(true)}
+              title={"Lägg till syssla"}
+              icon={"plus-circle-outline"}
+            />
+          ) : (
+            <View style={{ height: 0, width: 0 }} />
+          )}
           <CustomButton
             onPress={() => navigation.navigate("Profile")}
             title={"Profil"}
@@ -142,10 +160,8 @@ const styles = StyleSheet.create({
   buttonView: {
     width: "100%",
     height: "15%",
-    // paddingHorizontal: 10,
     justifyContent: "space-evenly",
     alignItems: "center",
     flexDirection: "row",
-    // marginBottom: 20,
   },
 });

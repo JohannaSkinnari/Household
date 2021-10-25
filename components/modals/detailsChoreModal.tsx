@@ -1,25 +1,8 @@
-import { Formik } from "formik";
-import React, { useEffect, useState } from "react";
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
-import * as yup from "yup";
-import { IChore, IModefideChore } from "../../interfaces/IChore";
-import { createChore, editChore } from "../../redux/chore/choreThunk";
-import { getUserHouseholds } from "../../redux/houseHold/houseHoldSelector";
-import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
+import { useAppSelector } from "../../redux/reduxHooks";
 import CustomButton from "../common/CustomButton";
-import IntervalPicker from "../IntervalPicker";
-import WeightPicker from "../WeightPicker";
 
 interface Props {
   onDone: () => void;
@@ -42,7 +25,6 @@ export default function DetailsChoreModal({
   const chore = useAppSelector((state) =>
     state.choresList.chores.find((chore) => chore.id == choreId)
   );
-
   const admin = useAppSelector((state) =>
     state.memberList.members.find(
       (m) =>
@@ -100,9 +82,6 @@ export default function DetailsChoreModal({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   card: {
     height: "95%",
     borderRadius: 10,
@@ -123,42 +102,6 @@ const styles = StyleSheet.create({
     height: "12%",
     padding: 5,
   },
-  input: {
-    width: "100%",
-    borderBottomWidth: 0,
-    fontSize: 18,
-    borderRadius: 10,
-    paddingHorizontal: 16,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-  textInput: {
-    alignItems: "flex-start",
-    height: 55,
-  },
-  descriptionInput: {
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    height: 125,
-    paddingTop: 8,
-  },
-  interval: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: 55,
-  },
-  value: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: 80,
-  },
   boldText: {
     fontWeight: "bold",
     fontSize: 18,
@@ -166,27 +109,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
   },
-  subText: {
-    fontSize: 12,
-  },
-  litleCircle: {
-    borderRadius: 50,
-    width: 25,
-    height: 25,
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 8,
-  },
-  errors: {
-    fontSize: 14,
-    fontWeight: "500",
-    paddingHorizontal: 10,
-  },
   detalisView: {
     alignItems: "flex-start",
     justifyContent: "flex-start",
     height: "90%",
-    // paddingTop: 8,
+    paddingTop: 8,
     borderRadius: 10,
     padding: 8,
   },
