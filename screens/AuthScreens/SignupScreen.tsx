@@ -3,12 +3,12 @@ import { useState } from "react";
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
-import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
+import { auth, firestore } from "../../database/firebase";
 
-const auth = Firebase.auth();
+
 
 export default function LoginScreen({
   navigation,
@@ -37,10 +37,8 @@ export default function LoginScreen({
       if (email !== "" && userName !== "" && password !== "") {
         await auth.createUserWithEmailAndPassword(email, password);
         
-        const user = Firebase.auth().currentUser;
-        user.updateProfile({
+            auth.currentUser?.updateProfile({
           displayName: userName,
-          photoURL: "https://alextrenoweth.co.uk/wp-content/uploads/2015/11/rowan-atkinson.jpg"
         }).then(() => {
           navigation.navigate("ProfileNav");
         })

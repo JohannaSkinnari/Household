@@ -3,13 +3,11 @@ import { useState } from "react";
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text,TouchableWithoutFeedback,View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
-import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
-import firebase from "firebase";
 import Logo from "../../components/Logo";
+import { auth } from "../../database/firebase";
 
-const auth = Firebase.auth();
 
 export default function LoginScreen({
   navigation,
@@ -34,7 +32,7 @@ export default function LoginScreen({
     try {
       if (email !== "" && password !== "") {
         await auth.signInWithEmailAndPassword(email, password);
-        console.log(firebase.auth().currentUser);
+        console.log(auth.currentUser);
         setEmail('');
         setPassword('');
         navigation.navigate("ProfileNav");
