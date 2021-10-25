@@ -3,12 +3,18 @@ import { FlatList, Image, Pressable, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { avatars } from "../assets/AvatarData/data";
 
+interface IAvatar {
+  icon: any;
+  id: number;
+}
+
 interface Props {
   value: number;
+  dataArray: IAvatar[];
   onChange: (id: string) => void;
 }
 
-export default function AvatarList({ onChange }: Props) {
+export default function AvatarList({ onChange, dataArray }: Props) {
   const { colors } = useTheme();
   const [selectedAvatar, setSelectedAvatar] = useState<number>();
   const [colorValue, setColorValue] = useState<string>();
@@ -48,7 +54,7 @@ export default function AvatarList({ onChange }: Props) {
   return (
     <View style={{ height: 65 }}>
       <FlatList
-        data={avatars}
+        data={dataArray}
         horizontal={true}
         renderItem={({ item }) => (
           <Pressable
