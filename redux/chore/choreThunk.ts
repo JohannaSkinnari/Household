@@ -1,5 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IChore, IModefideChore } from "../../interfaces/IChore";
+import {
+  ICompletedChore,
+  ICreateCompletedChore,
+} from "../../interfaces/ICompletedChore";
+import { createCompletedChore } from "../completedChores/completedChoreThunk";
 import { useAppSelector } from "../reduxHooks";
 import { ThunkApi } from "../reduxStore";
 // useEffect för huvudsida kanske ?  i samband med att du loggar in sig. Som en usedatafetcher custom hook => datafetcher useEffecter kör dessa functioner.
@@ -41,7 +46,11 @@ export const editChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
 
 export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
   "chore/completeChore",
-  async (updateData) => {
+  async (updateData, { dispatch }) => {
+    console.log("completeChore thunk:");
+    console.log("syssla innan datum");
+    console.log(updateData);
+
     const updatedChore: IChore = {
       ...updateData,
       lastCompleted: new Date(
@@ -50,8 +59,11 @@ export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
         new Date().getDate()
       ).toDateString(),
     };
+    console.log("syssla efter datum");
+    console.log(updatedChore);
+
     // prata med API
-    //dispatch(createCompletedChore . . . .)
+    dispatch(createCompletedChore(updatedChore));
     return updatedChore;
   }
 );
