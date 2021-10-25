@@ -17,7 +17,7 @@ type ProfileStackParamList = {
   CreateHousehold: undefined;
   HouseholdSettings: undefined;
   Household: { id: string };
-  HouseholdInfo: undefined;
+  HouseholdInfo: { id: string };
   Login: undefined;
 };
 

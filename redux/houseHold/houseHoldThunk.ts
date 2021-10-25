@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ICreateHouseHold, IHouseHold } from "../../interfaces/IHouseHold";
 import { ICreateMember } from "../../interfaces/IMember";
-import { createMember } from "../member/memberThunk";
+import { createOwner } from "../member/memberThunk";
 import { ThunkApi } from "../reduxStore";
 
 interface ThunkParam {
@@ -20,6 +20,6 @@ export const createHouseHold = createAsyncThunk<
     id: Math.random().toString(),
     houseHoldCode: Math.floor(Math.random() * 90000) + 10000,
   };
-  dispatch(createMember({ ...createData.member, householdId: household.id }));
+  dispatch(createOwner({ ...createData.member, householdId: household.id }));
   return household;
 });

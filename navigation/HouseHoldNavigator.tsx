@@ -12,10 +12,10 @@ import { ProfileStackScreenProps } from "./ProfileNavigator";
 export type HouseholdStackParamList = {
   // Om navigationsproblem uppstår utforska nedan utkommenterad Chores
   // Chores: ProfileStackScreenProps<"Profile">;
-  Chores: { id: string };
-  Members: { id: string };
-  CurrentWeek: { id: string };
-  PreviousWeek: { id: string };
+  idag: { id: string };
+  medlemmar: { id: string };
+  veckan: { id: string };
+  ["förra vackan"]: { id: string };
 };
 
 export type HouseholdStackScreenProps<
@@ -29,29 +29,29 @@ export default function HouseholdNavigator({
 }: ProfileStackScreenProps<"Household">) {
   return (
     <Tab.Navigator
-      initialRouteName="Chores"
+      initialRouteName="idag"
       tabBar={(props: any) => <CustomTabBar {...props} />}
     >
       <Tab.Screen
-        name="Chores"
+        name="idag"
         initialParams={route.params}
         component={ChoresScreen}
         options={{ title: "Dagens Sysslor" }}
       />
       <Tab.Screen
-        name="Members"
+        name="medlemmar"
         initialParams={route.params}
         component={MemberScreen}
         options={{ title: "Medlemmar" }}
       />
       <Tab.Screen
-        name="CurrentWeek"
+        name="veckan"
         initialParams={route.params}
         component={CurrentWeekStatisticScreen}
         options={{ title: "Veckan" }}
       />
       <Tab.Screen
-        name="PreviousWeek"
+        name="förra vackan"
         initialParams={route.params}
         component={PreviousWeekStatisticScreen}
         options={{ title: "Förra veckan" }}
