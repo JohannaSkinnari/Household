@@ -7,6 +7,7 @@ import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
 import { auth, firestore } from "../../database/firebase";
+import { IUser } from "../../interfaces/IUser";
 
 
 
@@ -35,13 +36,22 @@ export default function LoginScreen({
   const onHandleSignup = async () => {
     try {
       if (email !== "" && userName !== "" && password !== "") {
-        await auth.createUserWithEmailAndPassword(email, password);
-        
+        const res = await auth.createUserWithEmailAndPassword(email, password);
+        if((await res).user) {
+          const userData: IUser = {
+          email: email,
+          name: userName,
+          id: "1",
+          password: password,
+          
+        };
+        await firestore.collection('/users').doc(auth.currentUser?.uid).set(userData);
             auth.currentUser?.updateProfile({
           displayName: userName,
-        }).then(() => {
-          navigation.navigate("ProfileNav");
         })
+
+          navigation.navigate("ProfileNav");
+        }
       }
     } catch (error: unknown) {
       const er = error as Error;
