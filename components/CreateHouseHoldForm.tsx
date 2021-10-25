@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import * as yup from "yup";
+import { avatars } from "../assets/AvatarData/data";
 import { ICreateHouseHold } from "../interfaces/IHouseHold";
 import { ICreateMember } from "../interfaces/IMember";
 import { createHouseHold } from "../redux/houseHold/houseHoldThunk";
@@ -97,6 +98,7 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
           </View>
           <View style={styles.avatarStyle}>
             <AvatarList
+              dataArray={avatars}
               value={values.member.avatarId}
               onChange={(value) =>
                 setFieldValue("member.avatarId", parseFloat(value))
