@@ -38,3 +38,20 @@ export const editChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
     return updateData;
   }
 );
+
+export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
+  "chore/completeChore",
+  async (updateData) => {
+    const updatedChore: IChore = {
+      ...updateData,
+      lastCompleted: new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate()
+      ).toDateString(),
+    };
+    // prata med API
+    //dispatch(createCompletedChore . . . .)
+    return updatedChore;
+  }
+);

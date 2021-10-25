@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
-import { useAppSelector } from "../../redux/reduxHooks";
+import { IChore } from "../../interfaces/IChore";
+import { completeChore, editChore } from "../../redux/chore/choreThunk";
+import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 import CustomButton from "../common/CustomButton";
 
 interface Props {
@@ -20,11 +22,15 @@ export default function DetailsChoreModal({
   choreId,
   householdId,
 }: Props) {
+  const dispatch = useAppDispatch();
   const { colors } = useTheme();
 
   const chore = useAppSelector((state) =>
     state.choresList.chores.find((chore) => chore.id == choreId)
   );
+  if (!chore) {
+    throw new Error("No chore found");
+  }
   const admin = useAppSelector((state) =>
     state.memberList.members.find(
       (m) =>
@@ -41,6 +47,11 @@ export default function DetailsChoreModal({
       onPress={onEdit}
     />
   );
+
+  const completeThisChore = () => {
+    dispatch(completeChore(chore));
+    onDone;
+  };
 
   return (
     <Card style={styles.card}>
@@ -65,7 +76,7 @@ export default function DetailsChoreModal({
         <Button
           icon={"check-circle-outline"}
           color={colors.text}
-          onPress={onDone}
+          onPress={completeThisChore}
         >
           Markera som gjord
         </Button>
