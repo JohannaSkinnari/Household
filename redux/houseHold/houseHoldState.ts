@@ -24,6 +24,11 @@ export const initialState: HouseHoldState = {
       name: "Bäverly Hills",
       houseHoldCode: 56555,
     },
+    {
+      id: "4",
+      name: "Mount Doom",
+      houseHoldCode: 11111,
+    },
   ],
   loading: false,
   isCreatedSuccess: true,
