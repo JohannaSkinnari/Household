@@ -15,6 +15,7 @@ import { Button, Card, useTheme } from "react-native-paper";
 import * as yup from "yup";
 import { IChore, IModefideChore } from "../../interfaces/IChore";
 import { createChore, editChore } from "../../redux/chore/choreThunk";
+import { getUserHouseholds } from "../../redux/houseHold/houseHoldSelector";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 import CustomButton from "../common/CustomButton";
 import IntervalPicker from "../IntervalPicker";
@@ -26,28 +27,28 @@ interface Props {
   onEdit: () => void;
   // onRemove?: () => void;
   choreId: string;
-  // householdId: string;
+  householdId: string;
 }
 
 export default function DetailsChoreModal({
   onDone,
   onClose,
   onEdit,
-  // onRemove,
   choreId,
-}: // householdId,
-Props) {
+  householdId,
+}: Props) {
   const { colors } = useTheme();
-  const dispatch = useAppDispatch();
-  const [showInterval, setShowInterval] = useState(false);
-  const [showValue, setShowValue] = useState(false);
-  const [weight, setWeight] = useState(1);
-  const [interval, setInterval] = useState(7);
-  const [colorValue, setColorValue] = useState(colors.valueOne);
-  const [isAdmin, setIsAdmin] = useState(true);
 
-  let chore = useAppSelector((state) =>
+  const chore = useAppSelector((state) =>
     state.choresList.chores.find((chore) => chore.id == choreId)
+  );
+
+  const admin = useAppSelector((state) =>
+    state.memberList.members.find(
+      (m) =>
+        m.userId === state.userList.activeUser.id &&
+        m.householdId === householdId
+    )
   );
 
   const editButton = (props: { size: number }) => (
@@ -55,11 +56,7 @@ Props) {
       title="Redigera"
       {...props}
       icon="pencil-outline"
-      onPress={() => {
-        // onEdit;
-        onClose;
-        // console.log("redigerar");
-      }}
+      onPress={onEdit}
     />
   );
 
@@ -68,7 +65,7 @@ Props) {
       <Card.Title
         title={chore?.name}
         style={styles.cardTitle}
-        right={isAdmin ? editButton : undefined}
+        right={admin?.isAdmin ? editButton : undefined}
       />
       <Card.Content
         style={[styles.cardContent, { backgroundColor: colors.background }]}

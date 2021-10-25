@@ -80,6 +80,7 @@ export default function ChoresScreen({ navigation, route }: Props) {
                 setChoreExist(true);
               }}
               choreId={choreId}
+              householdId={householdId}
             />
           </Modal>
           {openEdit && choreExist && (
