@@ -10,17 +10,17 @@ export const initialState: MemberState = {
   members: [
     {
       id: "1",
-      userId: "2",
+      userId: "4",
       householdId: "1",
       isAdmin: true,
-      avatarId: 5,
+      avatarId: 1,
     },
     {
       id: "2",
       userId: "1",
       householdId: "2",
-      isAdmin: true,
-      avatarId: 6,
+      isAdmin: false,
+      avatarId: 3,
     },
     {
       id: "4",
@@ -41,7 +41,7 @@ export const initialState: MemberState = {
       userId: "1",
       householdId: "1",
       isAdmin: false,
-      avatarId: 6,
+      avatarId: 8,
     },
   ],
   loading: false,
