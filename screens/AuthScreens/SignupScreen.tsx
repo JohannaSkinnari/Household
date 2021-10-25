@@ -1,18 +1,27 @@
 import React from "react";
 import { useState } from "react";
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
+import { ISignUpData } from "../../interfaces/ISignupData";
+import { useAppDispatch } from "../../redux/reduxHooks";
+import { createNewUser } from "../../redux/user/userThunk";
 
-const auth = Firebase.auth();
-
-export default function LoginScreen({
+export default function SignupScreen({
   navigation,
-}: RootStackScreenProps<"Login">) {
+}: RootStackScreenProps<"SignUp">) {
   const { colors } = useTheme();
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
@@ -20,6 +29,8 @@ export default function LoginScreen({
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState("eye");
   const [signupError, setSignupError] = useState("");
+
+  const dispatch = useAppDispatch();
 
   const handlePasswordVisibility = () => {
     if (rightIcon === "eye") {
@@ -31,24 +42,38 @@ export default function LoginScreen({
     }
   };
 
-  
   const onHandleSignup = async () => {
-    try {
-      if (email !== "" && userName !== "" && password !== "") {
-        await auth.createUserWithEmailAndPassword(email, password);
-        
-        const user = Firebase.auth().currentUser;
-        user.updateProfile({
-          displayName: userName,
-          photoURL: "https://alextrenoweth.co.uk/wp-content/uploads/2015/11/rowan-atkinson.jpg"
-        }).then(() => {
-          navigation.navigate("ProfileNav");
-        })
-      }
-    } catch (error: unknown) {
-      const er = error as Error;
-      setSignupError(er.message);
+    if (email !== "" && userName !== "" && password !== "") {
+      const newUser: ISignUpData = {
+        email: email,
+        password: password,
+        name: userName,
+      };
+      dispatch(createNewUser(newUser));
+      navigation.navigate("ProfileNav");
+    } else {
+      setSignupError("Fyll i alla fält");
     }
+
+    // try {
+    //   if (email !== "" && userName !== "" && password !== "") {
+    //     await auth.createUserWithEmailAndPassword(email, password);
+
+    //     const user = Firebase.auth().currentUser;
+    //     user
+    //       .updateProfile({
+    //         displayName: userName,
+    //         photoURL:
+    //           "https://alextrenoweth.co.uk/wp-content/uploads/2015/11/rowan-atkinson.jpg",
+    //       })
+    //       .then(() => {
+    //         navigation.navigate("ProfileNav");
+    //       });
+    //   }
+    // } catch (error: unknown) {
+    //   const er = error as Error;
+    //   setSignupError(er.message);
+    // }
   };
 
   return (
@@ -56,87 +81,95 @@ export default function LoginScreen({
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={[styles.innerContainer, { backgroundColor: colors.background }]}>
-      <View style={styles.logoContainer}>
-        <Logo />
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View
+          style={[
+            styles.innerContainer,
+            { backgroundColor: colors.background },
+          ]}
+        >
+          <View style={styles.logoContainer}>
+            <Logo />
+          </View>
 
-      <View style={[styles.authContainer, { backgroundColor: colors.card }]}>
-        <Text style={styles.title}>Registrera nytt konto</Text>
+          <View
+            style={[styles.authContainer, { backgroundColor: colors.card }]}
+          >
+            <Text style={styles.title}>Registrera nytt konto</Text>
 
-        <InputField
-          inputContainerStyle={{
-            marginBottom: 20,
-          }}
-          leftIcon="email"
-          placeholder="Email"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          textContentType="emailAddress"
-          autoFocus={true}
-          value={email}
-          onChangeText={(text: string) => setEmail(text)}
-          rightIcon={undefined}
-          handlePasswordVisibility={undefined}
-          autoCorrect={false}
-        />
+            <InputField
+              inputContainerStyle={{
+                marginBottom: 20,
+              }}
+              leftIcon="email"
+              placeholder="Email"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              textContentType="emailAddress"
+              autoFocus={true}
+              value={email}
+              onChangeText={(text: string) => setEmail(text)}
+              rightIcon={undefined}
+              handlePasswordVisibility={undefined}
+              autoCorrect={false}
+            />
 
-<InputField
-          inputContainerStyle={{
-            marginBottom: 20,
-          }}
-          leftIcon="account"
-          placeholder="Användarnamn"
-          autoCapitalize="none"
-          keyboardType={""}
-          textContentType="userName"
-          autoFocus={false}
-          value={userName}
-          onChangeText={(text: string) => setUserName(text)}
-          rightIcon={undefined}
-          handlePasswordVisibility={undefined}
-          autoCorrect={false}
-        />
+            <InputField
+              inputContainerStyle={{
+                marginBottom: 20,
+              }}
+              leftIcon="account"
+              placeholder="Användarnamn"
+              autoCapitalize="none"
+              keyboardType={""}
+              textContentType="userName"
+              autoFocus={false}
+              value={userName}
+              onChangeText={(text: string) => setUserName(text)}
+              rightIcon={undefined}
+              handlePasswordVisibility={undefined}
+              autoCorrect={false}
+            />
 
-        <InputField
-          inputContainerStyle={{
-            marginBottom: 20,
-          }}
-          leftIcon="lock"
-          placeholder="Lösenord"
-          autoCapitalize="none"
-          autoCorrect={false}
-          secureTextEntry={passwordVisibility}
-          textContentType="password"
-          rightIcon={rightIcon}
-          value={password}
-          onChangeText={(text: string) => setPassword(text)}
-          handlePasswordVisibility={handlePasswordVisibility}
-          keyboardType={""}
-          autoFocus={false}
-        />
+            <InputField
+              inputContainerStyle={{
+                marginBottom: 20,
+              }}
+              leftIcon="lock"
+              placeholder="Lösenord"
+              autoCapitalize="none"
+              autoCorrect={false}
+              secureTextEntry={passwordVisibility}
+              textContentType="password"
+              rightIcon={rightIcon}
+              value={password}
+              onChangeText={(text: string) => setPassword(text)}
+              handlePasswordVisibility={handlePasswordVisibility}
+              keyboardType={""}
+              autoFocus={false}
+            />
 
-        {signupError ? (
-          <ErrorMessage error={signupError} visible={true} />
-        ) : null}
+            {signupError ? (
+              <ErrorMessage error={signupError} visible={true} />
+            ) : null}
 
-        <View style={styles.buttonField}>
-          <CustomButton onPress={onHandleSignup} title="Registrera" />
-          
-          <CustomButton
-              onPress={() => navigation.navigate("Login")}
-              title="Logga in" />
+            <View style={styles.buttonField}>
+              <CustomButton onPress={onHandleSignup} title="Registrera" />
+
+              <CustomButton
+                onPress={() => navigation.navigate("Login")}
+                title="Logga in"
+              />
+            </View>
+
+            <View>
+              <Text style={styles.footerText}>
+                När du registrerar dig kommer du samtidigt att loggas in !
+              </Text>
+            </View>
+          </View>
         </View>
-        
-        <View>
-          <Text style={styles.footerText}>
-            När du registrerar dig kommer du samtidigt att loggas in !
-          </Text>
-        </View>
-      </View>
-    </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 }
@@ -144,14 +177,12 @@ export default function LoginScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
-    
   },
 
   innerContainer: {
     paddingHorizontal: 12,
     paddingTop: 50,
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
   },
 
   authContainer: {

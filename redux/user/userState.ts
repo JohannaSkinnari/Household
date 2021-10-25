@@ -12,20 +12,17 @@ export const initialState: UserState = {
     id: "1",
     name: "alfos",
     email: "egc@fogjs.com",
-    password: "password",
   },
   users: [
     {
       id: "1",
       name: "tjillevippen",
       email: "egc@fogjs.com",
-      password: "password",
     },
     {
       id: "2",
       name: "Jo'Anne",
       email: "egc@fogjs.com",
-      password: "password",
     },
   ],
   loading: false,

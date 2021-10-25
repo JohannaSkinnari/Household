@@ -27,10 +27,9 @@ export type ProfileStackScreenProps<
 
 const Stack = createStackNavigator<ProfileStackParamList>();
 
-
 export default function ProfileNavigation() {
   const user = firebase.auth().currentUser;
-const userName = user?.displayName
+  const userName = user?.displayName;
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
@@ -38,8 +37,8 @@ const userName = user?.displayName
           name="Profile"
           component={ProfileScreen}
           options={{
-            title: "Profil sidan" , // userName istället
-            headerLeft: () => null
+            title: "Profilsidan", // userName istället
+            headerLeft: () => null,
           }}
         />
         <Stack.Screen
