@@ -9,7 +9,7 @@ export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
     const member: IMember = {
       ...createMember,
       id: Math.random().toString(),
-      userId: state.userList.user.id,
+      userId: state.userList.activeUser.id,
       isAdmin: false,
     };
     return member;
@@ -23,7 +23,7 @@ export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
     const member: IMember = {
       ...createMember,
       id: Math.random().toString(),
-      userId: state.userList.user.id,
+      userId: state.userList.activeUser.id,
       isAdmin: true,
     };
     return member;
