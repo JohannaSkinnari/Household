@@ -7,9 +7,10 @@ import CustomButton from "../../components/common/CustomButton";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import DetailsChoreModal from "../../components/modals/detailsChoreModal";
 
 type Props = CompositeScreenProps<
-  HouseholdStackScreenProps<"Chores">,
+  HouseholdStackScreenProps<"idag">,
   ProfileStackScreenProps<"Profile">
 >;
 
@@ -49,12 +50,6 @@ export default function ChoresScreen({ navigation, route }: Props) {
             title={"Profil"}
             icon={"account-circle-outline"}
           />
-          {/* <Pressable
-            style={{ height: 30, width: 60, backgroundColor: "pink" }}
-          ></Pressable>
-          <Pressable
-            style={{ height: 30, width: 60, backgroundColor: "pink" }}
-          ></Pressable> */}
         </View>
       </View>
       {openAdd && (
@@ -77,21 +72,15 @@ export default function ChoresScreen({ navigation, route }: Props) {
       {openChore && choreExist && (
         <>
           <Modal visible={openChore} onDismiss={() => setOpenChore(false)}>
-            <Text style={{ color: colors.text }}>
-              Exampel Modal med information för vald syssla. Click outside this
-              area to dismiss.
-            </Text>
-            {/* använd custom component för knapp*/}
-            <Button
-              onPress={() => {
+            <DetailsChoreModal
+              onDone={() => setOpenChore(false)}
+              onClose={() => setOpenChore(false)}
+              onEdit={() => {
                 setOpenEdit(true);
                 setChoreExist(true);
               }}
-            >
-              Ändra
-            </Button>
-            <Button onPress={() => setOpenChore(false)}>Klar</Button>
-            <Button onPress={() => setOpenChore(false)}>Stäng</Button>
+              choreId={choreId}
+            />
           </Modal>
           {openEdit && choreExist && (
             <>
