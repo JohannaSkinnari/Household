@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint --ignore-path .eslintignore . --ext .ts,.tsx",
-    "prettier": "prettier --config .prettierrc . --ext .ts,.tsx,.json"
+    "prettier": "prettier --config .prettierrc . --ext .ts,.tsx"
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
