@@ -95,6 +95,5 @@ const CustomPaperDefaultTheme: ReactNativePaper.Theme = {
 const CombinedDefaultTheme = merge(CustomPaperDefaultTheme, CustomDefaultTheme);
 const CombinedDarkTheme = merge(CustomPaperDarkTheme, CustomDarkTheme);
 
-export const getTheme = (dark: boolean) => {
-  return dark ? CombinedDarkTheme : CombinedDefaultTheme;
-};
+export const getTheme = (dark: boolean) =>
+  dark ? CombinedDarkTheme : CombinedDefaultTheme;

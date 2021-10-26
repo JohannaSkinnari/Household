@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
-import { IChore } from "../../interfaces/IChore";
-import { completeChore, editChore } from "../../redux/chore/choreThunk";
+import { completeChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 import CustomButton from "../common/CustomButton";
 
@@ -25,15 +24,15 @@ export default function DetailsChoreModal({
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
 
-  const chore = useAppSelector((state) =>
-    state.choresList.chores.find((chore) => chore.id == choreId)
+  const chore = useAppSelector(state =>
+    state.choresList.chores.find(c => c.id === choreId)
   );
   if (!chore) {
     throw new Error("No chore found");
   }
-  const admin = useAppSelector((state) =>
+  const admin = useAppSelector(state =>
     state.memberList.members.find(
-      (m) =>
+      m =>
         m.userId === state.userList.activeUser.id &&
         m.householdId === householdId
     )
@@ -74,14 +73,14 @@ export default function DetailsChoreModal({
       </Card.Content>
       <Card.Actions style={styles.cardAction}>
         <Button
-          icon={"check-circle-outline"}
+          icon="check-circle-outline"
           color={colors.text}
           onPress={completeThisChore}
         >
           Markera som gjord
         </Button>
         <Button
-          icon={"close-circle-outline"}
+          icon="close-circle-outline"
           color={colors.text}
           onPress={onClose}
         >

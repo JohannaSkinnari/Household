@@ -6,8 +6,8 @@
   "extends": [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "airbnb"
+    "airbnb",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,9 +17,16 @@
     "ecmaVersion": 13,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "import"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "import"
+  ],
   "rules": {
-    "quotes": ["error", "double"],
+    "quotes": [
+      "error",
+      "double"
+    ],
     "linebreak-style": "off",
     "no-use-before-define": "off",
     "import/extensions": "off",
@@ -29,7 +36,14 @@
     "import/no-extraneous-dependencies": "off",
     "react/jsx-filename-extension": [
       1,
-      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
     ],
     "react/jsx-no-bind": "off",
     "no-empty-pattern": "off",
@@ -40,11 +54,18 @@
     "global-require": "off",
     "react/style-prop-object": "off",
     "no-unused-expressions": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "react/no-unused-prop-types": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "import/no-mutable-exports": "off"
   },
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
     },
     "import/resolver": {
       "typescript": {

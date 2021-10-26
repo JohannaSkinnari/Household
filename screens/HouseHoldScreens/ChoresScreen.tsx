@@ -1,13 +1,13 @@
 import { CompositeScreenProps, useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ScrollView, Text, View, StyleSheet, Pressable } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import ChoreView from "../../components/ChoreView";
 import CustomButton from "../../components/common/CustomButton";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
+import DetailsChoreModal from "../../components/modals/detailsChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import DetailsChoreModal from "../../components/modals/detailsChoreModal";
 import { useAppSelector } from "../../redux/reduxHooks";
 
 type Props = CompositeScreenProps<
@@ -31,9 +31,9 @@ export default function ChoresScreen({ navigation, route }: Props) {
     setOpenChore(true);
   }
 
-  const admin = useAppSelector((state) =>
+  const admin = useAppSelector(state =>
     state.memberList.members.find(
-      (m) =>
+      m =>
         m.userId === state.userList.activeUser.id &&
         m.householdId === householdId
     )
@@ -57,16 +57,16 @@ export default function ChoresScreen({ navigation, route }: Props) {
           {admin?.isAdmin ? (
             <CustomButton
               onPress={() => setOpenAdd(true)}
-              title={"Lägg till syssla"}
-              icon={"plus-circle-outline"}
+              title="Lägg till syssla"
+              icon="plus-circle-outline"
             />
           ) : (
             <View style={{ height: 0, width: 0 }} />
           )}
           <CustomButton
             onPress={() => navigation.navigate("Profile")}
-            title={"Profil"}
-            icon={"account-circle-outline"}
+            title="Profil"
+            icon="account-circle-outline"
           />
         </View>
       </View>
@@ -110,7 +110,8 @@ export default function ChoresScreen({ navigation, route }: Props) {
               >
                 <AdminChoreModal
                   onSave={() => {
-                    setOpenEdit(false), setOpenChore(false);
+                    setOpenEdit(false);
+                    setOpenChore(false);
                   }}
                   onClose={() => setOpenEdit(false)}
                   choreId={choreId}

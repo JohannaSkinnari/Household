@@ -19,11 +19,11 @@ export default function HouseholdInfoScreen({
   const { colors } = useTheme();
   const dispatch = useAppDispatch();
 
-  const members = useAppSelector((state) =>
-    state.memberList.members.filter((s) => s.householdId === houseId)
+  const members = useAppSelector(state =>
+    state.memberList.members.filter(s => s.householdId === houseId)
   );
   const availableAvatars = avatars.filter(
-    (avatar) => !members.some((member) => avatar.id === member.avatarId)
+    avatar => !members.some(member => avatar.id === member.avatarId)
   );
 
   type RootValidationSchema = Record<keyof FormData, yup.AnySchema>;
@@ -67,7 +67,7 @@ export default function HouseholdInfoScreen({
           <View style={styles.imageStyle}>
             <AvatarList
               value={values.avatarId}
-              onChange={(value) => setFieldValue("avatarId", parseFloat(value))}
+              onChange={value => setFieldValue("avatarId", parseFloat(value))}
               dataArray={availableAvatars}
             />
           </View>
@@ -81,12 +81,12 @@ export default function HouseholdInfoScreen({
           <View style={styles.buttonsContainer}>
             <CustomButton
               icon="plus-circle-outline"
-              title={"Spara"}
+              title="Spara"
               onPress={handleSubmit}
             />
             <CustomButton
               icon="close-circle-outline"
-              title={"Stäng"}
+              title="Stäng"
               onPress={() => navigation.navigate("Profile")}
             />
           </View>

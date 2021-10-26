@@ -1,6 +1,5 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { useTheme } from "react-native-paper";
 import CreateHouseHoldForm from "../../components/CreateHouseHoldForm";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import { useAppSelector } from "../../redux/reduxHooks";
@@ -8,10 +7,9 @@ import { useAppSelector } from "../../redux/reduxHooks";
 export default function CreateHouseholdScreen({
   navigation,
 }: ProfileStackScreenProps<"CreateHousehold">) {
-  const households = useAppSelector((s) => s.houseHoldList);
-  const { colors } = useTheme();
+  const households = useAppSelector(s => s.houseHoldList);
   const toggleSuccess = () => {
-    if (households.isCreatedSuccess == true) {
+    if (households.isCreatedSuccess === true) {
       navigation.navigate("Profile");
     }
   };

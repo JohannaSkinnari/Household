@@ -66,8 +66,8 @@ export default function AdminChoreModal({
   const [title, setTitle] = useState("Skapa en ny syssla");
 
   let defaultFormData: IChore;
-  let chore = useAppSelector((state) =>
-    state.choresList.chores.find((chore) => chore.id == choreId)
+  const chore = useAppSelector(state =>
+    state.choresList.chores.find(c => c.id === choreId)
   );
   if (choreId && chore) {
     defaultFormData = {
@@ -90,7 +90,7 @@ export default function AdminChoreModal({
     defaultFormData = {
       id: "",
       name: "",
-      householdId: householdId,
+      householdId,
       description: "",
       interval: 7,
       weight: 1,
@@ -124,7 +124,7 @@ export default function AdminChoreModal({
 
   const removeButton = (props: { size: number }) => (
     <CustomButton
-      title={"Ta bort"}
+      title="Ta bort"
       {...props}
       icon="minus-circle-outline"
       onPress={() => {
@@ -159,7 +159,6 @@ export default function AdminChoreModal({
         values,
         touched,
         errors,
-        isValid,
       }) => (
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -207,13 +206,13 @@ export default function AdminChoreModal({
                       color: colors.onSurface,
                     },
                   ]}
-                  multiline={true}
+                  multiline
                   placeholder="Beskrivning"
                   placeholderTextColor={colors.placeholder}
                   onChangeText={handleChange("description")}
                   onBlur={handleBlur("description")}
                   value={values.description}
-                  textAlignVertical={"top"}
+                  textAlignVertical="top"
                 />
                 {errors.description && touched.description && (
                   <Text style={[styles.errors, { color: colors.darkPink }]}>
@@ -262,10 +261,10 @@ export default function AdminChoreModal({
                 ) : (
                   <IntervalPicker
                     value={values.interval}
-                    selectPickerIntervalValue={(value) => {
-                      setFieldValue("interval", value),
-                        setShowInterval(false),
-                        setInterval(value);
+                    selectPickerIntervalValue={value => {
+                      setFieldValue("interval", value);
+                      setShowInterval(false);
+                      setInterval(value);
                     }}
                   />
                 )}
@@ -306,24 +305,24 @@ export default function AdminChoreModal({
                 ) : (
                   <WeightPicker
                     value={values.weight}
-                    selectPickerWeightValue={(value) => {
-                      setFieldValue("weight", value),
-                        setShowValue(false),
-                        selectWeightValue(value);
+                    selectPickerWeightValue={value => {
+                      setFieldValue("weight", value);
+                      setShowValue(false);
+                      selectWeightValue(value);
                     }}
                   />
                 )}
               </Card.Content>
               <Card.Actions style={styles.cardAction}>
                 <Button
-                  icon={"plus-circle-outline"}
+                  icon="plus-circle-outline"
                   color={colors.text}
                   onPress={handleSubmit}
                 >
                   Spara
                 </Button>
                 <Button
-                  icon={"close-circle-outline"}
+                  icon="close-circle-outline"
                   color={colors.text}
                   onPress={onClose}
                 >
