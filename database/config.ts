@@ -1,8 +1,8 @@
-import firebase from "firebase/";
+import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
-// Initialize Firebase
-export const firebaseConfig = {
+const Firebase = firebase.initializeApp({
   apiKey: "AIzaSyABL2ch17eRIgySDn24CzBDnklQCFUDJ_0",
   authDomain: "household-6563e.firebaseapp.com",
   projectId: "household-6563e",
@@ -10,13 +10,6 @@ export const firebaseConfig = {
   messagingSenderId: "510651625283",
   appId: "1:510651625283:web:787ecbc9dbcd7ac6eec9f6",
   measurementId: "G-3WWJTBGF85",
-};
+});
 
-let Firebase: firebase.app.App;
-
-if (firebase.apps.length === 0) {
-  Firebase = firebase.initializeApp(firebaseConfig);
-  console.log(firebase.app().options);
-}
-
-export default Firebase!;
+export default Firebase;

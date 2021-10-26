@@ -5,7 +5,7 @@ export const getUserHouseholds = (state: RootState) =>
   state.houseHoldList.houseHoldList.map((house) => {
     const user = state.userList.activeUser;
     const member = state.memberList.members.find(
-      (member) => member.householdId === house.id && user.id === member.userId
+      (member) => member.householdId === house.id && user?.uid === member.userId
     );
     return {
       house,

@@ -8,12 +8,13 @@ import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { getTheme } from "./components/common/Theme";
-import { firebaseConfig } from "./database/firebase";
-import firebase from "firebase/app";
 import { Provider as ReduxProvider } from "react-redux";
 import RootNavigation from "./navigation/RootNavigation";
 import store, { useAppDispatch } from "./redux/reduxStore";
 import { removeUser, setUser } from "./redux/user/userSlice";
+import firebase from "firebase";
+import Firebase from "./database/config";
+import { IUser } from "./interfaces/IUser";
 
 export default function App() {
   const scheme = useColorScheme();
@@ -40,12 +41,12 @@ const FirebaseSetup = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    firebase.initializeApp(firebaseConfig);
+    // firebase.initializeApp(firebaseConfig);
 
-    firebase.auth().onAuthStateChanged((user) => {
+    Firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        const uid = user.uid;
-        dispatch(setUser(user));
+        //const uid = user.uid;
+        dispatch(setUser(user.toJSON() as IUser));
         // Dispatch user to redux store!
       } else {
         dispatch(removeUser(null));
