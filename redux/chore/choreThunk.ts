@@ -47,10 +47,6 @@ export const editChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
 export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
   "chore/completeChore",
   async (updateData, { dispatch }) => {
-    console.log("completeChore thunk:");
-    console.log("syssla innan datum");
-    console.log(updateData);
-
     const updatedChore: IChore = {
       ...updateData,
       lastCompleted: new Date(
@@ -59,8 +55,6 @@ export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
         new Date().getDate()
       ).toDateString(),
     };
-    console.log("syssla efter datum");
-    console.log(updatedChore);
 
     // prata med API
     dispatch(createCompletedChore(updatedChore));

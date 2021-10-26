@@ -10,10 +10,6 @@ export const createCompletedChore = createAsyncThunk<
   ThunkParam,
   ThunkApi
 >("chore/createCompletedChore", async (createData, { getState }) => {
-  console.log("createCompletedChore thunk:");
-  console.log("sysslan som används:");
-  console.log(createData);
-
   const state = getState();
   // servern ska lösa id istället.
   const completedChore: ICompletedChore = {
@@ -29,7 +25,6 @@ export const createCompletedChore = createAsyncThunk<
     weight: createData.weight,
   };
   // prata med API
-  console.log("completedChore som skapats:");
-  console.log(completedChore);
+
   return completedChore;
 });
