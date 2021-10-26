@@ -9,31 +9,36 @@ export const createNewUser = createAsyncThunk<
   ISignUpData,
   ISignUpData,
   ThunkApi
->("user/createNewUser", async (userData: ISignUpData) => {
-  console.log(userData);
-  try {
-    await firebase
-      .auth()
-      .createUserWithEmailAndPassword(userData.email, userData.password)
-      .then(async () => {
-        const user = firebase.auth().currentUser;
-        await user?.updateProfile({ displayName: userData.name });
-      });
-  } catch (error) {
-    console.log(error);
-  }
-  const response = firebase.auth().currentUser;
-  if (response !== null) {
-    const user: IUser = {
-      id: response.uid,
-      name: response.displayName as string,
-      email: response.email,
-    };
-    await firebase.firestore().collection("/users").doc(response.uid).set(user);
-  }
+>("user/createNewUser", async (userData, { rejectWithValue }) => {
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(userData.email, userData.password)
+    .then(async (userCred) => {
+      if (!userCred.user) {
+        return rejectWithValue("Could not create account");
+      }
+      await userCred.user.updateProfile({ displayName: userData.name });
+
+      // const id = userCred.user.uid;
+      // const user: IMember = {
+      //   id: id,
+      //   name: userData.name,
+      //   email: userData.email,
+      // };
+      // await firebase.firestore().collection("/member").doc(id).set(user);
+    });
 
   return userData;
 });
+// const response = firebase.auth().currentUser;
+// if (response !== null) {
+//   const user: IUser = {
+//     id: response.uid,
+//     name: response.displayName as string,
+//     email: response.email,
+//   };
+//   await firebase.firestore().collection("/users").doc(response.uid).set(user);
+// }
 
 //   if (response.user) {
 
