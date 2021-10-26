@@ -5,7 +5,6 @@ export interface IChore {
   description: string;
   interval: number;
   weight: number;
-  // lastCompleted?: Date;
   lastCompleted?: string;
 }
 export type IModefideChore = Omit<IChore, "id">;

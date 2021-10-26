@@ -3,7 +3,6 @@ export interface ICompletedChore {
   choreId: string;
   userId: string;
   houseHoldId: string;
-  // completed: Date;
   completed: string;
   weight: number;
 }
