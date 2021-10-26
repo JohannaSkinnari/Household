@@ -14,6 +14,7 @@ export const initialState: MemberState = {
       name: "test",
       householdId: "1",
       isAdmin: true,
+      isApproved: true,
       avatarId: 1,
     },
     {
@@ -22,6 +23,7 @@ export const initialState: MemberState = {
       name: "jepp",
       householdId: "2",
       isAdmin: false,
+      isApproved: true,
       avatarId: 3,
     },
     {
@@ -30,6 +32,7 @@ export const initialState: MemberState = {
       name: "test",
       householdId: "3",
       isAdmin: true,
+      isApproved: true,
       avatarId: 4,
     },
     {
@@ -38,6 +41,7 @@ export const initialState: MemberState = {
       name: "test",
       householdId: "3",
       isAdmin: false,
+      isApproved: false,
       avatarId: 1,
     },
     {
@@ -46,6 +50,7 @@ export const initialState: MemberState = {
       name: "test",
       householdId: "1",
       isAdmin: false,
+      isApproved: true,
       avatarId: 8,
     },
   ],

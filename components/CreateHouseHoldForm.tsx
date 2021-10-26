@@ -33,7 +33,7 @@ const validationSchema = yup.object().shape<RootValidationSchema>({
 
 type FormData = {
   house: ICreateHouseHold;
-  member: Omit<ICreateMember, "householdId" | "name">;
+  member: Omit<ICreateMember, "householdId" | "name" | "isApproved">;
 };
 
 interface Props {
