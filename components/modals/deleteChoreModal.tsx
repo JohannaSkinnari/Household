@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
-import { completeChore } from "../../redux/chore/choreThunk";
+import { completeChore, deleteChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 import CustomButton from "../common/CustomButton";
 
@@ -28,15 +28,10 @@ export default function DeleteChoreModal({
     state.choresList.chores.find(c => c.id === choreId)
   );
   if (!chore) {
-    throw new Error("No chore found");
+    // return <View></View>
+    throw new Error("delete");
   }
-  // const admin = useAppSelector(state =>
-  //   state.memberList.members.find(
-  //     m =>
-  //       m.userId === state.userList.activeUser.id &&
-  //       m.householdId === householdId
-  //   )
-  // );
+  
 
   // const ArciveButton = (props: { size: number }) => (
   //   <CustomButton
@@ -47,14 +42,11 @@ export default function DeleteChoreModal({
   //   />
   // );
 
-  // const deleteChore = () => {
-  //   // dispatch(completeChore(chore));
-  //   onDelete;
-  // };
+  const deleteThisChore = () => {
+    dispatch(deleteChore(choreId));
+    onDelete;
+  };
 
-  // function deleteChore() {
-  //   onDelete
-  // };
 
   return (
     <Card style={styles.card}>
@@ -84,7 +76,7 @@ export default function DeleteChoreModal({
         <Button
           icon="minus-circle-outline"
           color={colors.text}
-          onPress={onDelete}
+          onPress={deleteThisChore}
         >
           Ta bort
         </Button>
