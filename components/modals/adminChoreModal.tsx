@@ -43,7 +43,7 @@ const choreValidation = yup.object().shape<ChoreValidationSchema>({
 interface Props {
   onSave: () => void;
   onClose: () => void;
-  onRemove?: () => void;
+  onRemove: () => void;
   choreId?: string;
   householdId: string;
 }
@@ -122,14 +122,14 @@ export default function AdminChoreModal({
     setShowValue(false);
   };
 
-    const removeButton = (props: { size: number }) => (
-      <CustomButton
-        title="Ta bort"
-        {...props}
-        icon="minus-circle-outline"
-        onPress={onRemove ? onRemove : () => {}}
-      />
-    );
+  const removeButton = (props: { size: number }) => (
+    <CustomButton
+      title="Ta bort"
+      {...props}
+      icon="minus-circle-outline"
+      onPress={onRemove}
+    />
+  );
 
   async function handleOnSubmit(values: IChore) {
     let response;

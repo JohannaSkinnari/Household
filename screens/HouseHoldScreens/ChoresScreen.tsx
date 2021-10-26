@@ -84,6 +84,7 @@ export default function ChoresScreen({ navigation, route }: Props) {
             onSave={() => setOpenAdd(false)}
             onClose={() => setOpenAdd(false)}
             householdId={householdId}
+            onRemove={() => ({})}
           />
         </Modal>
       )}
@@ -125,21 +126,20 @@ export default function ChoresScreen({ navigation, route }: Props) {
                   onDismiss={() => setOpenDelete(false)}
                 >
                   <DeleteChoreModal
-                  onArcive={() => {
-                    setOpenDelete(false);
-                    setOpenEdit(false);
-                    setOpenChore(false);
-                    console.log("arkiverar");
-                    
-                  }} 
-                  onClose={() => setOpenDelete(false)}
-                  onDelete={() => {
-                    setOpenDelete(false);
-                    setOpenEdit(false);
-                    setOpenChore(false);
-                    console.log("delete");
-                      }}
-                  choreId={choreId}
+                    onArcive={() => {
+                      setOpenDelete(false);
+                      setOpenEdit(false);
+                      setOpenChore(false);
+                      console.log("arkiverar");
+                    }}
+                    onClose={() => setOpenDelete(false)}
+                    onDelete={() => {
+                      setOpenDelete(false);
+                      setOpenEdit(false);
+                      setOpenChore(false);
+                      console.log("delete");
+                    }}
+                    choreId={choreId}
                   />
                 </Modal>
               )}

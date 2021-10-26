@@ -19,8 +19,8 @@ export default function DeleteChoreModal({
   onClose,
   onDelete,
   choreId,
-  // householdId,
-}: Props) {
+}: // householdId,
+Props) {
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
 
@@ -47,10 +47,7 @@ export default function DeleteChoreModal({
 
   return (
     <Card style={styles.card}>
-      <Card.Title
-        title={"Ta bort " + chore?.name}
-        style={styles.cardTitle}
-      />
+      <Card.Title title={`Ta bort , ${chore?.name}`} style={styles.cardTitle} />
       <Card.Content
         style={[styles.cardContent, { backgroundColor: colors.background }]}
       >
