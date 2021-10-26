@@ -1,7 +1,7 @@
-import { CompositeScreenProps, useTheme } from "@react-navigation/native";
+import { CompositeScreenProps } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { Button, Modal } from "react-native-paper";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { Modal } from "react-native-paper";
 import ChoreView from "../../components/ChoreView";
 import CustomButton from "../../components/common/CustomButton";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
@@ -22,7 +22,6 @@ export default function ChoresScreen({ navigation, route }: Props) {
   const [openChore, setOpenChore] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const { colors } = useTheme();
   const [choreExist, setChoreExist] = useState(false);
   const [choreId, setChoreId] = useState("");
 
@@ -121,14 +120,6 @@ export default function ChoresScreen({ navigation, route }: Props) {
                 />
               </Modal>
               {openDelete && (
-              //   <Button
-              //   onPress={() => {
-              //     setOpenDelete(false);
-              //     setOpenEdit(false);
-              //     setOpenChore(false);
-              //   }}
-              // >
-              // <Button onPress={() => setOpenDelete(false)}>Stäng</Button>
                 <Modal
                   visible={openChore}
                   onDismiss={() => setOpenDelete(false)}

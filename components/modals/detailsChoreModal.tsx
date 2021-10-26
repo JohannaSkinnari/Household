@@ -9,7 +9,6 @@ interface Props {
   onDone: () => void;
   onClose: () => void;
   onEdit: () => void;
-  // onRemove?: () => void;
   choreId: string;
   householdId: string;
 }
@@ -27,9 +26,11 @@ export default function DetailsChoreModal({
   const chore = useAppSelector(state =>
     state.choresList.chores.find(c => c.id === choreId)
   );
+
   if (!chore) {
     throw new Error("No chore found");
   }
+  
   const admin = useAppSelector(state =>
     state.memberList.members.find(
       m =>

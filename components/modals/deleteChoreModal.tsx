@@ -28,10 +28,8 @@ export default function DeleteChoreModal({
     state.choresList.chores.find(c => c.id === choreId)
   );
   if (!chore) {
-    // return <View></View>
     throw new Error("delete");
   }
-  
 
   // const ArciveButton = (props: { size: number }) => (
   //   <CustomButton
@@ -44,9 +42,8 @@ export default function DeleteChoreModal({
 
   const deleteThisChore = () => {
     dispatch(deleteChore(choreId));
-    onDelete;
+    onDelete();
   };
-
 
   return (
     <Card style={styles.card}>

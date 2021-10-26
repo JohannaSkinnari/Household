@@ -122,7 +122,6 @@ export default function AdminChoreModal({
     setShowValue(false);
   };
 
-  // if (onRemove) {
     const removeButton = (props: { size: number }) => (
       <CustomButton
         title="Ta bort"
@@ -131,7 +130,6 @@ export default function AdminChoreModal({
         onPress={onRemove ? onRemove : () => {}}
       />
     );
-  // }
 
   async function handleOnSubmit(values: IChore) {
     let response;
