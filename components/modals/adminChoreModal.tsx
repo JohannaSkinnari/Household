@@ -122,16 +122,16 @@ export default function AdminChoreModal({
     setShowValue(false);
   };
 
-  const removeButton = (props: { size: number }) => (
-    <CustomButton
-      title="Ta bort"
-      {...props}
-      icon="minus-circle-outline"
-      onPress={() => {
-        onRemove;
-      }}
-    />
-  );
+  // if (onRemove) {
+    const removeButton = (props: { size: number }) => (
+      <CustomButton
+        title="Ta bort"
+        {...props}
+        icon="minus-circle-outline"
+        onPress={onRemove ? onRemove : () => {}}
+      />
+    );
+  // }
 
   async function handleOnSubmit(values: IChore) {
     let response;
