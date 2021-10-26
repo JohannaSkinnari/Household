@@ -16,7 +16,7 @@ import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
 import { ISignUpData } from "../../interfaces/ISignupData";
 import { useAppDispatch } from "../../redux/reduxHooks";
-import { createNewUser } from "../../redux/user/userThunk";
+import { signupUser } from "../../redux/user/userThunk";
 
 export default function SignupScreen({
   navigation,
@@ -48,7 +48,7 @@ export default function SignupScreen({
         password: password,
         name: userName,
       };
-      await dispatch(createNewUser(newUser));
+      await dispatch(signupUser(newUser));
       navigation.navigate("ProfileNav");
     } else {
       setSignupError("Fyll i alla fält");
