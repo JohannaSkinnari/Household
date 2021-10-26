@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FlatList, Image, Pressable, View } from "react-native";
 import { useTheme } from "react-native-paper";
-import { avatars } from "../assets/AvatarData/data";
 
 interface IAvatar {
   icon: any;
@@ -55,13 +54,13 @@ export default function AvatarList({ onChange, dataArray }: Props) {
     <View style={{ height: 65 }}>
       <FlatList
         data={dataArray}
-        horizontal={true}
+        horizontal
         renderItem={({ item }) => (
           <Pressable
             onPress={() => {
-              onChange(String(item.id)),
-                setSelectedAvatar(item.id),
-                selectValue(item.id);
+              onChange(String(item.id));
+              setSelectedAvatar(item.id);
+              selectValue(item.id);
             }}
           >
             <Image
@@ -78,7 +77,7 @@ export default function AvatarList({ onChange, dataArray }: Props) {
             />
           </Pressable>
         )}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={item => item.id.toString()}
       />
     </View>
   );

@@ -6,7 +6,7 @@ const completedChoreSlice = createSlice({
   name: "completedChores",
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder.addCase(createCompletedChore.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.isCreatedSuccess = true;

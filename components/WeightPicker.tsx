@@ -11,57 +11,63 @@ export default function WeightPicker({ selectPickerWeightValue }: Props) {
   const { colors } = useTheme();
   return (
     <View
-      style={[styles.input, styles.value, {backgroundColor: colors.surface}]}
+      style={[styles.input, styles.value, { backgroundColor: colors.surface }]}
     >
       <View style={[styles.valueContainer]}>
         <View style={[styles.valueInnerContainer]}>
-          <Pressable 
-            style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueOne}]} 
+          <Pressable
+            style={[
+              styles.valueCircle,
+              styles.marginRight5,
+              { backgroundColor: colors.valueOne },
+            ]}
             onPress={() => selectPickerWeightValue(1)}
           >
-            <Text style={[{color: colors.text}]}>
-              1
-            </Text>
+            <Text style={[{ color: colors.text }]}>1</Text>
           </Pressable>
         </View>
         <View style={[styles.valueInnerContainer]}>
-          <Pressable 
-              style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueTwo}]}
+          <Pressable
+            style={[
+              styles.valueCircle,
+              styles.marginRight5,
+              { backgroundColor: colors.valueTwo },
+            ]}
             onPress={() => selectPickerWeightValue(2)}
           >
-            <Text style={[{color: colors.text}]}>
-              2
-            </Text>
+            <Text style={[{ color: colors.text }]}>2</Text>
           </Pressable>
         </View>
         <View style={[styles.valueInnerContainer]}>
-          <Pressable 
-              style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueFour}]} 
+          <Pressable
+            style={[
+              styles.valueCircle,
+              styles.marginRight5,
+              { backgroundColor: colors.valueFour },
+            ]}
             onPress={() => selectPickerWeightValue(4)}
           >
-            <Text style={[{color: colors.text}]}>
-              4
-            </Text>
+            <Text style={[{ color: colors.text }]}>4</Text>
           </Pressable>
         </View>
         <View style={[styles.valueInnerContainer]}>
-          <Pressable 
-              style={[styles.valueCircle, styles.marginRight5, {backgroundColor: colors.valueSix}]}  
+          <Pressable
+            style={[
+              styles.valueCircle,
+              styles.marginRight5,
+              { backgroundColor: colors.valueSix },
+            ]}
             onPress={() => selectPickerWeightValue(6)}
           >
-            <Text style={[{color: colors.text}]}>
-              6
-            </Text>
+            <Text style={[{ color: colors.text }]}>6</Text>
           </Pressable>
         </View>
         <View style={styles.valueLastInnerContainer}>
-          <Pressable 
-              style={[styles.valueCircle, {backgroundColor: colors.valueEight}]}
+          <Pressable
+            style={[styles.valueCircle, { backgroundColor: colors.valueEight }]}
             onPress={() => selectPickerWeightValue(8)}
           >
-            <Text style={[{color: colors.text}]}>
-              8
-            </Text>
+            <Text style={[{ color: colors.text }]}>8</Text>
           </Pressable>
         </View>
       </View>
@@ -92,33 +98,33 @@ const styles = StyleSheet.create({
     height: 80,
   },
   valueContainer: {
-    // borderLeftWidth: 0.5, 
-    flexDirection: "row", 
-    justifyContent: "space-evenly", 
-    width: "100%", 
-    // borderRightColor: "red", 
+    // borderLeftWidth: 0.5,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "100%",
+    // borderRightColor: "red",
     // borderRightWidth: 0.5,
     padding: 0,
-    height: "100%"
+    height: "100%",
   },
   valueInnerContainer: {
-    // borderRightWidth: 0.5, 
-    justifyContent: "center", 
+    // borderRightWidth: 0.5,
+    justifyContent: "center",
     alignItems: "center",
   },
   valueLastInnerContainer: {
-    justifyContent: "center", 
+    justifyContent: "center",
     alignItems: "center",
   },
   valueCircle: {
-    borderRadius: 50, 
-    width: 48, 
-    height: 48, 
-    // backgroundColor: colors.disabled, 
-    justifyContent: "center", 
+    borderRadius: 50,
+    width: 48,
+    height: 48,
+    // backgroundColor: colors.disabled,
+    justifyContent: "center",
     alignItems: "center",
   },
   marginRight5: {
     marginRight: 5,
   },
-})
+});

@@ -9,9 +9,7 @@ export default function PreviousWeekStatisticScreen() {
       <Text style={{ color: colors.text }}>
         Hello from PreviousWeekStatisticScreen
       </Text>
-      <Text style={{ color: colors.text }}>
-      Detta är en VG Sida
-      </Text>
+      <Text style={{ color: colors.text }}>Detta är en VG Sida</Text>
     </View>
   );
 }

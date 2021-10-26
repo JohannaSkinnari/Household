@@ -4,10 +4,10 @@ import { ThunkApi } from "../reduxStore";
 
 export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
   "member/createMember",
-  async (createMember, { getState }) => {
+  async (createMemberData, { getState }) => {
     const state = getState();
     const member: IMember = {
-      ...createMember,
+      ...createMemberData,
       id: Math.random().toString(),
       userId: state.userList.activeUser.id,
       isAdmin: false,
@@ -18,10 +18,10 @@ export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
 
 export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
   "member/createOwner",
-  async (createMember, { getState }) => {
+  async (createOwnerData, { getState }) => {
     const state = getState();
     const member: IMember = {
-      ...createMember,
+      ...createOwnerData,
       id: Math.random().toString(),
       userId: state.userList.activeUser.id,
       isAdmin: true,

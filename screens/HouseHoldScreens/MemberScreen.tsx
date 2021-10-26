@@ -10,20 +10,21 @@ export default function MemberScreen({
 }: HouseholdStackScreenProps<"medlemmar">) {
   const householdId = route.params.id;
   const { colors } = useTheme();
-  const household = useAppSelector((state) =>
-    state.houseHoldList.houseHoldList.find((house) => house.id === householdId)
+  const household = useAppSelector(state =>
+    state.houseHoldList.houseHoldList.find(house => house.id === householdId)
   );
 
   return (
     <View style={styles.choreList}>
       <ScrollView>
-        <MemberView householdId={householdId}></MemberView>
+        <MemberView householdId={householdId} />
       </ScrollView>
       <View style={styles.bottomView}>
         <Card style={[styles.card, { backgroundColor: colors.surface }]}>
           <Card.Content style={styles.cardContent}>
             <Text style={[styles.titleText, { color: colors.onSurface }]}>
-              {household?.name}´s kod:
+              {household?.name}
+              ´s kod:
             </Text>
             <Text style={[styles.codeText, { color: colors.onSurface }]}>
               {household?.houseHoldCode}
