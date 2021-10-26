@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../../interfaces/IUser";
 import { initialState } from "./userState";
-import { createNewUser } from "./userThunk";
+import { createNewUser, loginUser } from "./userThunk";
 
 const userSlice = createSlice({
   name: "users",
@@ -23,6 +23,16 @@ const userSlice = createSlice({
       state.error = "No data found";
     });
     builder.addCase(createNewUser.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(loginUser.fulfilled, (state, { payload }) => {
+      state.loading = false;
+    });
+    builder.addCase(loginUser.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = "No data found";
+    });
+    builder.addCase(loginUser.pending, (state, { payload }) => {
       state.loading = true;
     });
   },

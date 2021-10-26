@@ -1,8 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import firebase from "firebase";
-import { ICreateMember, IMember } from "../../interfaces/IMember";
+import { IMember } from "../../interfaces/IMember";
 import { ISignUpData } from "../../interfaces/ISignupData";
-import { IUser } from "../../interfaces/IUser";
 import { ThunkApi } from "../reduxStore";
 
 export const createNewUser = createAsyncThunk<
@@ -15,21 +14,38 @@ export const createNewUser = createAsyncThunk<
     .createUserWithEmailAndPassword(userData.email, userData.password)
     .then(async (userCred) => {
       if (!userCred.user) {
-        return rejectWithValue("Could not create account");
+        return rejectWithValue("Kan inte skapa konto");
       }
       await userCred.user.updateProfile({ displayName: userData.name });
 
-      // const id = userCred.user.uid;
-      // const user: IMember = {
-      //   id: id,
-      //   name: userData.name,
-      //   email: userData.email,
-      // };
-      // await firebase.firestore().collection("/member").doc(id).set(user);
+      const id = userCred.user.uid;
+      const user: IMember = {
+        userId: id,
+        householdId: "",
+        isAdmin: false,
+        avatarId: 0,
+      };
+      await firebase.firestore().collection("/member").doc(id).set(user);
     });
 
   return userData;
 });
+
+export const loginUser = createAsyncThunk<ILoginData, ILoginData, ThunkApi>(
+  "user/loginUser",
+  async (userData, { rejectWithValue }) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(userData.email, userData.password)
+      .then(async (userCred) => {
+        if (!userCred.user) {
+          return rejectWithValue("Kan inte logga in");
+        }
+      });
+
+    return userData;
+  }
+);
 // const response = firebase.auth().currentUser;
 // if (response !== null) {
 //   const user: IUser = {

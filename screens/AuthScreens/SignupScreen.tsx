@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
-import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
@@ -49,31 +48,11 @@ export default function SignupScreen({
         password: password,
         name: userName,
       };
-      dispatch(createNewUser(newUser));
+      await dispatch(createNewUser(newUser));
       navigation.navigate("ProfileNav");
     } else {
       setSignupError("Fyll i alla fält");
     }
-
-    // try {
-    //   if (email !== "" && userName !== "" && password !== "") {
-    //     await auth.createUserWithEmailAndPassword(email, password);
-
-    //     const user = Firebase.auth().currentUser;
-    //     user
-    //       .updateProfile({
-    //         displayName: userName,
-    //         photoURL:
-    //           "https://alextrenoweth.co.uk/wp-content/uploads/2015/11/rowan-atkinson.jpg",
-    //       })
-    //       .then(() => {
-    //         navigation.navigate("ProfileNav");
-    //       });
-    //   }
-    // } catch (error: unknown) {
-    //   const er = error as Error;
-    //   setSignupError(er.message);
-    // }
   };
 
   return (
