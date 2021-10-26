@@ -11,6 +11,7 @@ export const initialState: MemberState = {
     {
       id: "1",
       userId: "4",
+      name: "test",
       householdId: "1",
       isAdmin: true,
       avatarId: 1,
@@ -18,6 +19,7 @@ export const initialState: MemberState = {
     {
       id: "2",
       userId: "1",
+      name: "jepp",
       householdId: "2",
       isAdmin: false,
       avatarId: 3,
@@ -25,6 +27,7 @@ export const initialState: MemberState = {
     {
       id: "4",
       userId: "1",
+      name: "test",
       householdId: "3",
       isAdmin: true,
       avatarId: 4,
@@ -32,6 +35,7 @@ export const initialState: MemberState = {
     {
       id: "5",
       userId: "2",
+      name: "test",
       householdId: "3",
       isAdmin: false,
       avatarId: 1,
@@ -39,6 +43,7 @@ export const initialState: MemberState = {
     {
       id: "6",
       userId: "1",
+      name: "test",
       householdId: "1",
       isAdmin: false,
       avatarId: 8,

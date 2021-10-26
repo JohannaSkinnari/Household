@@ -1,4 +1,3 @@
-import firebase from "firebase";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -8,21 +7,20 @@ import HouseHoldView from "../../components/HouseHoldsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { useAppSelector } from "../../redux/reduxHooks";
+import Firebase from "../../database/config";
 
 export default function ProfileScreen({
   navigation,
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
-  const user = firebase.auth().currentUser;
+  const user = useAppSelector((user) => user.userList.activeUser);
 
   const onSignOut = () => {
-    firebase
-      .auth()
+    Firebase.auth()
       .signOut()
       .then(() => {
         navigation.navigate("Login");
-        console.log("Signed Out");
-        console.log(firebase.auth().currentUser);
       })
       .catch((e) => {
         console.error("Sign Out Error", e);
@@ -86,7 +84,6 @@ export default function ProfileScreen({
 }
 
 const styles = StyleSheet.create({
-
   header: {
     flexDirection: "row",
     alignItems: "center",

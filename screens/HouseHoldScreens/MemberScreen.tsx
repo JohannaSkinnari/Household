@@ -7,7 +7,7 @@ import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function MemberScreen({
   route,
-}: HouseholdStackScreenProps<"Members">) {
+}: HouseholdStackScreenProps<"medlemmar">) {
   const householdId = route.params.id;
   const { colors } = useTheme();
   const household = useAppSelector((state) =>

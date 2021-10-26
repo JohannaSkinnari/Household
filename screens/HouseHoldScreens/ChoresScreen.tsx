@@ -9,7 +9,7 @@ import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 
 type Props = CompositeScreenProps<
-  HouseholdStackScreenProps<"Chores">,
+  HouseholdStackScreenProps<"idag">,
   ProfileStackScreenProps<"Profile">
 >;
 
