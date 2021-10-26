@@ -8,12 +8,13 @@ import HouseHoldView from "../../components/HouseHoldsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { auth } from "../../database/firebase";
 
 export default function ProfileScreen({
   navigation,
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
-  const user = firebase.auth().currentUser;
+  const user = auth.currentUser;
 
   const onSignOut = () => {
     firebase
@@ -38,15 +39,14 @@ export default function ProfileScreen({
       <View style={[styles.header, , { backgroundColor: colors.background }]}>
         <View style={styles.userNameContainer}>
           <FontAwesome name="user-circle-o" size={24} color="#c75267" />
+          
           <Text style={[styles.headerText, { color: colors.text }]}>
-            {"   "}
-            {user?.displayName}
-            {"  "}
-          </Text>
+            {user?.displayName} 
+          </Text> 
         </View>
 
         <TouchableOpacity
-          onPress={onSignOut}
+          onPress={onSignOut} 
           style={[styles.buttonStyle, , { backgroundColor: colors.darkPink }]}
           activeOpacity={0.5}
         >
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
   headerText: {
     textTransform: "uppercase",
     fontSize: 18,
+    marginHorizontal: 10,
   },
   buttonStyle: {
     flexDirection: "row",

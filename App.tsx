@@ -12,6 +12,7 @@ import store from "./redux/reduxStore";
 export default function App() {
   console.ignoredYellowBox = ['Setting a timer'];
 
+
   const scheme = useColorScheme();
   const isDarkTheme = scheme === "dark";
   const theme = getTheme(isDarkTheme);

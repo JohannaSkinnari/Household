@@ -1,6 +1,14 @@
 import React from "react";
 import { useState } from "react";
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 import CustomButton from "../../components/common/CustomButton";
@@ -8,8 +16,6 @@ import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
 import { auth, firestore } from "../../database/firebase";
 import { IUser } from "../../interfaces/IUser";
-
-
 
 export default function LoginScreen({
   navigation,
@@ -32,28 +38,28 @@ export default function LoginScreen({
     }
   };
 
-  
   const onHandleSignup = async () => {
     try {
       if (email !== "" && userName !== "" && password !== "") {
         const res = await auth.createUserWithEmailAndPassword(email, password);
-        if((await res).user) {
+        if ((await res).user) {
           const userData: IUser = {
-          email: email,
-          name: userName,
-          id: "1",
-          password: password,
-          
-        };
-        await firestore.collection('/users').doc(auth.currentUser?.uid).set(userData);
-            auth.currentUser?.updateProfile({
-          displayName: userName,
-        })
-
+            email: email,
+            name: userName,
+            id: "1",
+            password: password,
+          };
+          await firestore
+            .collection("/users")
+            .doc(auth.currentUser?.uid)
+            .set(userData);
+          auth.currentUser?.updateProfile({
+            displayName: userName,
+          });
           navigation.navigate("ProfileNav");
         }
       }
-    } catch (error: unknown) {
+    } catch (error) {
       const er = error as Error;
       setSignupError(er.message);
     }
@@ -64,87 +70,95 @@ export default function LoginScreen({
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={[styles.innerContainer, { backgroundColor: colors.background }]}>
-      <View style={styles.logoContainer}>
-        <Logo />
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View
+          style={[
+            styles.innerContainer,
+            { backgroundColor: colors.background },
+          ]}
+        >
+          <View style={styles.logoContainer}>
+            <Logo />
+          </View>
 
-      <View style={[styles.authContainer, { backgroundColor: colors.card }]}>
-        <Text style={styles.title}>Registrera nytt konto</Text>
+          <View
+            style={[styles.authContainer, { backgroundColor: colors.card }]}
+          >
+            <Text style={styles.title}>Registrera nytt konto</Text>
 
-        <InputField
-          inputContainerStyle={{
-            marginBottom: 20,
-          }}
-          leftIcon="email"
-          placeholder="Email"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          textContentType="emailAddress"
-          autoFocus={true}
-          value={email}
-          onChangeText={(text: string) => setEmail(text)}
-          rightIcon={undefined}
-          handlePasswordVisibility={undefined}
-          autoCorrect={false}
-        />
+            <InputField
+              inputContainerStyle={{
+                marginBottom: 20,
+              }}
+              leftIcon="email"
+              placeholder="Email"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              textContentType="emailAddress"
+              autoFocus={true}
+              value={email}
+              onChangeText={(text: string) => setEmail(text)}
+              rightIcon={undefined}
+              handlePasswordVisibility={undefined}
+              autoCorrect={false}
+            />
 
-<InputField
-          inputContainerStyle={{
-            marginBottom: 20,
-          }}
-          leftIcon="account"
-          placeholder="Användarnamn"
-          autoCapitalize="none"
-          keyboardType={""}
-          textContentType="userName"
-          autoFocus={false}
-          value={userName}
-          onChangeText={(text: string) => setUserName(text)}
-          rightIcon={undefined}
-          handlePasswordVisibility={undefined}
-          autoCorrect={false}
-        />
+            <InputField
+              inputContainerStyle={{
+                marginBottom: 20,
+              }}
+              leftIcon="account"
+              placeholder="Användarnamn"
+              autoCapitalize="none"
+              keyboardType={""}
+              textContentType="userName"
+              autoFocus={false}
+              value={userName}
+              onChangeText={(text: string) => setUserName(text)}
+              rightIcon={undefined}
+              handlePasswordVisibility={undefined}
+              autoCorrect={false}
+            />
 
-        <InputField
-          inputContainerStyle={{
-            marginBottom: 20,
-          }}
-          leftIcon="lock"
-          placeholder="Lösenord"
-          autoCapitalize="none"
-          autoCorrect={false}
-          secureTextEntry={passwordVisibility}
-          textContentType="password"
-          rightIcon={rightIcon}
-          value={password}
-          onChangeText={(text: string) => setPassword(text)}
-          handlePasswordVisibility={handlePasswordVisibility}
-          keyboardType={""}
-          autoFocus={false}
-        />
+            <InputField
+              inputContainerStyle={{
+                marginBottom: 20,
+              }}
+              leftIcon="lock"
+              placeholder="Lösenord"
+              autoCapitalize="none"
+              autoCorrect={false}
+              secureTextEntry={passwordVisibility}
+              textContentType="password"
+              rightIcon={rightIcon}
+              value={password}
+              onChangeText={(text: string) => setPassword(text)}
+              handlePasswordVisibility={handlePasswordVisibility}
+              keyboardType={""}
+              autoFocus={false}
+            />
 
-        {signupError ? (
-          <ErrorMessage error={signupError} visible={true} />
-        ) : null}
+            {signupError ? (
+              <ErrorMessage error={signupError} visible={true} />
+            ) : null}
 
-        <View style={styles.buttonField}>
-          <CustomButton onPress={onHandleSignup} title="Registrera" />
-          
-          <CustomButton
-              onPress={() => navigation.navigate("Login")}
-              title="Logga in" />
+            <View style={styles.buttonField}>
+              <CustomButton onPress={onHandleSignup} title="Registrera" />
+
+              <CustomButton
+                onPress={() => navigation.navigate("Login")}
+                title="Logga in"
+              />
+            </View>
+
+            <View>
+              <Text style={styles.footerText}>
+                När du registrerar dig kommer du samtidigt att loggas in !
+              </Text>
+            </View>
+          </View>
         </View>
-        
-        <View>
-          <Text style={styles.footerText}>
-            När du registrerar dig kommer du samtidigt att loggas in !
-          </Text>
-        </View>
-      </View>
-    </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 }
@@ -152,14 +166,12 @@ export default function LoginScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
-    
   },
 
   innerContainer: {
     paddingHorizontal: 12,
     paddingTop: 50,
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
   },
 
   authContainer: {
