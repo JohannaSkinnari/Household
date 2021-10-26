@@ -1,11 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IUser } from "../../interfaces/IUser";
 import { initialState } from "./userState";
 import { createNewUser } from "./userThunk";
 
 const userSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser(state, { payload }) {
+      state.activeUser = payload;
+    },
+    removeUser(state, { payload }) {
+      state.activeUser = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createNewUser.fulfilled, (state, { payload }) => {
       state.loading = false;
@@ -20,6 +28,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {} = userSlice.actions;
+export const { setUser, removeUser } = userSlice.actions;
 
 export default userSlice.reducer;

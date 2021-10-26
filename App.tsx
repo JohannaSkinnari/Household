@@ -13,6 +13,7 @@ import firebase from "firebase/app";
 import { Provider as ReduxProvider } from "react-redux";
 import RootNavigation from "./navigation/RootNavigation";
 import store, { useAppDispatch } from "./redux/reduxStore";
+import { removeUser, setUser } from "./redux/user/userSlice";
 
 export default function App() {
   const scheme = useColorScheme();
@@ -43,13 +44,11 @@ const FirebaseSetup = () => {
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
         dispatch(setUser(user));
         // Dispatch user to redux store!
       } else {
-        dispatch(setUser(undefined));
+        dispatch(removeUser(null));
         // User is signed out
         // Remove user from redux store!
       }
