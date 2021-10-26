@@ -49,7 +49,7 @@ export default function DetailsChoreModal({
 
   const completeThisChore = () => {
     dispatch(completeChore(chore));
-    onDone;
+    onDone();
   };
 
   return (
