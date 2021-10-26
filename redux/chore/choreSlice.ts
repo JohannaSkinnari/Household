@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IChore, IModefideChore } from "../../interfaces/IChore";
 import { initialState } from "./choreState";
-import { createChore, editChore, getChores } from "./choreThunk";
+import { completeChore, createChore, editChore, getChores } from "./choreThunk";
 
 const choreSlice = createSlice({
   name: "chores",
@@ -43,6 +43,24 @@ const choreSlice = createSlice({
       state.error = "No data found";
     });
     builder.addCase(editChore.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+
+    builder.addCase(completeChore.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.isCreatedSuccess = true;
+      const index = state.chores.findIndex((chore) => chore.id === payload.id);
+      state.chores[index] = {
+        ...state.chores[index],
+        ...payload,
+      };
+    });
+    builder.addCase(completeChore.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.isCreatedSuccess = false;
+      state.error = "No data found";
+    });
+    builder.addCase(completeChore.pending, (state, { payload }) => {
       state.loading = true;
     });
 
