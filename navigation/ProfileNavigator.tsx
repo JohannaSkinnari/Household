@@ -2,14 +2,12 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import firebase from "firebase";
 import React from "react";
-import { useAppSelector } from "../redux/reduxHooks";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
 import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettingsScreen";
 import JoinHouseholdScreen from "../screens/ProfileScreens/JoinHouseHoldScreen";
 import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
 import HouseholdNavigator from "./HouseHoldNavigator";
-import RootNavigation from "./RootNavigation";
 
 type ProfileStackParamList = {
   Profile: undefined;
@@ -17,7 +15,7 @@ type ProfileStackParamList = {
   CreateHousehold: undefined;
   HouseholdSettings: undefined;
   Household: { id: string };
-  HouseholdInfo: undefined;
+  HouseholdInfo: { id: string };
   Login: undefined;
 };
 
@@ -27,10 +25,9 @@ export type ProfileStackScreenProps<
 
 const Stack = createStackNavigator<ProfileStackParamList>();
 
-
 export default function ProfileNavigation() {
   const user = firebase.auth().currentUser;
-const userName = user?.displayName
+  const userName = user?.displayName;
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
@@ -38,8 +35,8 @@ const userName = user?.displayName
           name="Profile"
           component={ProfileScreen}
           options={{
-            title: "Profil sidan" , // userName istället
-            headerLeft: () => null
+            title: "Profil sidan", // userName istället
+            headerLeft: () => null,
           }}
         />
         <Stack.Screen
@@ -62,7 +59,7 @@ const userName = user?.displayName
           component={HouseholdNavigator}
           options={{
             title:
-              "household.name" /**peta in state/prop här för att visa korrekt hushållsnamn */,
+              "household.name" /** peta in state/prop här för att visa korrekt hushållsnamn */,
             headerLeft: () => null,
           }}
         />

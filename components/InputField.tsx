@@ -20,19 +20,27 @@ interface Props {
   autoCorrect: boolean;
 }
 
-const InputField: FC<Props> = (props) => {
+const InputField: FC<Props> = ({
+  inputContainerStyle,
+  leftIcon,
+  placeholder,
+  secureTextEntry,
+  onChangeText,
+  rightIcon,
+  handlePasswordVisibility,
+}: Props) => {
   const { colors } = useTheme();
   return (
     <View
       style={[
         styles.container,
-        props.inputContainerStyle,
+        inputContainerStyle,
         { backgroundColor: colors.background },
       ]}
     >
-      {props.leftIcon ? (
+      {leftIcon ? (
         <MaterialCommunityIcons
-          name={props.leftIcon}
+          name={leftIcon}
           size={20}
           color={colors.placeholder}
           style={styles.leftIcon}
@@ -40,15 +48,15 @@ const InputField: FC<Props> = (props) => {
       ) : null}
       <TextInput
         style={[styles.input, { color: colors.text }]}
-        placeholder={props.placeholder}
-        secureTextEntry={props.secureTextEntry || false}
-        onChangeText={props.onChangeText}
+        placeholder={placeholder}
+        secureTextEntry={secureTextEntry || false}
+        onChangeText={onChangeText}
         placeholderTextColor={colors.placeholder}
       />
-      {props.rightIcon ? (
-        <TouchableOpacity onPress={props.handlePasswordVisibility}>
+      {rightIcon ? (
+        <TouchableOpacity onPress={handlePasswordVisibility}>
           <MaterialCommunityIcons
-            name={props.rightIcon}
+            name={rightIcon}
             size={20}
             color={colors.placeholder}
             style={styles.rightIcon}

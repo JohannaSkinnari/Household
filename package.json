@@ -5,7 +5,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "eslint --ignore-path .eslintignore . --ext .ts,.tsx",
+    "prettier": "prettier --config .prettierrc . --ext .ts,.tsx"
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
@@ -39,7 +41,21 @@
     "@types/react": "~16.9.35",
     "@types/react-dom": "^17.0.9",
     "@types/react-native": "~0.63.2",
+<<<<<<< HEAD
     "@types/uuid": "^8.3.1",
+=======
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.4.1",
+>>>>>>> development
     "typescript": "~4.0.0"
   },
   "private": true

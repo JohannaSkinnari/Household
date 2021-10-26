@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
+import firebase from "firebase/app";
 import React from "react";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -11,7 +12,6 @@ import store from "./redux/reduxStore";
 
 export default function App() {
   console.ignoredYellowBox = ['Setting a timer'];
-
 
   const scheme = useColorScheme();
   const isDarkTheme = scheme === "dark";

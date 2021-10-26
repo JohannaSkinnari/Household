@@ -12,15 +12,15 @@ interface Props {
 export default function MemberView({ householdId }: Props) {
   const { colors } = useTheme();
 
-  const MemberList = useAppSelector((state) =>
+  const MemberList = useAppSelector(state =>
     state.memberList.members
-      .filter((member) => member.householdId === householdId)
-      .map((member) => {
-        const user = state.userList.users.find((u) => u.id === member.userId);
+      .filter(member => member.householdId === householdId)
+      .map(member => {
+        const user = state.userList.users.find(u => u.id === member.userId);
         return {
           member,
           user,
-          avatar: avatars.find((avatar) => avatar.id === member?.avatarId),
+          avatar: avatars.find(avatar => avatar.id === member?.avatarId),
         };
       })
   );
@@ -43,7 +43,7 @@ export default function MemberView({ householdId }: Props) {
             </View>
             <View style={styles.iconsContainer}>
               <Image style={styles.avatar} source={avatar?.icon} />
-              <View style={styles.active}></View>
+              <View style={styles.active} />
             </View>
           </TouchableOpacity>
         </View>

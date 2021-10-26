@@ -1,7 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { TabBar } from "react-native-tab-view";
 import CustomTabBar from "../components/CustomTabBar";
 import ChoresScreen from "../screens/HouseHoldScreens/ChoresScreen";
 import CurrentWeekStatisticScreen from "../screens/HouseHoldScreens/CurrentWeekStatisticScreen";
@@ -10,12 +9,10 @@ import PreviousWeekStatisticScreen from "../screens/HouseHoldScreens/PreviousWee
 import { ProfileStackScreenProps } from "./ProfileNavigator";
 
 export type HouseholdStackParamList = {
-  // Om navigationsproblem uppstår utforska nedan utkommenterad Chores
-  // Chores: ProfileStackScreenProps<"Profile">;
   idag: { id: string };
   medlemmar: { id: string };
   veckan: { id: string };
-  ["förra vackan"]: { id: string };
+  ["förra veckan"]: { id: string };
 };
 
 export type HouseholdStackScreenProps<
@@ -51,7 +48,7 @@ export default function HouseholdNavigator({
         options={{ title: "Veckan" }}
       />
       <Tab.Screen
-        name="förra vackan"
+        name="förra veckan"
         initialParams={route.params}
         component={PreviousWeekStatisticScreen}
         options={{ title: "Förra veckan" }}

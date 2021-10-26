@@ -1,4 +1,4 @@
-import ErrorMessage from './ErrorMessage';
-import InputField from './InputField';
+import ErrorMessage from "./ErrorMessage";
+import InputField from "./InputField";
 
-export {  ErrorMessage, InputField };
+export { ErrorMessage, InputField };
