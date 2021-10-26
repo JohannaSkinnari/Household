@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import * as yup from "yup";
+import { avatars } from "../assets/AvatarData/data";
 import { ICreateHouseHold } from "../interfaces/IHouseHold";
 import { ICreateMember } from "../interfaces/IMember";
 import { createHouseHold } from "../redux/houseHold/houseHoldThunk";
@@ -94,26 +95,27 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
                 {errors.house.name}
               </Text>
             )}
-          </View>
-          <View style={styles.avatarStyle}>
-            <AvatarList
-              value={values.member.avatarId}
-              onChange={(value) =>
-                setFieldValue("member.avatarId", parseFloat(value))
-              }
-            />
-          </View>
-          {errors.member && touched.member && (
-            <Text style={[styles.errors, { color: colors.darkPink }]}>
-              {errors.member.avatarId}
-            </Text>
-          )}
-          <View style={{ marginVertical: 80 }}>
-            <CustomButton
-              icon={"plus-circle-outline"}
-              title={"Spara"}
-              onPress={handleSubmit}
-            />
+            <View style={styles.avatarStyle}>
+              <AvatarList
+                dataArray={avatars}
+                value={values.member.avatarId}
+                onChange={(value) =>
+                  setFieldValue("member.avatarId", parseFloat(value))
+                }
+              />
+            </View>
+            {errors.member && touched.member && (
+              <Text style={[styles.errors, { color: colors.darkPink }]}>
+                {errors.member.avatarId}
+              </Text>
+            )}
+            <View style={styles.buttonStyle}>
+              <CustomButton
+                icon={"plus-circle-outline"}
+                title={"Spara"}
+                onPress={handleSubmit}
+              />
+            </View>
           </View>
         </View>
       )}
@@ -123,8 +125,10 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
 
 const styles = StyleSheet.create({
   root: {
-    justifyContent: "center",
+    flex: 1,
+    justifyContent: "space-between",
     alignItems: "center",
+    paddingTop: 10,
   },
   container: {
     justifyContent: "center",
@@ -152,10 +156,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 6,
-    width: 200,
+    width: 330,
   },
   textInput: {
     textAlign: "center",
     height: 55,
+  },
+  buttonStyle: {
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 10,
   },
 });

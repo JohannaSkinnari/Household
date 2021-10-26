@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
+import firebase from "firebase";
 import React from "react";
 import { useAppSelector } from "../redux/reduxHooks";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
@@ -8,6 +9,7 @@ import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettings
 import JoinHouseholdScreen from "../screens/ProfileScreens/JoinHouseHoldScreen";
 import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
 import HouseholdNavigator from "./HouseHoldNavigator";
+import RootNavigation from "./RootNavigation";
 
 type ProfileStackParamList = {
   Profile: undefined;
@@ -15,7 +17,8 @@ type ProfileStackParamList = {
   CreateHousehold: undefined;
   HouseholdSettings: undefined;
   Household: { id: string };
-  HouseholdInfo: undefined;
+  HouseholdInfo: { id: string };
+  Login: undefined;
 };
 
 export type ProfileStackScreenProps<
@@ -24,8 +27,10 @@ export type ProfileStackScreenProps<
 
 const Stack = createStackNavigator<ProfileStackParamList>();
 
+
 export default function ProfileNavigation() {
-  // useAppSelector till att ta ut hushålls namnet
+  const user = firebase.auth().currentUser;
+const userName = user?.displayName
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
@@ -33,8 +38,8 @@ export default function ProfileNavigation() {
           name="Profile"
           component={ProfileScreen}
           options={{
-            title: "user.name",
-            headerLeft: () => null,
+            title: "Profil sidan" , // userName istället
+            headerLeft: () => null
           }}
         />
         <Stack.Screen

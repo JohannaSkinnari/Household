@@ -1,5 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IChore, ICreateChore } from "../../interfaces/IChore";
+import { IChore, IModefideChore } from "../../interfaces/IChore";
+import {
+  ICompletedChore,
+  ICreateCompletedChore,
+} from "../../interfaces/ICompletedChore";
+import { createCompletedChore } from "../completedChores/completedChoreThunk";
+import { useAppSelector } from "../reduxHooks";
 import { ThunkApi } from "../reduxStore";
 // useEffect för huvudsida kanske ?  i samband med att du loggar in sig. Som en usedatafetcher custom hook => datafetcher useEffecter kör dessa functioner.
 export const getChores = createAsyncThunk<IChore[]>(
@@ -14,21 +20,44 @@ export const getChores = createAsyncThunk<IChore[]>(
   }
 );
 
+type ThunkParam = IChore;
 
-type ThunkParam = ICreateChore;
+export const createChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
+  "chore/createChore",
+  async (createData) => {
+    // servern ska lösa det här istället.
+    const chore: IChore = {
+      ...createData,
+      id: Math.random().toString(),
+    };
+    // prata med API
+    return chore;
+  }
+);
 
-export const createChore = createAsyncThunk<
-  IChore,
-  ThunkParam,
-  ThunkApi
->("chore/createChore", async (createData, { dispatch }) => {
-  // servern ska lösa det här istället.
-  const chore: IChore = {
-    ...createData,
-    id: Math.random().toString(),
-  };
-  // dispatch(createMember({ ...createData.member, householdId: household.id }));
-  console.log("thunk: " +chore);
-  
-  return chore;
-});
+export const editChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
+  "chore/editChore",
+  async (updateData) => {
+    console.log("edit thunk");
+    // prata med API
+    return updateData;
+  }
+);
+
+export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
+  "chore/completeChore",
+  async (updateData, { dispatch }) => {
+    const updatedChore: IChore = {
+      ...updateData,
+      lastCompleted: new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate()
+      ).toDateString(),
+    };
+
+    // prata med API
+    dispatch(createCompletedChore(updatedChore));
+    return updatedChore;
+  }
+);
