@@ -6,7 +6,7 @@ export interface IChore {
   interval: number;
   weight: number;
   lastCompleted?: string;
-  isArchived?: boolean;
+  isArchived: boolean;
 }
 
 export type IModefideChore = Omit<IChore, "id">;

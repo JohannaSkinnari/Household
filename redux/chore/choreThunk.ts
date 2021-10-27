@@ -40,6 +40,18 @@ export const editChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
     updateData
 );
 
+export const archiveChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
+  "chore/archiveChore",
+  async updateData => {
+    const archivedChore: IChore = {
+      ...updateData,
+      isArchived: true,
+    };
+    // prata med API
+    return archivedChore;
+  }
+);
+
 export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
   "chore/completeChore",
   async (updateData, { dispatch }) => {

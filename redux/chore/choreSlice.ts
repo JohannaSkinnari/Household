@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./choreState";
 import {
+  archiveChore,
   completeChore,
   createChore,
   deleteChore,
@@ -42,6 +43,24 @@ const choreSlice = createSlice({
       state.error = "No data found";
     });
     builder.addCase(editChore.pending, state => {
+      state.loading = true;
+    });
+
+    builder.addCase(archiveChore.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.isCreatedSuccess = true;
+      const index = state.chores.findIndex(chore => chore.id === payload.id);
+      state.chores[index] = {
+        ...state.chores[index],
+        ...payload,
+      };
+    });
+    builder.addCase(archiveChore.rejected, state => {
+      state.loading = false;
+      state.isCreatedSuccess = false;
+      state.error = "No data found";
+    });
+    builder.addCase(archiveChore.pending, state => {
       state.loading = true;
     });
 

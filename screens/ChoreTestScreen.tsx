@@ -30,6 +30,7 @@ export default function testScreen() {
       weight: 1,
       lastCompleted: undefined,
       householdId: "1",
+      isArchived: false,
     };
     dispatch(createChore(dummyChore));
     // console.log(chores);
