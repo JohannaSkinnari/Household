@@ -126,7 +126,7 @@ export default function ChoresScreen({ navigation, route }: Props) {
                   onDismiss={() => setOpenDelete(false)}
                 >
                   <DeleteChoreModal
-                    onArcive={() => {
+                    onArchive={() => {
                       setOpenDelete(false);
                       setOpenEdit(false);
                       setOpenChore(false);
