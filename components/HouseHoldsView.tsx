@@ -43,6 +43,7 @@ export default function HouseHoldView({ onSelectedHouse }: Props) {
           </TouchableOpacity>
           <TouchableOpacity
           //onPress={}
+          disabled={false} 
           style={[styles.buttonStyle, { backgroundColor: colors.surface}]}
           activeOpacity={0.5}
         >

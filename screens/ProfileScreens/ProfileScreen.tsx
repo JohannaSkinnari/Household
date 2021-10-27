@@ -13,6 +13,17 @@ export default function ProfileScreen({
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
   const user = firebase.auth().currentUser;
+  const [setupButton, setSetupButton] = useState("eye");
+
+  const handleButtonVisibility = () => {
+    if (householdId  === membberid && isAdmin === true) {
+      setSetupButton("eye-off");
+      setPasswordVisibility(!buttonVisibility);
+    } else if (setupButton === "eye-off") {
+      setSetupButton("eye");
+      setPasswordVisibility(!buttonVisibility);
+    }
+  };
 
   const onSignOut = () => {
     firebase
