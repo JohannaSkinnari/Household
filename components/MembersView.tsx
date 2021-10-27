@@ -11,15 +11,16 @@ interface Props {
 
 export default function MemberView({ householdId }: Props) {
   const { colors } = useTheme();
-
+  const currentUser = useAppSelector((state) => state.userList.activeUser);
   const MemberList = useAppSelector((state) =>
     state.memberList.members
       .filter((member) => member.householdId === householdId)
       .map((member) => {
-        const user = state.userList.users.find((u) => u.id === member.userId);
+        const currentMember = state.memberList.members.find(
+          (m) => m.userId === currentUser?.uid
+        );
         return {
-          member,
-          user,
+          currentMember,
           avatar: avatars.find((avatar) => avatar.id === member?.avatarId),
         };
       })
@@ -27,18 +28,21 @@ export default function MemberView({ householdId }: Props) {
 
   return (
     <>
-      {MemberList.map(({ member, user, avatar }) => (
-        <View key={member.id}>
+      {MemberList.map(({ currentMember, avatar }) => (
+        <View key={currentMember?.id}>
           <TouchableOpacity
             style={[styles.householdCard, { backgroundColor: colors.surface }]}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
-                style={[styles.crown, { height: member?.isAdmin ? 30 : 0 }]}
+                style={[
+                  styles.crown,
+                  { height: currentMember?.isAdmin ? 30 : 0 },
+                ]}
                 source={require("../assets/images/crown.png")}
               />
               <Text style={[styles.text, { color: colors.onSurface }]}>
-                {user?.name}
+                {currentMember?.name}
               </Text>
             </View>
             <View style={styles.iconsContainer}>
