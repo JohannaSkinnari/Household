@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
-import { deleteChore } from "../../redux/chore/choreThunk";
+import { archiveChore, deleteChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 
 interface Props {
@@ -32,6 +32,11 @@ export default function DeleteChoreModal({
     onDelete();
   };
 
+  const archiveThisChore = () => {
+    dispatch(archiveChore(chore));
+    onArchive();
+  };
+
   return (
     <Card style={styles.card}>
       <Card.Title title={`Ta bort , ${chore?.name}`} style={styles.cardTitle} />
@@ -51,7 +56,7 @@ export default function DeleteChoreModal({
           <Button
             icon="folder-download-outline"
             color={colors.green}
-            onPress={onArchive}
+            onPress={archiveThisChore}
           >
             Arkivera
           </Button>
