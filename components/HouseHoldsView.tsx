@@ -4,6 +4,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { getUserHouseholds } from "../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../redux/reduxHooks";
+import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
+
 
 interface Props {
   onSelectedHouse: (id: string) => void;
@@ -39,6 +41,17 @@ export default function HouseHoldView({ onSelectedHouse }: Props) {
               <Image style={styles.avatar} source={avatar?.icon} />
             </View>
           </TouchableOpacity>
+          <TouchableOpacity
+          //onPress={}
+          style={[styles.buttonStyle, { backgroundColor: colors.surface}]}
+          activeOpacity={0.5}
+        >
+          <View style={styles.buttonIconStyle}>
+          <SimpleLineIcons name="settings" size={18} color="black" />
+          </View>
+          
+          <Text style={[{ color: colors.text}]}>Inställningar</Text>
+        </TouchableOpacity>
         </View>
       ))}
     </>
@@ -75,5 +88,27 @@ const styles = StyleSheet.create({
   iconsContainer: {
     marginRight: 8,
     flexDirection: "row",
+  },
+
+  buttonStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#485a96",
+    borderWidth: 0.5,
+    borderColor: "#fff",
+    height: 35,
+    borderRadius: 20,
+    margin: 5,
+    width:120,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+  buttonIconStyle: {
+    padding: 8,
   },
 });
