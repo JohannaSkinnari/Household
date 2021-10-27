@@ -24,6 +24,10 @@ export const createHouseHold = createAsyncThunk<
     .collection("/household")
     .add(household)
     .then((docRef) => {
+      Firebase.firestore()
+        .collection("/household")
+        .doc(docRef.id)
+        .update({ id: docRef.id });
       household.id = docRef.id;
       dispatch(createOwner({ ...createData.member, householdId: docRef.id }));
     });

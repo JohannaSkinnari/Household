@@ -15,6 +15,7 @@ import { removeUser, setUser } from "./redux/user/userSlice";
 import firebase from "firebase";
 import Firebase from "./database/config";
 import { IUser } from "./interfaces/IUser";
+import { loadData } from "./redux/auth/authThunk";
 
 export default function App() {
   const scheme = useColorScheme();
@@ -41,15 +42,13 @@ const FirebaseSetup = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // firebase.initializeApp(firebaseConfig);
-
     Firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        //const uid = user.uid;
         dispatch(setUser(user.toJSON() as IUser));
-        // Dispatch user to redux store!
+        dispatch(loadData(user.toJSON() as IUser));
       } else {
         dispatch(removeUser(null));
+        // clear data vanlig action. till tomma []
         // User is signed out
         // Remove user from redux store!
       }

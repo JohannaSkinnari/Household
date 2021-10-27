@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IHouseHold } from "../../interfaces/IHouseHold";
+import { loadData } from "../auth/authThunk";
 import { initialState } from "./houseHoldState";
 import { createHouseHold } from "./houseHoldThunk";
 
@@ -30,6 +31,9 @@ const houseHoldSlice = createSlice({
     });
     builder.addCase(createHouseHold.pending, (state, { payload }) => {
       state.loading = true;
+    });
+    builder.addCase(loadData.fulfilled, (state, { payload }) => {
+      state.houseHoldList = payload.households;
     });
   },
 });

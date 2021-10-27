@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loadData } from "../auth/authThunk";
 import { initialState } from "./memberState";
 import { createMember, createOwner } from "./memberThunk";
 
@@ -28,6 +29,9 @@ const memberSlice = createSlice({
     });
     builder.addCase(createOwner.pending, (state, { payload }) => {
       state.loading = true;
+    });
+    builder.addCase(loadData.fulfilled, (state, { payload }) => {
+      state.members = payload.members;
     });
   },
 });

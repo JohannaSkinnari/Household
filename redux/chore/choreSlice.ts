@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IChore, IModefideChore } from "../../interfaces/IChore";
+import { loadData } from "../auth/authThunk";
 import { initialState } from "./choreState";
 import { createChore, editChore, getChores } from "./choreThunk";
 
@@ -54,6 +55,9 @@ const choreSlice = createSlice({
     });
     builder.addCase(getChores.pending, (state, { payload }) => {
       state.loading = true;
+    });
+    builder.addCase(loadData.fulfilled, (state, { payload }) => {
+      state.chores = payload.chores;
     });
   },
 });
