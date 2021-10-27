@@ -130,14 +130,12 @@ export default function ChoresScreen({ navigation, route }: Props) {
                       setOpenDelete(false);
                       setOpenEdit(false);
                       setOpenChore(false);
-                      console.log("arkiverar");
                     }}
                     onClose={() => setOpenDelete(false)}
                     onDelete={() => {
                       setOpenDelete(false);
                       setOpenEdit(false);
                       setOpenChore(false);
-                      console.log("delete");
                     }}
                     choreId={choreId}
                   />
