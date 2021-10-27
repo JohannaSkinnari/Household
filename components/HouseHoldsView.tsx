@@ -4,17 +4,18 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { getUserHouseholds } from "../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../redux/reduxHooks";
-import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 
 interface Props {
   onSelectedHouse: (id: string) => void;
+  onSelectedHouseSetup: (id: string) => void;
 }
 
-export default function HouseHoldView({ onSelectedHouse }: Props) {
+export default function HouseHoldView({ onSelectedHouse,onSelectedHouseSetup }: Props) {
   const { colors } = useTheme();
-
   const houseList = useAppSelector(getUserHouseholds);
+
 
   return (
     <>
@@ -42,13 +43,13 @@ export default function HouseHoldView({ onSelectedHouse }: Props) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-          //onPress={}
-          disabled={false} 
-          style={[styles.buttonStyle, { backgroundColor: colors.surface}]}
+          onPress={() => onSelectedHouseSetup("HouseholdSettings")} // navigation.navigate("ProfileNav")
+          
+          style={[styles.buttonStyle, { backgroundColor: colors.surface},{ display: member?.isAdmin ? "flex" : "none" }]}
           activeOpacity={0.5}
         >
           <View style={styles.buttonIconStyle}>
-          <SimpleLineIcons name="settings" size={18} color="black" />
+          <SimpleLineIcons name="settings" size={18} color="#c75267" />
           </View>
           
           <Text style={[{ color: colors.text}]}>Inställningar</Text>
@@ -94,12 +95,12 @@ const styles = StyleSheet.create({
   buttonStyle: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#485a96",
     borderWidth: 0.5,
-    borderColor: "#fff",
-    height: 35,
-    borderRadius: 20,
-    margin: 5,
+    borderColor: "#485a96",
+    height: 25,
+    marginHorizontal:10,
+    borderRadius: 15,
+    marginBottom: 10,
     width:120,
     shadowOffset: {
       width: 0,

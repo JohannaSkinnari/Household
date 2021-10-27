@@ -14,10 +14,11 @@ import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
+import firebase from "firebase";
 
-const auth = Firebase.auth();
-// Är funktionsnamnet rätt för LoginScreen??
-export default function LoginScreen({
+const auth = firebase.auth();
+
+export default function SignupScreen({
   navigation,
 }: RootStackScreenProps<"Login">) {
   const { colors } = useTheme();
@@ -47,8 +48,6 @@ export default function LoginScreen({
         user
           .updateProfile({
             displayName: userName,
-            photoURL:
-              "https://alextrenoweth.co.uk/wp-content/uploads/2015/11/rowan-atkinson.jpg",
           })
           .then(() => {
             navigation.navigate("ProfileNav");

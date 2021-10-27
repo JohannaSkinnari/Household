@@ -13,17 +13,6 @@ export default function ProfileScreen({
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
   const user = firebase.auth().currentUser;
-  const [setupButton, setSetupButton] = useState("eye");
-
-  const handleButtonVisibility = () => {
-    if (householdId  === membberid && isAdmin === true) {
-      setSetupButton("eye-off");
-      setPasswordVisibility(!buttonVisibility);
-    } else if (setupButton === "eye-off") {
-      setSetupButton("eye");
-      setPasswordVisibility(!buttonVisibility);
-    }
-  };
 
   const onSignOut = () => {
     firebase
@@ -70,7 +59,7 @@ export default function ProfileScreen({
       <View style={{ flex: 1 }} />
       <View style={[styles.houseList, { flex: 6 }]}>
         <ScrollView>
-          <HouseHoldView onSelectedHouse={navigateTo} />
+          <HouseHoldView onSelectedHouse={navigateTo} onSelectedHouseSetup ={navigation.navigate}/>
         </ScrollView>
       </View>
       <View style={[{ justifyContent: "flex-end", flex: 6 }]}>

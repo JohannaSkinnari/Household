@@ -11,12 +11,11 @@ import {
 import { useTheme } from "@react-navigation/native";
 import firebase from "firebase";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
-import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
 
-const auth = Firebase.auth();
+const auth = firebase.auth();
 
 export default function LoginScreen({
   navigation,
@@ -41,9 +40,9 @@ export default function LoginScreen({
     try {
       if (email !== "" && password !== "") {
         await auth.signInWithEmailAndPassword(email, password);
-        console.log(firebase.auth().currentUser);
-        setEmail("");
-        setPassword("");
+        console.log(firebase.auth().currentUser?.displayName)
+        setEmail(" ");
+        setPassword(" ");
         navigation.navigate("ProfileNav");
       }
     } catch (error: unknown) {

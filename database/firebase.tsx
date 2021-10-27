@@ -14,9 +14,8 @@ const firebaseConfig = {
 
 let Firebase: any;
 
-if (firebase.apps.length === 0) {
   Firebase = firebase.initializeApp(firebaseConfig);
-  console.log(firebase.app().options);
-}
+  console.log("firebase initialized from setup file");
+
 
 export default Firebase;
