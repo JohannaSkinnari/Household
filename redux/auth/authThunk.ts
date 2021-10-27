@@ -1,11 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import firebase from "firebase";
 import Firebase from "../../database/config";
 import { IChore } from "../../interfaces/IChore";
 import { ICompletedChore } from "../../interfaces/ICompletedChore";
 import { IHouseHold } from "../../interfaces/IHouseHold";
 import { IMember } from "../../interfaces/IMember";
-import { ISignUpData } from "../../interfaces/ISignupData";
 import { IUser } from "../../interfaces/IUser";
 import { ThunkApi } from "../reduxStore";
 
@@ -29,18 +27,17 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
         .where("userId", "==", user.uid)
         .get()
     ).docs.map((doc) => ({ id: doc.id, ...doc.data() } as IMember));
-    //   .then((snapshot) => {
-    //     snapshot.docs.forEach((doc) => {
-    //       console.log(doc.id, doc.data());
-    //     });
-    //   })) as any as IMember[];
+
     // hämta alla hushåll som användaren tillhör.
+    const housholdIds = members.map((member) => member.householdId);
+
     const households = (
       await Firebase.firestore()
         .collection("/household")
-        // .where("userId", "==", user.uid)
+        .where("id", "in", housholdIds)
         .get()
     ).docs.map((doc) => ({ id: doc.id, ...doc.data() } as IHouseHold));
+
     // const households = (
     //   await Firebase.firestore().collection("/household").get()
     // ).docs as unknown as IHouseHold[];
