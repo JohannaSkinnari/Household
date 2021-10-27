@@ -29,7 +29,7 @@ export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
     const state = getState();
     const member: IMember = {
       ...createMember,
-      id: Math.random().toString(),
+      id: "",
       userId: state.userList.activeUser?.uid as string,
       name: state.userList.activeUser?.displayName as string,
       isAdmin: true,
@@ -37,8 +37,14 @@ export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
     };
     await Firebase.firestore()
       .collection("/member")
-      .doc(state.userList.activeUser?.uid)
-      .set(member);
+      .add(member)
+      .then((docRef) => {
+        Firebase.firestore()
+          .collection("/member")
+          .doc(docRef.id)
+          .update({ id: docRef.id });
+        member.id = docRef.id;
+      });
     return member;
   }
 );
