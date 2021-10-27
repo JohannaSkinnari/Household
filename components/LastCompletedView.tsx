@@ -13,10 +13,10 @@ export default function LastCompletedView({ chore }: Props) {
   if (!chore.lastCompleted) {
     return null;
   }
-  const DateLastCompleted = new Date(chore.lastCompleted);
+  const dateLastCompleted = new Date(chore.lastCompleted);
   const today = new Date();
-  const DaysSinceLastCompleted: number =
-    today.getDate() - DateLastCompleted.getDate();
+  const daysSinceLastCompleted: number =
+    today.getDate() - dateLastCompleted.getDate();
 
   return (
     <View
@@ -24,15 +24,15 @@ export default function LastCompletedView({ chore }: Props) {
         styles.litleCircle,
         {
           backgroundColor:
-            DaysSinceLastCompleted >= chore.interval
+            daysSinceLastCompleted >= chore.interval
               ? colors.darkPink
               : colors.valueEight,
           height:
-            chore.lastCompleted === undefined || DaysSinceLastCompleted === 0
+            chore.lastCompleted === undefined || daysSinceLastCompleted === 0
               ? 0
               : 25,
           width:
-            chore.lastCompleted === undefined || DaysSinceLastCompleted === 0
+            chore.lastCompleted === undefined || daysSinceLastCompleted === 0
               ? 0
               : 25,
         },
@@ -41,12 +41,12 @@ export default function LastCompletedView({ chore }: Props) {
       <Text
         style={{
           color:
-            DaysSinceLastCompleted >= chore.interval
+            daysSinceLastCompleted >= chore.interval
               ? colors.surface
               : colors.text,
         }}
       >
-        {DaysSinceLastCompleted}
+        {daysSinceLastCompleted}
       </Text>
     </View>
   );

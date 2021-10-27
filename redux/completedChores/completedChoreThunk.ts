@@ -17,11 +17,6 @@ export const createCompletedChore = createAsyncThunk<
     choreId: createData.id,
     userId: state.userList.activeUser.id,
     houseHoldId: createData.householdId,
-    // completed: new Date(
-    //   new Date().getFullYear(),
-    //   new Date().getMonth(),
-    //   new Date().getDate()
-    // ),
     completed: new Date(
       new Date().getFullYear(),
       new Date().getMonth(),
