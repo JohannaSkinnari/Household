@@ -13,7 +13,9 @@ export default function ChoreView({ onSelectedChore, householdId }: Props) {
   const { colors } = useTheme();
 
   const ChoreList = useAppSelector(state =>
-    state.choresList.chores.filter(chore => chore.householdId === householdId)
+    state.choresList.chores.filter(
+      chore => chore.householdId === householdId && chore.isArchived === false
+    )
   );
 
   return (

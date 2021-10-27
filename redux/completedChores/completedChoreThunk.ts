@@ -28,3 +28,10 @@ export const createCompletedChore = createAsyncThunk<
 
   return completedChore;
 });
+
+export const deleteCompletedChore = createAsyncThunk<string, string, ThunkApi>(
+  "chore/deleteCompletedChore",
+  async choreId =>
+    // prata med API
+    choreId
+);

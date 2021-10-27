@@ -1,26 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
-import { completeChore, deleteChore } from "../../redux/chore/choreThunk";
+import { archiveChore, deleteChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
-import CustomButton from "../common/CustomButton";
 
 interface Props {
-  onArcive: () => void;
+  onArchive: () => void;
   onClose: () => void;
   onDelete: () => void;
-  // onRemove?: () => void;
   choreId: string;
-  // householdId: string;
 }
 
 export default function DeleteChoreModal({
-  onArcive,
+  onArchive,
   onClose,
   onDelete,
   choreId,
-}: // householdId,
-Props) {
+}: Props) {
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
 
@@ -31,18 +27,14 @@ Props) {
     throw new Error("delete");
   }
 
-  // const ArciveButton = (props: { size: number }) => (
-  //   <CustomButton
-  //     title="Redigera"
-  //     {...props}
-  //     icon="pencil-outline"
-  //     onPress={onArcive}
-  //   />
-  // );
-
   const deleteThisChore = () => {
     dispatch(deleteChore(choreId));
     onDelete();
+  };
+
+  const archiveThisChore = () => {
+    dispatch(archiveChore(chore));
+    onArchive();
   };
 
   return (
@@ -52,24 +44,28 @@ Props) {
         style={[styles.cardContent, { backgroundColor: colors.background }]}
       >
         <View style={[styles.detalisView, { backgroundColor: colors.surface }]}>
-          {/* <Text style={[styles.boldText, { color: colors.text }]}>
-            VARNING!
-          </Text>
-          <Text style={[styles.text, { color: colors.text }]}>
-            Om du tar bort denna syssla kommer statistiken att förändras.
-            Vill du istället arkivera sysslan?
-          </Text>
-          <CustomButton
-            title="Redigera"
-            icon="pencil-outline"
-            onPress={onArcive}
-          /> */}
+          <View style={styles.warning}>
+            <Text style={[styles.boldText, { color: colors.darkPink }]}>
+              VARNING!
+            </Text>
+            <Text style={[styles.text, { color: colors.text }]}>
+              Om du tar bort denna syssla kommer statistiken att förändras. Vill
+              du istället arkivera sysslan?
+            </Text>
+          </View>
+          <Button
+            icon="folder-download-outline"
+            color={colors.green}
+            onPress={archiveThisChore}
+          >
+            Arkivera
+          </Button>
         </View>
       </Card.Content>
       <Card.Actions style={styles.cardAction}>
         <Button
           icon="minus-circle-outline"
-          color={colors.text}
+          color={colors.darkPink}
           onPress={deleteThisChore}
         >
           Ta bort
@@ -113,13 +109,17 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
+    textAlign: "center",
   },
   detalisView: {
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "space-evenly",
     height: "90%",
     paddingTop: 8,
     borderRadius: 10,
     padding: 8,
+  },
+  warning: {
+    alignItems: "center",
   },
 });
