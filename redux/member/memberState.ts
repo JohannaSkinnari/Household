@@ -10,7 +10,7 @@ export const initialState: MemberState = {
   members: [
     {
       id: "1",
-      userId: "4",
+      userId: "2",
       householdId: "1",
       isAdmin: true,
       avatarId: 1,
