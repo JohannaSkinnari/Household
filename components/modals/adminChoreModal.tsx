@@ -43,7 +43,7 @@ const choreValidation = yup.object().shape<ChoreValidationSchema>({
 interface Props {
   onSave: () => void;
   onClose: () => void;
-  onRemove?: () => void;
+  onRemove: () => void;
   choreId?: string;
   householdId: string;
 }
@@ -127,9 +127,7 @@ export default function AdminChoreModal({
       title="Ta bort"
       {...props}
       icon="minus-circle-outline"
-      onPress={() => {
-        onRemove;
-      }}
+      onPress={onRemove}
     />
   );
 

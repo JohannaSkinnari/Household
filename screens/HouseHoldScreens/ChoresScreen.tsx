@@ -1,10 +1,11 @@
-import { CompositeScreenProps, useTheme } from "@react-navigation/native";
+import { CompositeScreenProps } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { Button, Modal } from "react-native-paper";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { Modal } from "react-native-paper";
 import ChoreView from "../../components/ChoreView";
 import CustomButton from "../../components/common/CustomButton";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
+import DeleteChoreModal from "../../components/modals/deleteChoreModal";
 import DetailsChoreModal from "../../components/modals/detailsChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
@@ -21,7 +22,6 @@ export default function ChoresScreen({ navigation, route }: Props) {
   const [openChore, setOpenChore] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const { colors } = useTheme();
   const [choreExist, setChoreExist] = useState(false);
   const [choreId, setChoreId] = useState("");
 
@@ -84,6 +84,7 @@ export default function ChoresScreen({ navigation, route }: Props) {
             onSave={() => setOpenAdd(false)}
             onClose={() => setOpenAdd(false)}
             householdId={householdId}
+            onRemove={() => ({})}
           />
         </Modal>
       )}
@@ -124,20 +125,22 @@ export default function ChoresScreen({ navigation, route }: Props) {
                   visible={openChore}
                   onDismiss={() => setOpenDelete(false)}
                 >
-                  <Text style={{ color: colors.text }}>
-                    Exampel Modal för att Tabort vald syssla. Click outside this
-                    area to dismiss.
-                  </Text>
-                  <Button
-                    onPress={() => {
+                  <DeleteChoreModal
+                    onArcive={() => {
                       setOpenDelete(false);
                       setOpenEdit(false);
                       setOpenChore(false);
+                      console.log("arkiverar");
                     }}
-                  >
-                    Ta bort
-                  </Button>
-                  <Button onPress={() => setOpenDelete(false)}>Stäng</Button>
+                    onClose={() => setOpenDelete(false)}
+                    onDelete={() => {
+                      setOpenDelete(false);
+                      setOpenEdit(false);
+                      setOpenChore(false);
+                      console.log("delete");
+                    }}
+                    choreId={choreId}
+                  />
                 </Modal>
               )}
             </>

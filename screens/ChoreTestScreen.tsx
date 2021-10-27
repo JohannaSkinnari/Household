@@ -2,11 +2,10 @@ import React from "react";
 import { Button, Text, View } from "react-native";
 import { IChore } from "../interfaces/IChore";
 import { IHouseHold } from "../interfaces/IHouseHold";
-import { deleteChore } from "../redux/chore/choreSlice";
 // import { addHouseHold } from "../redux/houseHold/houseHoldSlice";
 import { useAppSelector } from "../redux/reduxHooks";
 import { useAppDispatch } from "../redux/reduxStore";
-import { createChore, editChore } from "../redux/chore/choreThunk";
+import { createChore, deleteChore, editChore } from "../redux/chore/choreThunk";
 
 // Visar lite hur det kan funka med våra reducers
 // kan testa att bara lägga in den i rootnavigatorn och kommentera bort allt annat.

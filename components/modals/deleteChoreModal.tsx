@@ -1,84 +1,78 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
-import { completeChore } from "../../redux/chore/choreThunk";
+import { completeChore, deleteChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 import CustomButton from "../common/CustomButton";
 
 interface Props {
-  onDone: () => void;
+  onArcive: () => void;
   onClose: () => void;
-  onEdit: () => void;
+  onDelete: () => void;
+  // onRemove?: () => void;
   choreId: string;
-  householdId: string;
+  // householdId: string;
 }
 
-export default function DetailsChoreModal({
-  onDone,
+export default function DeleteChoreModal({
+  onArcive,
   onClose,
-  onEdit,
+  onDelete,
   choreId,
-  householdId,
-}: Props) {
+}: // householdId,
+Props) {
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
 
   const chore = useAppSelector(state =>
     state.choresList.chores.find(c => c.id === choreId)
   );
-
   if (!chore) {
-    throw new Error("No chore found");
+    throw new Error("delete");
   }
-  
-  const admin = useAppSelector(state =>
-    state.memberList.members.find(
-      m =>
-        m.userId === state.userList.activeUser.id &&
-        m.householdId === householdId
-    )
-  );
 
-  const editButton = (props: { size: number }) => (
-    <CustomButton
-      title="Redigera"
-      {...props}
-      icon="pencil-outline"
-      onPress={onEdit}
-    />
-  );
+  // const ArciveButton = (props: { size: number }) => (
+  //   <CustomButton
+  //     title="Redigera"
+  //     {...props}
+  //     icon="pencil-outline"
+  //     onPress={onArcive}
+  //   />
+  // );
 
-  const completeThisChore = () => {
-    dispatch(completeChore(chore));
-    onDone();
+  const deleteThisChore = () => {
+    dispatch(deleteChore(choreId));
+    onDelete();
   };
 
   return (
     <Card style={styles.card}>
-      <Card.Title
-        title={chore?.name}
-        style={styles.cardTitle}
-        right={admin?.isAdmin ? editButton : undefined}
-      />
+      <Card.Title title={`Ta bort , ${chore?.name}`} style={styles.cardTitle} />
       <Card.Content
         style={[styles.cardContent, { backgroundColor: colors.background }]}
       >
         <View style={[styles.detalisView, { backgroundColor: colors.surface }]}>
-          <Text style={[styles.boldText, { color: colors.text }]}>
-            Beskrivning:
+          {/* <Text style={[styles.boldText, { color: colors.text }]}>
+            VARNING!
           </Text>
           <Text style={[styles.text, { color: colors.text }]}>
-            {chore?.description}
+            Om du tar bort denna syssla kommer statistiken att förändras.
+            Vill du istället arkivera sysslan?
           </Text>
+          <CustomButton
+            title="Redigera"
+            icon="pencil-outline"
+            onPress={onArcive}
+          /> */}
         </View>
       </Card.Content>
       <Card.Actions style={styles.cardAction}>
         <Button
-          icon="check-circle-outline"
+          icon="minus-circle-outline"
           color={colors.text}
-          onPress={completeThisChore}
+          onPress={deleteThisChore}
         >
-          Markera som gjord
+          Ta bort
         </Button>
         <Button
           icon="close-circle-outline"

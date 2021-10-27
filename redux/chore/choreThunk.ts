@@ -54,3 +54,15 @@ export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
     return updatedChore;
   }
 );
+
+export const deleteChore = createAsyncThunk<string, string, ThunkApi>(
+  "chore/deleteChore",
+  async (choreId ) => {
+    if(!choreId) {
+      throw new Error("thunk får inget chore id");
+      
+    }
+    // prata med API
+    return choreId;
+  }
+);
