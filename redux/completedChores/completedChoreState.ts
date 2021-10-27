@@ -8,7 +8,16 @@ export interface completedChoreState {
 }
 
 export const initialState: completedChoreState = {
-  completedChores: [],
+  completedChores: [
+    {
+      id: "",
+      choreId: "",
+      userId: "",
+      houseHoldId: "",
+      completed: "",
+      weight: 0,
+    },
+  ],
   loading: false,
   error: "",
   isCreatedSuccess: true,

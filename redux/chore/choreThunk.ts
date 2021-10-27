@@ -61,7 +61,7 @@ export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
         new Date().getFullYear(),
         new Date().getMonth(),
         new Date().getDate()
-      ).toDateString(),
+      ).toString(),
     };
 
     // prata med API

@@ -34,6 +34,7 @@ export const initialState: ChoresState = {
       description: "gör tallriken ren",
       interval: 1,
       weight: 2,
+      lastCompleted: "2021-10-20T22:00:00.000Z",
       isArchived: false,
     },
     {
