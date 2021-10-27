@@ -12,7 +12,7 @@ export const initialState: completedChoreState = {
     {
       id: "",
       choreId: "",
-      userId: "",
+      memberId: "",
       houseHoldId: "",
       completed: "",
       weight: 0,
