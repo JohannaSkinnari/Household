@@ -12,12 +12,12 @@ const completedChoreSlice = createSlice({
       state.isCreatedSuccess = true;
       state.completedChores.push(payload);
     });
-    builder.addCase(createCompletedChore.rejected, (state, { payload }) => {
+    builder.addCase(createCompletedChore.rejected, state => {
       state.loading = false;
       state.isCreatedSuccess = false;
       state.error = "No data found";
     });
-    builder.addCase(createCompletedChore.pending, (state, { payload }) => {
+    builder.addCase(createCompletedChore.pending, state => {
       state.loading = true;
     });
   },

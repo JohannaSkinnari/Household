@@ -258,7 +258,6 @@ export default function AdminChoreModal({
                   </Pressable>
                 ) : (
                   <IntervalPicker
-                    value={values.interval}
                     selectPickerIntervalValue={value => {
                       setFieldValue("interval", value);
                       setShowInterval(false);
@@ -302,7 +301,6 @@ export default function AdminChoreModal({
                   </Pressable>
                 ) : (
                   <WeightPicker
-                    value={values.weight}
                     selectPickerWeightValue={value => {
                       setFieldValue("weight", value);
                       setShowValue(false);
