@@ -21,7 +21,7 @@ export const createCompletedChore = createAsyncThunk<
       new Date().getFullYear(),
       new Date().getMonth(),
       new Date().getDate()
-    ).toDateString(),
+    ).toString(),
     weight: createData.weight,
   };
   // prata med API
