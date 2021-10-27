@@ -1,6 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IChore } from "../../interfaces/IChore";
-import { createCompletedChore } from "../completedChores/completedChoreThunk";
+import {
+  createCompletedChore,
+  deleteCompletedChore,
+} from "../completedChores/completedChoreThunk";
 import { ThunkApi } from "../reduxStore";
 // useEffect för huvudsida kanske ?  i samband med att du loggar in sig. Som en usedatafetcher custom hook => datafetcher useEffecter kör dessa functioner.
 export const getChores = createAsyncThunk<IChore[]>(
@@ -57,12 +60,13 @@ export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
 
 export const deleteChore = createAsyncThunk<string, string, ThunkApi>(
   "chore/deleteChore",
-  async (choreId ) => {
-    if(!choreId) {
-      throw new Error("thunk får inget chore id");
-      
-    }
+  async (choreId, { dispatch }) => {
+    // if(!choreId) {
+    //   throw new Error("thunk får inget chore id");
+
+    // }
     // prata med API
+    dispatch(deleteCompletedChore(choreId));
     return choreId;
   }
 );
