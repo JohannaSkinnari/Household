@@ -1,15 +1,17 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./choreState";
-import { completeChore, createChore, deleteChore, editChore, getChores } from "./choreThunk";
+import {
+  completeChore,
+  createChore,
+  deleteChore,
+  editChore,
+  getChores,
+} from "./choreThunk";
 
 const choreSlice = createSlice({
   name: "chores",
   initialState,
-  reducers: {
-    // deleteChore(state, action: PayloadAction<string>) {
-    //   state.chores = state.chores.filter(chore => chore.id !== action.payload);
-    // },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(createChore.fulfilled, (state, { payload }) => {
       state.loading = false;
@@ -87,6 +89,6 @@ const choreSlice = createSlice({
   },
 });
 
-export const { } = choreSlice.actions;
+export const {} = choreSlice.actions;
 
 export default choreSlice.reducer;

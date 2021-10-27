@@ -4,7 +4,6 @@ import { useTheme } from "react-native-paper";
 import { intervalData } from "../assets/intervalData/intervalData";
 
 interface Props {
-  value: number;
   selectPickerIntervalValue: (value: number) => void;
 }
 

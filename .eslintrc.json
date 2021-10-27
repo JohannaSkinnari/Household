@@ -5,8 +5,8 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
     "airbnb",
+    "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -55,8 +55,8 @@
     "react/style-prop-object": "off",
     "no-unused-expressions": "off",
     "implicit-arrow-linebreak": "off",
-    "react/no-unused-prop-types": "off",
-    "no-unused-vars": "off",
+    // "react/no-unused-prop-types": "off",
+    // "no-unused-vars": "off",
     "@typescript-eslint/no-namespace": "off",
     "import/no-mutable-exports": "off"
   },

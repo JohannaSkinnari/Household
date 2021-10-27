@@ -12,8 +12,12 @@ interface Props {
   dataArray: IAvatar[];
   onChange: (id: string) => void;
 }
-
-export default function AvatarList({ onChange, dataArray }: Props) {
+// Should the value be used?? do we need it??
+export default function AvatarList({
+  value: unused,
+  onChange,
+  dataArray,
+}: Props) {
   const { colors } = useTheme();
   const [selectedAvatar, setSelectedAvatar] = useState<number>();
   const [colorValue, setColorValue] = useState<string>();
