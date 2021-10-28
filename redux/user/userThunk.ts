@@ -9,11 +9,11 @@ export const signupUser = createAsyncThunk<ISignUpData, ISignUpData, ThunkApi>(
     firebase
       .auth()
       .createUserWithEmailAndPassword(userData.email, userData.password)
-      .then(async (userCred) => {
+      .then(async userCred => {
         if (!userCred.user) {
           return rejectWithValue("Kan inte skapa konto");
         }
-        await userCred.user.updateProfile({ displayName: userData.name });
+        return userCred.user.updateProfile({ displayName: userData.name });
       });
 
     return userData;
@@ -26,10 +26,11 @@ export const loginUser = createAsyncThunk<ILoginData, ILoginData, ThunkApi>(
     firebase
       .auth()
       .signInWithEmailAndPassword(userData.email, userData.password)
-      .then(async (userCred) => {
+      .then(async userCred => {
         if (!userCred.user) {
           return rejectWithValue("Kan inte logga in");
         }
+        return userCred;
       });
 
     return userData;

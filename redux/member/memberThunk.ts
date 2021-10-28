@@ -5,10 +5,10 @@ import { ThunkApi } from "../reduxStore";
 
 export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
   "member/createMember",
-  async (createMember, { getState }) => {
+  async (createMemberData, { getState }) => {
     const state = getState();
     const member: IMember = {
-      ...createMember,
+      ...createMemberData,
       id: Math.random().toString(),
       userId: state.userList.activeUser?.uid as string,
       name: state.userList.activeUser?.displayName as string,
@@ -25,7 +25,7 @@ export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
 
 export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
   "member/createOwner",
-  async (createMember, { getState }) => {
+  async (createOwnerData, { getState }) => {
     const state = getState();
     const member: IMember = {
       ...createMember,
@@ -38,7 +38,7 @@ export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
     await Firebase.firestore()
       .collection("/member")
       .add(member)
-      .then((docRef) => {
+      .then(docRef => {
         Firebase.firestore()
           .collection("/member")
           .doc(docRef.id)

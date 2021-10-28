@@ -40,15 +40,7 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
       validationSchema={validationSchema}
       onSubmit={handleOnSubmit}
     >
-      {({
-        setFieldValue,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        values,
-        touched,
-        errors,
-      }) => (
+      {({ handleChange, handleBlur, handleSubmit, touched, errors }) => (
         <View>
           <View style={[{ flex: 1 }]}>
             <TextInput
@@ -60,11 +52,11 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
                 ],
               ]}
               placeholderTextColor={colors.placeholder}
-              placeholder={"Ange Hushållskod"}
+              placeholder="Ange Hushållskod"
               onChangeText={handleChange("houseHoldCode")}
               onBlur={handleBlur("houseHoldCode")}
-              //value={String(values.houseHoldCode)}
-              clearTextOnFocus={true}
+              // value={String(values.houseHoldCode)}
+              clearTextOnFocus
             />
             {errors.houseHoldCode && touched.houseHoldCode && (
               <Text style={[styles.errors, { color: colors.darkPink }]}>
@@ -73,7 +65,7 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
             )}
           </View>
           <View style={styles.buttonStyle}>
-            <CustomButton title={"Gå med i Hushåll"} onPress={handleSubmit} />
+            <CustomButton title="Gå med i Hushåll" onPress={handleSubmit} />
           </View>
         </View>
       )}

@@ -14,25 +14,25 @@ const userSlice = createSlice({
       state.activeUser = action.payload;
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(signupUser.fulfilled, (state, { payload }) => {
+  extraReducers: builder => {
+    builder.addCase(signupUser.fulfilled, state => {
       state.loading = false;
     });
-    builder.addCase(signupUser.rejected, (state, { payload }) => {
+    builder.addCase(signupUser.rejected, state => {
       state.loading = false;
       state.error = "No data found";
     });
-    builder.addCase(signupUser.pending, (state, { payload }) => {
+    builder.addCase(signupUser.pending, state => {
       state.loading = true;
     });
-    builder.addCase(loginUser.fulfilled, (state, { payload }) => {
+    builder.addCase(loginUser.fulfilled, state => {
       state.loading = false;
     });
-    builder.addCase(loginUser.rejected, (state, { payload }) => {
+    builder.addCase(loginUser.rejected, state => {
       state.loading = false;
       state.error = "No data found";
     });
-    builder.addCase(loginUser.pending, (state, { payload }) => {
+    builder.addCase(loginUser.pending, state => {
       state.loading = true;
     });
   },

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -44,8 +43,8 @@ export default function SignupScreen({
   const onHandleSignup = async () => {
     if (email !== "" && userName !== "" && password !== "") {
       const newUser: ISignUpData = {
-        email: email,
-        password: password,
+        email,
+        password,
         name: userName,
       };
       await dispatch(signupUser(newUser));
@@ -82,15 +81,15 @@ export default function SignupScreen({
               }}
               leftIcon="email"
               placeholder="Email"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              textContentType="emailAddress"
-              autoFocus={true}
-              value={email}
+              // autoCapitalize="none"
+              // keyboardType="email-address"
+              // textContentType="emailAddress"
+              // autoFocus
+              // value={email}
               onChangeText={(text: string) => setEmail(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              autoCorrect={false}
+              // autoCorrect={false}
             />
 
             <InputField
@@ -99,15 +98,15 @@ export default function SignupScreen({
               }}
               leftIcon="account"
               placeholder="Användarnamn"
-              autoCapitalize="none"
-              keyboardType={""}
-              textContentType="userName"
-              autoFocus={false}
-              value={userName}
+              // autoCapitalize="none"
+              // keyboardType=""
+              // textContentType="userName"
+              // autoFocus={false}
+              // value={userName}
               onChangeText={(text: string) => setUserName(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              autoCorrect={false}
+              // autoCorrect={false}
             />
 
             <InputField
@@ -116,21 +115,19 @@ export default function SignupScreen({
               }}
               leftIcon="lock"
               placeholder="Lösenord"
-              autoCapitalize="none"
-              autoCorrect={false}
+              // autoCapitalize="none"
+              // autoCorrect={false}
               secureTextEntry={passwordVisibility}
-              textContentType="password"
+              // textContentType="password"
               rightIcon={rightIcon}
-              value={password}
+              // value={password}
               onChangeText={(text: string) => setPassword(text)}
               handlePasswordVisibility={handlePasswordVisibility}
-              keyboardType={""}
-              autoFocus={false}
+              // keyboardType=""
+              // autoFocus={false}
             />
 
-            {signupError ? (
-              <ErrorMessage error={signupError} visible={true} />
-            ) : null}
+            {signupError ? <ErrorMessage error={signupError} visible /> : null}
 
             <View style={styles.buttonField}>
               <CustomButton onPress={onHandleSignup} title="Registrera" />

@@ -1,12 +1,16 @@
-import { CompositeScreenProps, useTheme } from "@react-navigation/native";
+import { CompositeScreenProps } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ScrollView, Text, View, StyleSheet, Pressable } from "react-native";
-import { Button, Modal } from "react-native-paper";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { Modal } from "react-native-paper";
 import ChoreView from "../../components/ChoreView";
 import CustomButton from "../../components/common/CustomButton";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
+import DeleteChoreModal from "../../components/modals/deleteChoreModal";
+import DetailsChoreModal from "../../components/modals/detailsChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import { selectOwnerOfHousehold } from "../../redux/member/memberSelectors";
+import { useAppSelector } from "../../redux/reduxHooks";
 
 type Props = CompositeScreenProps<
   HouseholdStackScreenProps<"idag">,
@@ -19,7 +23,6 @@ export default function ChoresScreen({ navigation, route }: Props) {
   const [openChore, setOpenChore] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const { colors } = useTheme();
   const [choreExist, setChoreExist] = useState(false);
   const [choreId, setChoreId] = useState("");
 
@@ -28,6 +31,8 @@ export default function ChoresScreen({ navigation, route }: Props) {
     setChoreId(id);
     setOpenChore(true);
   }
+
+  const admin = useAppSelector(selectOwnerOfHousehold(householdId));
 
   return (
     <>
@@ -38,23 +43,26 @@ export default function ChoresScreen({ navigation, route }: Props) {
             householdId={householdId}
           />
         </ScrollView>
-        <View style={styles.buttonView}>
-          <CustomButton
-            onPress={() => setOpenAdd(true)}
-            title={"Lägg till syssla"}
-            icon={"plus-circle-outline"}
-          />
+        <View
+          style={[
+            styles.buttonView,
+            { justifyContent: admin?.isAdmin ? "space-evenly" : "center" },
+          ]}
+        >
+          {admin?.isAdmin ? (
+            <CustomButton
+              onPress={() => setOpenAdd(true)}
+              title="Lägg till syssla"
+              icon="plus-circle-outline"
+            />
+          ) : (
+            <View style={{ height: 0, width: 0 }} />
+          )}
           <CustomButton
             onPress={() => navigation.navigate("Profile")}
-            title={"Profil"}
-            icon={"account-circle-outline"}
+            title="Profil"
+            icon="account-circle-outline"
           />
-          {/* <Pressable
-            style={{ height: 30, width: 60, backgroundColor: "pink" }}
-          ></Pressable>
-          <Pressable
-            style={{ height: 30, width: 60, backgroundColor: "pink" }}
-          ></Pressable> */}
         </View>
       </View>
       {openAdd && (
@@ -71,27 +79,23 @@ export default function ChoresScreen({ navigation, route }: Props) {
             onSave={() => setOpenAdd(false)}
             onClose={() => setOpenAdd(false)}
             householdId={householdId}
+            onRemove={() => ({})}
           />
         </Modal>
       )}
       {openChore && choreExist && (
         <>
           <Modal visible={openChore} onDismiss={() => setOpenChore(false)}>
-            <Text style={{ color: colors.text }}>
-              Exampel Modal med information för vald syssla. Click outside this
-              area to dismiss.
-            </Text>
-            {/* använd custom component för knapp*/}
-            <Button
-              onPress={() => {
+            <DetailsChoreModal
+              onDone={() => setOpenChore(false)}
+              onClose={() => setOpenChore(false)}
+              onEdit={() => {
                 setOpenEdit(true);
                 setChoreExist(true);
               }}
-            >
-              Ändra
-            </Button>
-            <Button onPress={() => setOpenChore(false)}>Klar</Button>
-            <Button onPress={() => setOpenChore(false)}>Stäng</Button>
+              choreId={choreId}
+              householdId={householdId}
+            />
           </Modal>
           {openEdit && choreExist && (
             <>
@@ -102,7 +106,8 @@ export default function ChoresScreen({ navigation, route }: Props) {
               >
                 <AdminChoreModal
                   onSave={() => {
-                    setOpenEdit(false), setOpenChore(false);
+                    setOpenEdit(false);
+                    setOpenChore(false);
                   }}
                   onClose={() => setOpenEdit(false)}
                   choreId={choreId}
@@ -115,20 +120,20 @@ export default function ChoresScreen({ navigation, route }: Props) {
                   visible={openChore}
                   onDismiss={() => setOpenDelete(false)}
                 >
-                  <Text style={{ color: colors.text }}>
-                    Exampel Modal för att Tabort vald syssla. Click outside this
-                    area to dismiss.
-                  </Text>
-                  <Button
-                    onPress={() => {
+                  <DeleteChoreModal
+                    onArchive={() => {
                       setOpenDelete(false);
                       setOpenEdit(false);
                       setOpenChore(false);
                     }}
-                  >
-                    Ta bort
-                  </Button>
-                  <Button onPress={() => setOpenDelete(false)}>Stäng</Button>
+                    onClose={() => setOpenDelete(false)}
+                    onDelete={() => {
+                      setOpenDelete(false);
+                      setOpenEdit(false);
+                      setOpenChore(false);
+                    }}
+                    choreId={choreId}
+                  />
                 </Modal>
               )}
             </>
@@ -152,10 +157,8 @@ const styles = StyleSheet.create({
   buttonView: {
     width: "100%",
     height: "15%",
-    // paddingHorizontal: 10,
     justifyContent: "space-evenly",
     alignItems: "center",
     flexDirection: "row",
-    // marginBottom: 20,
   },
 });

@@ -3,8 +3,8 @@ import { NavigationState } from "@react-navigation/routers";
 import React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useTheme } from "react-native-paper";
-import { HouseholdStackParamList } from "../navigation/HouseHoldNavigator";
 import { Entypo } from "@expo/vector-icons";
+import { HouseholdStackParamList } from "../navigation/HouseHoldNavigator";
 
 interface Props {
   state: NavigationState;

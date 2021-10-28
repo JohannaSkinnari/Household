@@ -40,8 +40,8 @@ export default function LoginScreen({
     try {
       if (email !== "" && password !== "") {
         const user: ILoginData = {
-          email: email,
-          password: password,
+          email,
+          password,
         };
         await dispatch(loginUser(user));
         setEmail("");
@@ -79,15 +79,15 @@ export default function LoginScreen({
               }}
               leftIcon="email"
               placeholder="Email"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              textContentType="emailAddress"
-              autoFocus={true}
-              value={email}
+              // autoCapitalize="none"
+              // keyboardType="email-address"
+              // textContentType="emailAddress"
+              // autoFocus
+              // value={email}
               onChangeText={(text: string) => setEmail(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              autoCorrect={false}
+              // autoCorrect={false}
             />
             <InputField
               inputContainerStyle={{
@@ -95,21 +95,19 @@ export default function LoginScreen({
               }}
               leftIcon="lock"
               placeholder="Lösenord"
-              autoCapitalize="none"
-              autoCorrect={false}
+              // autoCapitalize="none"
+              // autoCorrect={false}
               secureTextEntry={passwordVisibility}
-              textContentType="password"
+              // textContentType="password"
               rightIcon={rightIcon}
-              value={password}
+              // value={password}
               onChangeText={(text: string) => setPassword(text)}
               handlePasswordVisibility={handlePasswordVisibility}
-              keyboardType={""}
-              autoFocus={false}
+              // keyboardType=""
+              // autoFocus={false}
             />
 
-            {loginError ? (
-              <ErrorMessage error={loginError} visible={true} />
-            ) : null}
+            {loginError ? <ErrorMessage error={loginError} visible /> : null}
 
             <View style={styles.buttonField}>
               <CustomButton onPress={onLogin} title="Logga in" />

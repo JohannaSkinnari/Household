@@ -2,14 +2,12 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import firebase from "firebase";
 import React from "react";
-import { useAppSelector } from "../redux/reduxHooks";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
 import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettingsScreen";
 import JoinHouseholdScreen from "../screens/ProfileScreens/JoinHouseHoldScreen";
 import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
 import HouseholdNavigator from "./HouseHoldNavigator";
-import RootNavigation from "./RootNavigation";
 
 type ProfileStackParamList = {
   Profile: undefined;
@@ -28,8 +26,8 @@ export type ProfileStackScreenProps<
 const Stack = createStackNavigator<ProfileStackParamList>();
 
 export default function ProfileNavigation() {
-  const user = firebase.auth().currentUser;
-  const userName = user?.displayName;
+  // const user = firebase.auth().currentUser;
+  // const userName = user?.displayName;
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
@@ -61,7 +59,7 @@ export default function ProfileNavigation() {
           component={HouseholdNavigator}
           options={{
             title:
-              "household.name" /**peta in state/prop här för att visa korrekt hushållsnamn */,
+              "Sysslor" /** peta in state/prop här för att visa korrekt hushållsnamn */,
             headerLeft: () => null,
           }}
         />

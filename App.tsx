@@ -13,6 +13,7 @@ import RootNavigation from "./navigation/RootNavigation";
 import { loadData } from "./redux/auth/authThunk";
 import store, { useAppDispatch } from "./redux/reduxStore";
 import { removeUser, setUser } from "./redux/user/userSlice";
+
 LogBox.ignoreLogs(["Setting a timer"]);
 
 export default function App() {
@@ -40,7 +41,7 @@ const FirebaseSetup = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const unsubscribe = Firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = Firebase.auth().onAuthStateChanged(user => {
       if (user) {
         dispatch(setUser(user.toJSON() as IUser));
         dispatch(loadData(user.toJSON() as IUser));

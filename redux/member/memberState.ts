@@ -10,8 +10,8 @@ export const initialState: MemberState = {
   members: [
     {
       id: "1",
-      userId: "4",
-      name: "test",
+      userId: "2",
+      name: "Johanna",
       householdId: "1",
       isAdmin: true,
       isApproved: true,

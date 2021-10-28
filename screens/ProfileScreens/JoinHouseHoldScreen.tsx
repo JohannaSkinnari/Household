@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, View, Text } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { Snackbar, useTheme } from "react-native-paper";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import JoinHouseHoldForm from "../../components/JoinHouseHoldForm";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import {
-  getHouseholdCodes,
-  getUserHouseholds,
+  selectHouseholdCodes,
+  selectUserHouseholds,
 } from "../../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function JoinHouseholdScreen({
   navigation,
 }: ProfileStackScreenProps<"JoinHousehold">) {
-  const households = useAppSelector(getHouseholdCodes);
-  const userHouseHolds = useAppSelector(getUserHouseholds);
+  const households = useAppSelector(selectHouseholdCodes);
+  const userHouseHolds = useAppSelector(selectUserHouseholds);
   const { colors } = useTheme();
   const [error, setError] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
@@ -22,11 +21,11 @@ export default function JoinHouseholdScreen({
 
   function checkCode(code: number) {
     const householdCode: boolean = households.some(
-      (house) => house.houseHoldCode == code
+      house => house.houseHoldCode === code
     );
-    const foundHouse = households.find((h) => (h.id, h.houseHoldCode == code));
+    const foundHouse = households.find(h => h.houseHoldCode === code); // tog bort h.id, innan h.houseHoldCode === code
     const alreadyMember = userHouseHolds.some(
-      (h) => h.member?.householdId == foundHouse?.id
+      h => h.member?.householdId === foundHouse?.id
     );
 
     if (!householdCode) {
@@ -43,7 +42,7 @@ export default function JoinHouseholdScreen({
     }
   }
   useEffect(() => {
-    if (error == true) {
+    if (error === true) {
       setShowSnackbar(true);
       setError(!error);
     }

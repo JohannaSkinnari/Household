@@ -2,7 +2,9 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
+import { selectChoresByHouseholdId } from "../redux/chore/choreSelectors";
 import { useAppSelector } from "../redux/reduxHooks";
+import LastCompletedView from "./LastCompletedView";
 
 interface Props {
   onSelectedChore: (id: string) => void;
@@ -12,13 +14,11 @@ interface Props {
 export default function ChoreView({ onSelectedChore, householdId }: Props) {
   const { colors } = useTheme();
 
-  const ChoreList = useAppSelector((state) =>
-    state.choresList.chores.filter((chore) => chore.householdId === householdId)
-  );
+  const ChoreList = useAppSelector(selectChoresByHouseholdId(householdId));
 
   return (
     <>
-      {ChoreList.map((chore) => (
+      {ChoreList.map(chore => (
         <View key={chore.id}>
           <TouchableOpacity
             onPress={() => onSelectedChore(chore.id)}
@@ -28,10 +28,10 @@ export default function ChoreView({ onSelectedChore, householdId }: Props) {
               {chore.name}
             </Text>
             <View style={styles.iconsContainer}>
-              <Image style={styles.avatar} source={require("../")}></Image>
-              <Image style={styles.avatar} source={require("../")}></Image>
-              <Image style={styles.avatar} source={require("../")}></Image>
-              <View style={styles.days}></View>
+              <Image style={styles.avatar} source={require("..")} />
+              <Image style={styles.avatar} source={require("..")} />
+              <Image style={styles.avatar} source={require("..")} />
+              <LastCompletedView chore={chore} />
             </View>
           </TouchableOpacity>
         </View>
@@ -66,12 +66,9 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
-  days: {
-    height: 30,
-    width: 30,
-  },
   iconsContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+    alignItems: "center",
   },
 });

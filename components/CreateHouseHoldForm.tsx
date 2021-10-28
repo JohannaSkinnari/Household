@@ -84,11 +84,11 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
                 ],
               ]}
               placeholderTextColor={colors.placeholder}
-              placeholder={"hushållets namn"}
+              placeholder="hushållets namn"
               onChangeText={handleChange("house.name")}
               onBlur={handleBlur("house.name")}
               value={values.house.name}
-              clearTextOnFocus={true}
+              clearTextOnFocus
             />
             {errors.house && touched.house && (
               <Text style={[styles.errors, { color: colors.darkPink }]}>
@@ -99,7 +99,7 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
               <AvatarList
                 dataArray={avatars}
                 value={values.member.avatarId}
-                onChange={(value) =>
+                onChange={value =>
                   setFieldValue("member.avatarId", parseFloat(value))
                 }
               />
@@ -111,8 +111,8 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
             )}
             <View style={styles.buttonStyle}>
               <CustomButton
-                icon={"plus-circle-outline"}
-                title={"Spara"}
+                icon="plus-circle-outline"
+                title="Spara"
                 onPress={handleSubmit}
               />
             </View>

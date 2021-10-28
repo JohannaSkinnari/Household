@@ -1,12 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import CustomButton from "../../components/common/CustomButton";
 import HouseHoldView from "../../components/HouseHoldsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
 import { useAppSelector } from "../../redux/reduxHooks";
 import Firebase from "../../database/config";
 
@@ -14,7 +13,7 @@ export default function ProfileScreen({
   navigation,
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
-  const user = useAppSelector((user) => user.userList.activeUser);
+  const user = useAppSelector(u => u.userList.activeUser);
 
   const onSignOut = () => {
     Firebase.auth()
@@ -22,7 +21,7 @@ export default function ProfileScreen({
       .then(() => {
         navigation.navigate("Login");
       })
-      .catch((e) => {
+      .catch(e => {
         console.error("Sign Out Error", e);
       });
   };
@@ -33,7 +32,7 @@ export default function ProfileScreen({
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={[styles.header, , { backgroundColor: colors.background }]}>
+      <View style={[styles.header, { backgroundColor: colors.background }]}>
         <View style={styles.userNameContainer}>
           <FontAwesome name="user-circle-o" size={24} color="#c75267" />
           <Text style={[styles.headerText, { color: colors.text }]}>
@@ -45,7 +44,7 @@ export default function ProfileScreen({
 
         <TouchableOpacity
           onPress={onSignOut}
-          style={[styles.buttonStyle, , { backgroundColor: colors.darkPink }]}
+          style={[styles.buttonStyle, { backgroundColor: colors.darkPink }]}
           activeOpacity={0.5}
         >
           <View style={styles.buttonIconStyle}>
@@ -55,7 +54,7 @@ export default function ProfileScreen({
         </TouchableOpacity>
       </View>
 
-      <View style={{ flex: 1 }}></View>
+      <View style={{ flex: 1 }} />
       <View style={[styles.houseList, { flex: 6 }]}>
         <ScrollView>
           <HouseHoldView onSelectedHouse={navigateTo} />
@@ -71,11 +70,11 @@ export default function ProfileScreen({
         >
           <CustomButton
             onPress={() => navigation.navigate("JoinHousehold")}
-            title={"Gå med i Hushåll"}
+            title="Gå med i Hushåll"
           />
           <CustomButton
             onPress={() => navigation.navigate("CreateHousehold")}
-            title={"Skapa Hushåll"}
+            title="Skapa Hushåll"
           />
         </View>
       </View>
