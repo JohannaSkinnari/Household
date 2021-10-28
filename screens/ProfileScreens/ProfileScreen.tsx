@@ -1,13 +1,12 @@
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import firebase from "firebase";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import CustomButton from "../../components/common/CustomButton";
 import HouseHoldView from "../../components/HouseHoldsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
 
 export default function ProfileScreen({
   navigation,
@@ -24,7 +23,7 @@ export default function ProfileScreen({
         console.log("Signed Out");
         console.log(firebase.auth().currentUser);
       })
-      .catch((e) => {
+      .catch(e => {
         console.error("Sign Out Error", e);
       });
   };
@@ -35,7 +34,7 @@ export default function ProfileScreen({
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={[styles.header, , { backgroundColor: colors.background }]}>
+      <View style={[styles.header, { backgroundColor: colors.background }]}>
         <View style={styles.userNameContainer}>
           <FontAwesome name="user-circle-o" size={24} color="#c75267" />
           <Text style={[styles.headerText, { color: colors.text }]}>
@@ -47,7 +46,7 @@ export default function ProfileScreen({
 
         <TouchableOpacity
           onPress={onSignOut}
-          style={[styles.buttonStyle, , { backgroundColor: colors.darkPink }]}
+          style={[styles.buttonStyle, { backgroundColor: colors.darkPink }]}
           activeOpacity={0.5}
         >
           <View style={styles.buttonIconStyle}>
@@ -57,7 +56,7 @@ export default function ProfileScreen({
         </TouchableOpacity>
       </View>
 
-      <View style={{ flex: 1 }}></View>
+      <View style={{ flex: 1 }} />
       <View style={[styles.houseList, { flex: 6 }]}>
         <ScrollView>
           <HouseHoldView onSelectedHouse={navigateTo} />
@@ -73,11 +72,11 @@ export default function ProfileScreen({
         >
           <CustomButton
             onPress={() => navigation.navigate("JoinHousehold")}
-            title={"Gå med i Hushåll"}
+            title="Gå med i Hushåll"
           />
           <CustomButton
             onPress={() => navigation.navigate("CreateHousehold")}
-            title={"Skapa Hushåll"}
+            title="Skapa Hushåll"
           />
         </View>
       </View>
@@ -86,7 +85,6 @@ export default function ProfileScreen({
 }
 
 const styles = StyleSheet.create({
-
   header: {
     flexDirection: "row",
     alignItems: "center",

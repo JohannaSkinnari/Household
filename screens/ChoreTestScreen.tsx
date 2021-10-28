@@ -2,10 +2,10 @@ import React from "react";
 import { Button, Text, View } from "react-native";
 import { IChore } from "../interfaces/IChore";
 import { IHouseHold } from "../interfaces/IHouseHold";
-import { addChore, deleteChore, editChore } from "../redux/chore/choreSlice";
-//import { addHouseHold } from "../redux/houseHold/houseHoldSlice";
+// import { addHouseHold } from "../redux/houseHold/houseHoldSlice";
 import { useAppSelector } from "../redux/reduxHooks";
 import { useAppDispatch } from "../redux/reduxStore";
+import { createChore, deleteChore, editChore } from "../redux/chore/choreThunk";
 
 // Visar lite hur det kan funka med våra reducers
 // kan testa att bara lägga in den i rootnavigatorn och kommentera bort allt annat.
@@ -13,15 +13,13 @@ import { useAppDispatch } from "../redux/reduxStore";
 
 export default function testScreen() {
   const dispatch = useAppDispatch();
-  const chores = useAppSelector((state) => state.choresList.chores);
+  const chores = useAppSelector(state => state.choresList.chores);
   // ----------------------------------------------
-  const houseList = useAppSelector(
-    (state) => state.houseHoldList.houseHoldList
-  );
+  const houseList = useAppSelector(state => state.houseHoldList.houseHoldList);
 
-  console.log(chores);
-  console.log("amount of households: " + houseList.length);
-  console.log("All Household codes: " + houseList.map((i) => i.houseHoldCode));
+  // console.log(chores);
+  // console.log(`amount of households: ${houseList.length}`);
+  // console.log(`All Household codes: ${houseList.map(i => i.houseHoldCode)}`);
 
   const onSave = () => {
     const dummyChore: IChore = {
@@ -32,9 +30,10 @@ export default function testScreen() {
       weight: 1,
       lastCompleted: undefined,
       householdId: "1",
+      isArchived: false,
     };
-    dispatch(addChore(dummyChore));
-    console.log(chores);
+    dispatch(createChore(dummyChore));
+    // console.log(chores);
   };
 
   const deleteItem = (id: string) => {
@@ -61,7 +60,7 @@ export default function testScreen() {
     >
       {/* for Chores */}
       <View>
-        {chores.map((choreItem) => (
+        {chores.map(choreItem => (
           <View style={{ width: 150, paddingVertical: 10 }} key={choreItem.id}>
             <Text>{choreItem.name}</Text>
             <Text>{choreItem.description}</Text>

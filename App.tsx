@@ -1,26 +1,23 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
+import firebase from "firebase/app";
 import React from "react";
-import { StyleSheet } from "react-native";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { getTheme } from "./components/common/Theme";
-import firebaseConfig from './database/firebase';
-import firebase from 'firebase/app'
 import { Provider as ReduxProvider } from "react-redux";
+import { getTheme } from "./components/common/Theme";
+import firebaseConfig from "./database/firebase";
 import RootNavigation from "./navigation/RootNavigation";
 import store from "./redux/reduxStore";
 
 export default function App() {
-  
-  let Firebase:any;
+  let Firebase: any;
 
   if (firebase.apps.length === 0) {
     Firebase = firebase.initializeApp(firebaseConfig);
     console.log(firebase.app().options);
   }
-
 
   const scheme = useColorScheme();
   const isDarkTheme = scheme === "dark";

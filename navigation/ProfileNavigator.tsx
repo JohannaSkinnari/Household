@@ -8,7 +8,6 @@ import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettings
 import JoinHouseholdScreen from "../screens/ProfileScreens/JoinHouseHoldScreen";
 import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
 import HouseholdNavigator from "./HouseHoldNavigator";
-import RootNavigation from "./RootNavigation";
 
 type ProfileStackParamList = {
   Profile: undefined;
@@ -26,10 +25,9 @@ export type ProfileStackScreenProps<
 
 const Stack = createStackNavigator<ProfileStackParamList>();
 
-
 export default function ProfileNavigation() {
   const user = firebase.auth().currentUser;
-const userName = user?.displayName
+  const userName = user?.displayName;
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
@@ -37,8 +35,8 @@ const userName = user?.displayName
           name="Profile"
           component={ProfileScreen}
           options={{
-            title: "Profil sidan" , // userName istället
-            headerLeft: () => null
+            title: "Profil sidan", // userName istället
+            headerLeft: () => null,
           }}
         />
         <Stack.Screen
@@ -61,7 +59,7 @@ const userName = user?.displayName
           component={HouseholdNavigator}
           options={{
             title:
-              "household.name" /**peta in state/prop här för att visa korrekt hushållsnamn */,
+              "household.name" /** peta in state/prop här för att visa korrekt hushållsnamn */,
             headerLeft: () => null,
           }}
         />

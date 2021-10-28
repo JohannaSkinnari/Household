@@ -1,11 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IChore, IModefideChore } from "../../interfaces/IChore";
+import { IChore } from "../../interfaces/IChore";
 import {
-  ICompletedChore,
-  ICreateCompletedChore,
-} from "../../interfaces/ICompletedChore";
-import { createCompletedChore } from "../completedChores/completedChoreThunk";
-import { useAppSelector } from "../reduxHooks";
+  createCompletedChore,
+  deleteCompletedChore,
+} from "../completedChores/completedChoreThunk";
 import { ThunkApi } from "../reduxStore";
 // useEffect för huvudsida kanske ?  i samband med att du loggar in sig. Som en usedatafetcher custom hook => datafetcher useEffecter kör dessa functioner.
 export const getChores = createAsyncThunk<IChore[]>(
@@ -24,7 +22,7 @@ type ThunkParam = IChore;
 
 export const createChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
   "chore/createChore",
-  async (createData) => {
+  async createData => {
     // servern ska lösa det här istället.
     const chore: IChore = {
       ...createData,
@@ -37,10 +35,20 @@ export const createChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
 
 export const editChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
   "chore/editChore",
-  async (updateData) => {
-    console.log("edit thunk");
+  async updateData =>
     // prata med API
-    return updateData;
+    updateData
+);
+
+export const archiveChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
+  "chore/archiveChore",
+  async updateData => {
+    const archivedChore: IChore = {
+      ...updateData,
+      isArchived: true,
+    };
+    // prata med API
+    return archivedChore;
   }
 );
 
@@ -53,11 +61,20 @@ export const completeChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
         new Date().getFullYear(),
         new Date().getMonth(),
         new Date().getDate()
-      ).toDateString(),
+      ).toString(),
     };
 
     // prata med API
     dispatch(createCompletedChore(updatedChore));
     return updatedChore;
+  }
+);
+
+export const deleteChore = createAsyncThunk<string, string, ThunkApi>(
+  "chore/deleteChore",
+  async (choreId, { dispatch }) => {
+    // prata med API
+    dispatch(deleteCompletedChore(choreId));
+    return choreId;
   }
 );

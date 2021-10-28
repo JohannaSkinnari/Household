@@ -1,24 +1,21 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
-import { completeChore } from "../../redux/chore/choreThunk";
+import { archiveChore, deleteChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
-import CustomButton from "../common/CustomButton";
 
 interface Props {
-  onDone: () => void;
+  onArchive: () => void;
   onClose: () => void;
-  onEdit: () => void;
+  onDelete: () => void;
   choreId: string;
-  householdId: string;
 }
 
-export default function DetailsChoreModal({
-  onDone,
+export default function DeleteChoreModal({
+  onArchive,
   onClose,
-  onEdit,
+  onDelete,
   choreId,
-  householdId,
 }: Props) {
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
@@ -26,59 +23,52 @@ export default function DetailsChoreModal({
   const chore = useAppSelector(state =>
     state.choresList.chores.find(c => c.id === choreId)
   );
-
   if (!chore) {
-    throw new Error("No chore found");
+    throw new Error("delete");
   }
-  
-  const admin = useAppSelector(state =>
-    state.memberList.members.find(
-      m =>
-        m.userId === state.userList.activeUser.id &&
-        m.householdId === householdId
-    )
-  );
 
-  const editButton = (props: { size: number }) => (
-    <CustomButton
-      title="Redigera"
-      {...props}
-      icon="pencil-outline"
-      onPress={onEdit}
-    />
-  );
+  const deleteThisChore = () => {
+    dispatch(deleteChore(choreId));
+    onDelete();
+  };
 
-  const completeThisChore = () => {
-    dispatch(completeChore(chore));
-    onDone();
+  const archiveThisChore = () => {
+    dispatch(archiveChore(chore));
+    onArchive();
   };
 
   return (
     <Card style={styles.card}>
-      <Card.Title
-        title={chore?.name}
-        style={styles.cardTitle}
-        right={admin?.isAdmin ? editButton : undefined}
-      />
+      <Card.Title title={`Ta bort , ${chore?.name}`} style={styles.cardTitle} />
       <Card.Content
         style={[styles.cardContent, { backgroundColor: colors.background }]}
       >
         <View style={[styles.detalisView, { backgroundColor: colors.surface }]}>
-          <Text style={[styles.boldText, { color: colors.text }]}>
-            Beskrivning:
-          </Text>
-          <Text style={[styles.text, { color: colors.text }]}>
-            {chore?.description}
-          </Text>
+          <View style={styles.warning}>
+            <Text style={[styles.boldText, { color: colors.darkPink }]}>
+              VARNING!
+            </Text>
+            <Text style={[styles.text, { color: colors.text }]}>
+              Om du tar bort denna syssla kommer statistiken att förändras. Vill
+              du istället arkivera sysslan?
+            </Text>
+          </View>
+          <Button
+            icon="folder-download-outline"
+            color={colors.green}
+            onPress={archiveThisChore}
+          >
+            Arkivera
+          </Button>
         </View>
       </Card.Content>
       <Card.Actions style={styles.cardAction}>
         <Button
-          icon="check-circle-outline"
-          color={colors.text}
-          onPress={completeThisChore}
+          icon="minus-circle-outline"
+          color={colors.darkPink}
+          onPress={deleteThisChore}
         >
-          Markera som gjord
+          Ta bort
         </Button>
         <Button
           icon="close-circle-outline"
@@ -119,13 +109,17 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
+    textAlign: "center",
   },
   detalisView: {
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "space-evenly",
     height: "90%",
     paddingTop: 8,
     borderRadius: 10,
     padding: 8,
+  },
+  warning: {
+    alignItems: "center",
   },
 });

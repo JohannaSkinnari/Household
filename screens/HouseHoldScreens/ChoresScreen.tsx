@@ -1,13 +1,14 @@
-import { CompositeScreenProps, useTheme } from "@react-navigation/native";
+import { CompositeScreenProps } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ScrollView, Text, View, StyleSheet, Pressable } from "react-native";
-import { Button, Modal } from "react-native-paper";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { Modal } from "react-native-paper";
 import ChoreView from "../../components/ChoreView";
 import CustomButton from "../../components/common/CustomButton";
 import AdminChoreModal from "../../components/modals/adminChoreModal";
+import DeleteChoreModal from "../../components/modals/deleteChoreModal";
+import DetailsChoreModal from "../../components/modals/detailsChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import DetailsChoreModal from "../../components/modals/detailsChoreModal";
 import { useAppSelector } from "../../redux/reduxHooks";
 
 type Props = CompositeScreenProps<
@@ -21,7 +22,6 @@ export default function ChoresScreen({ navigation, route }: Props) {
   const [openChore, setOpenChore] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const { colors } = useTheme();
   const [choreExist, setChoreExist] = useState(false);
   const [choreId, setChoreId] = useState("");
 
@@ -31,9 +31,9 @@ export default function ChoresScreen({ navigation, route }: Props) {
     setOpenChore(true);
   }
 
-  const admin = useAppSelector((state) =>
+  const admin = useAppSelector(state =>
     state.memberList.members.find(
-      (m) =>
+      m =>
         m.userId === state.userList.activeUser.id &&
         m.householdId === householdId
     )
@@ -57,16 +57,16 @@ export default function ChoresScreen({ navigation, route }: Props) {
           {admin?.isAdmin ? (
             <CustomButton
               onPress={() => setOpenAdd(true)}
-              title={"Lägg till syssla"}
-              icon={"plus-circle-outline"}
+              title="Lägg till syssla"
+              icon="plus-circle-outline"
             />
           ) : (
             <View style={{ height: 0, width: 0 }} />
           )}
           <CustomButton
             onPress={() => navigation.navigate("Profile")}
-            title={"Profil"}
-            icon={"account-circle-outline"}
+            title="Profil"
+            icon="account-circle-outline"
           />
         </View>
       </View>
@@ -84,6 +84,7 @@ export default function ChoresScreen({ navigation, route }: Props) {
             onSave={() => setOpenAdd(false)}
             onClose={() => setOpenAdd(false)}
             householdId={householdId}
+            onRemove={() => ({})}
           />
         </Modal>
       )}
@@ -110,7 +111,8 @@ export default function ChoresScreen({ navigation, route }: Props) {
               >
                 <AdminChoreModal
                   onSave={() => {
-                    setOpenEdit(false), setOpenChore(false);
+                    setOpenEdit(false);
+                    setOpenChore(false);
                   }}
                   onClose={() => setOpenEdit(false)}
                   choreId={choreId}
@@ -123,20 +125,20 @@ export default function ChoresScreen({ navigation, route }: Props) {
                   visible={openChore}
                   onDismiss={() => setOpenDelete(false)}
                 >
-                  <Text style={{ color: colors.text }}>
-                    Exampel Modal för att Tabort vald syssla. Click outside this
-                    area to dismiss.
-                  </Text>
-                  <Button
-                    onPress={() => {
+                  <DeleteChoreModal
+                    onArchive={() => {
                       setOpenDelete(false);
                       setOpenEdit(false);
                       setOpenChore(false);
                     }}
-                  >
-                    Ta bort
-                  </Button>
-                  <Button onPress={() => setOpenDelete(false)}>Stäng</Button>
+                    onClose={() => setOpenDelete(false)}
+                    onDelete={() => {
+                      setOpenDelete(false);
+                      setOpenEdit(false);
+                      setOpenChore(false);
+                    }}
+                    choreId={choreId}
+                  />
                 </Modal>
               )}
             </>

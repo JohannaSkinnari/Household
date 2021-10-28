@@ -4,7 +4,6 @@ import { useTheme } from "react-native-paper";
 import { intervalData } from "../assets/intervalData/intervalData";
 
 interface Props {
-  value: number;
   selectPickerIntervalValue: (value: number) => void;
 }
 
@@ -12,20 +11,26 @@ export default function IntervalPicker({ selectPickerIntervalValue }: Props) {
   const { colors } = useTheme();
   return (
     <View
-      style={[styles.input, styles.interval, {backgroundColor: colors.surface}]}
+      style={[
+        styles.input,
+        styles.interval,
+        { backgroundColor: colors.surface },
+      ]}
     >
       <FlatList
         data={intervalData}
-        horizontal={true}
+        horizontal
         renderItem={({ item }) => (
           <Pressable
             onPress={() => selectPickerIntervalValue(item.value)}
             style={styles.numbers}
           >
-            <Text style={[styles.number, {color: colors.text}]}>{item.value}</Text>
+            <Text style={[styles.number, { color: colors.text }]}>
+              {item.value}
+            </Text>
           </Pressable>
         )}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={item => item.id.toString()}
       />
     </View>
   );
@@ -63,4 +68,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-})
+});
