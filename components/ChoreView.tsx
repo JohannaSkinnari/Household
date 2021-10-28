@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { useAppSelector } from "../redux/reduxHooks";
+import AvatarsThatLastCompletedChore from "./AvatarsThatLastCompletedChore";
 import LastCompletedView from "./LastCompletedView";
 
 interface Props {
@@ -31,9 +32,7 @@ export default function ChoreView({ onSelectedChore, householdId }: Props) {
               {chore.name}
             </Text>
             <View style={styles.iconsContainer}>
-              <Image style={styles.avatar} source={require("..")} />
-              <Image style={styles.avatar} source={require("..")} />
-              <Image style={styles.avatar} source={require("..")} />
+              <AvatarsThatLastCompletedChore choreId={chore.id} />
               <LastCompletedView chore={chore} />
             </View>
           </TouchableOpacity>
