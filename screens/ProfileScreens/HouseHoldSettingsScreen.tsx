@@ -12,7 +12,7 @@ export default function HouseholdSettingsScreen({
   const households = useAppSelector(s => s.houseHoldList);
   const { colors } = useTheme();
   const toggleSuccess = () => {
-    if (households.isCreatedSuccess == true) {
+    if (households.isCreatedSuccess === true) {
       navigation.navigate("Profile");
     }
   };

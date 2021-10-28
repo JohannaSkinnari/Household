@@ -1,17 +1,15 @@
 import { Formik } from "formik";
 import React from "react";
+import * as yup from "yup";
 import { StyleSheet, TextInput, Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { editHouseHold } from "../redux/houseHold/houseHoldThunk";
-import * as yup from "yup";
 import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 import CustomButton from "./common/CustomButton";
 import { ICreateHouseHold, IHouseHold } from "../interfaces/IHouseHold";
 
-
 type RootValidationSchema = Record<keyof FormData, yup.AnySchema>;
 type HouseValidationSchema = Record<keyof FormData["house"], yup.AnySchema>;
-
 
 const validationSchema = yup.object().shape<RootValidationSchema>({
   house: yup.object().shape<HouseValidationSchema>({
@@ -20,34 +18,33 @@ const validationSchema = yup.object().shape<RootValidationSchema>({
       .required("Namnge ditt hushåll")
       .min(3, "Namnet är för kort")
       .max(18, "Namnet är för långt"),
-    })
+  }),
 });
 interface Props {
-  onSubmitSuccess: () =>void ,
-  houseId: string,
+  onSubmitSuccess: () => void;
+  houseId: string;
 }
 
 type FormData = {
-  house: Omit<ICreateHouseHold, "id"> ,
+  house: Omit<ICreateHouseHold, "id">;
 };
 
-export default function EditHouseHoldForm({ onSubmitSuccess, houseId
-  }: Props) {
-  const dispatch=useAppDispatch();
+export default function EditHouseHoldForm({ onSubmitSuccess, houseId }: Props) {
+  const dispatch = useAppDispatch();
   const { colors } = useTheme();
 
-  const activeHouse = useAppSelector((state) =>
-    state.houseHoldList.houseHoldList.find((h) => h.id === houseId)
+  const activeHouse = useAppSelector(state =>
+    state.houseHoldList.houseHoldList.find(h => h.id === houseId)
   );
   if (!activeHouse) throw Error;
 
   const defaultFormData: FormData = {
-    house: activeHouse
+    house: activeHouse,
   };
   async function handleOnSubmit(values: FormData) {
     const response = await dispatch(editHouseHold(values.house));
     if (response) {
-      onSubmitSuccess()
+      onSubmitSuccess();
     }
   }
   return (
@@ -79,7 +76,7 @@ export default function EditHouseHoldForm({ onSubmitSuccess, houseId
               onChangeText={handleChange("house.name")}
               onBlur={handleBlur("house.name")}
               value={values.house.name}
-              clearTextOnFocus={true}
+              clearTextOnFocus
             />
             {errors.house && touched.house && (
               <Text style={[styles.errors, { color: colors.darkPink }]}>
@@ -88,8 +85,8 @@ export default function EditHouseHoldForm({ onSubmitSuccess, houseId
             )}
             <View style={styles.buttonStyle}>
               <CustomButton
-                icon={"plus-circle-outline"}
-                title={"Spara"}
+                icon="plus-circle-outline"
+                title="Spara"
                 onPress={handleSubmit}
               />
             </View>
