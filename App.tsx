@@ -1,21 +1,19 @@
-import { LogBox } from "react-native";
-LogBox.ignoreLogs(["Setting a timer"]);
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { LogBox } from "react-native";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { getTheme } from "./components/common/Theme";
 import { Provider as ReduxProvider } from "react-redux";
-import RootNavigation from "./navigation/RootNavigation";
-import store, { useAppDispatch } from "./redux/reduxStore";
-import { removeUser, setUser } from "./redux/user/userSlice";
-import firebase from "firebase";
+import { getTheme } from "./components/common/Theme";
 import Firebase from "./database/config";
 import { IUser } from "./interfaces/IUser";
+import RootNavigation from "./navigation/RootNavigation";
 import { loadData } from "./redux/auth/authThunk";
+import store, { useAppDispatch } from "./redux/reduxStore";
+import { removeUser, setUser } from "./redux/user/userSlice";
+LogBox.ignoreLogs(["Setting a timer"]);
 
 export default function App() {
   const scheme = useColorScheme();
@@ -42,7 +40,7 @@ const FirebaseSetup = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    Firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = Firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         dispatch(setUser(user.toJSON() as IUser));
         dispatch(loadData(user.toJSON() as IUser));
@@ -53,6 +51,7 @@ const FirebaseSetup = () => {
         // Remove user from redux store!
       }
     });
+    return () => unsubscribe();
   }, []);
 
   return null;
