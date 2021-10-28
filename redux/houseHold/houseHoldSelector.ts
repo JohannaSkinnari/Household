@@ -28,3 +28,7 @@ export const getAvailableAvatars = (state: RootState) => {
   );
   return availableAvatars;
 };
+
+export const selectHouseholdById =
+  (householdId: string) => (state: RootState) =>
+    state.houseHoldList.houseHoldList.find(house => house.id === householdId);

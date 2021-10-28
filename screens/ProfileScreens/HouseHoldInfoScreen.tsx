@@ -22,6 +22,7 @@ export default function HouseholdInfoScreen({
   const members = useAppSelector(state =>
     state.memberList.members.filter(s => s.householdId === houseId)
   );
+  // sak vi ersätta koden i householdSelectorn med denna kod??
   const availableAvatars = avatars.filter(
     avatar => !members.some(member => avatar.id === member.avatarId)
   );
