@@ -11,8 +11,10 @@ interface Props {
 
 export default function MemberView({ householdId }: Props) {
   const { colors } = useTheme();
-
-  const MemberList = useAppSelector(selectMembersByHouseholdId(householdId));
+  const currentUser = useAppSelector(state => state.userList.activeUser);
+  const MemberList = useAppSelector(
+    selectMembersByHouseholdId(householdId, currentUser)
+  );
 
   return (
     <>

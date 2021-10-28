@@ -33,7 +33,7 @@ export default function DetailsChoreModal({
   const admin = useAppSelector(state =>
     state.memberList.members.find(
       m =>
-        m.userId === state.userList.activeUser.id &&
+        m.userId === state.userList.activeUser?.uid &&
         m.householdId === householdId
     )
   );

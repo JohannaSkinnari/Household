@@ -1,15 +1,17 @@
 import { avatars } from "../../assets/AvatarData/data";
+import { IUser } from "../../interfaces/IUser";
 import { RootState } from "../reduxStore";
 
 export const selectMembersByHouseholdId =
-  (householdId: string) => (state: RootState) =>
+  (householdId: string, currentUser: IUser) => (state: RootState) =>
     state.memberList.members
       .filter(member => member.householdId === householdId)
       .map(member => {
-        const user = state.userList.users.find(u => u.id === member.userId);
+        const currentMember = state.memberList.members.find(
+          m => m.userId === currentUser?.uid
+        );
         return {
-          member,
-          user,
+          currentMember,
           avatar: avatars.find(avatar => avatar.id === member?.avatarId),
         };
       });
@@ -18,7 +20,7 @@ export const selectOwnerOfHousehold =
   (householdId: string) => (state: RootState) =>
     state.memberList.members.find(
       m =>
-        m.userId === state.userList.activeUser.id &&
+        m.userId === state.userList.activeUser?.uid &&
         m.householdId === householdId
     );
 

@@ -12,6 +12,7 @@ import {
 import { ErrorMessage, InputField } from "../../components";
 import CustomButton from "../../components/common/CustomButton";
 import Logo from "../../components/Logo";
+import { ILoginData } from "../../interfaces/ILoginData";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 import { useAppDispatch } from "../../redux/reduxStore";
 import { loginUser } from "../../redux/user/userThunk";
