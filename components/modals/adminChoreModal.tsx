@@ -14,6 +14,7 @@ import {
 import { Button, Card, useTheme } from "react-native-paper";
 import * as yup from "yup";
 import { IChore, IModefideChore } from "../../interfaces/IChore";
+import { selectChoreById } from "../../redux/chore/choreSelectors";
 import { createChore, editChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 import CustomButton from "../common/CustomButton";
@@ -65,10 +66,9 @@ export default function AdminChoreModal({
   const [choreExist, setChoreExist] = useState(false);
   const [title, setTitle] = useState("Skapa en ny syssla");
 
+  const chore = useAppSelector(selectChoreById(choreId));
   let defaultFormData: IChore;
-  const chore = useAppSelector(state =>
-    state.choresList.chores.find(c => c.id === choreId)
-  );
+
   if (choreId && chore) {
     defaultFormData = {
       id: chore.id,

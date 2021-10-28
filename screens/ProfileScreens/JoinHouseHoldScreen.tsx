@@ -4,16 +4,16 @@ import { Snackbar, useTheme } from "react-native-paper";
 import JoinHouseHoldForm from "../../components/JoinHouseHoldForm";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import {
-  getHouseholdCodes,
-  getUserHouseholds,
+  selectHouseholdCodes,
+  selectUserHouseholds,
 } from "../../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function JoinHouseholdScreen({
   navigation,
 }: ProfileStackScreenProps<"JoinHousehold">) {
-  const households = useAppSelector(getHouseholdCodes);
-  const userHouseHolds = useAppSelector(getUserHouseholds);
+  const households = useAppSelector(selectHouseholdCodes);
+  const userHouseHolds = useAppSelector(selectUserHouseholds);
   const { colors } = useTheme();
   const [error, setError] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
