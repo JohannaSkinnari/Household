@@ -3,7 +3,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-import { getUserHouseholds } from "../redux/houseHold/houseHoldSelector";
+import { selectUserHouseholds } from "../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../redux/reduxHooks";
 
 
@@ -15,7 +15,8 @@ interface Props {
 
 export default function HouseHoldView({ onSelectedHouse,onSelectedHouseSetup }: Props) {
   const { colors } = useTheme();
-  const houseList = useAppSelector(getUserHouseholds);
+
+  const houseList = useAppSelector(selectUserHouseholds);
 
 
   return (
