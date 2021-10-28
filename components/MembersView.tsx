@@ -2,7 +2,7 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-import { avatars } from "../assets/AvatarData/data";
+import { selectMembersByHouseholdId } from "../redux/member/memberSelectors";
 import { useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
@@ -12,18 +12,7 @@ interface Props {
 export default function MemberView({ householdId }: Props) {
   const { colors } = useTheme();
 
-  const MemberList = useAppSelector(state =>
-    state.memberList.members
-      .filter(member => member.householdId === householdId)
-      .map(member => {
-        const user = state.userList.users.find(u => u.id === member.userId);
-        return {
-          member,
-          user,
-          avatar: avatars.find(avatar => avatar.id === member?.avatarId),
-        };
-      })
-  );
+  const MemberList = useAppSelector(selectMembersByHouseholdId(householdId));
 
   return (
     <>

@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
+import { selectChoreById } from "../../redux/chore/choreSelectors";
 import { archiveChore, deleteChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 
@@ -20,9 +21,8 @@ export default function DeleteChoreModal({
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
 
-  const chore = useAppSelector(state =>
-    state.choresList.chores.find(c => c.id === choreId)
-  );
+  const chore = useAppSelector(selectChoreById(choreId));
+
   if (!chore) {
     throw new Error("delete");
   }

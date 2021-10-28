@@ -59,7 +59,7 @@ export default function ProfileNavigation() {
           component={HouseholdNavigator}
           options={{
             title:
-              "household.name" /** peta in state/prop här för att visa korrekt hushållsnamn */,
+              "Sysslor" /** peta in state/prop här för att visa korrekt hushållsnamn */,
             headerLeft: () => null,
           }}
         />

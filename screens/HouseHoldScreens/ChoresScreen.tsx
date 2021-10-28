@@ -9,6 +9,7 @@ import DeleteChoreModal from "../../components/modals/deleteChoreModal";
 import DetailsChoreModal from "../../components/modals/detailsChoreModal";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import { selectOwnerOfHousehold } from "../../redux/member/memberSelectors";
 import { useAppSelector } from "../../redux/reduxHooks";
 
 type Props = CompositeScreenProps<
@@ -31,13 +32,7 @@ export default function ChoresScreen({ navigation, route }: Props) {
     setOpenChore(true);
   }
 
-  const admin = useAppSelector(state =>
-    state.memberList.members.find(
-      m =>
-        m.userId === state.userList.activeUser.id &&
-        m.householdId === householdId
-    )
-  );
+  const admin = useAppSelector(selectOwnerOfHousehold(householdId));
 
   return (
     <>

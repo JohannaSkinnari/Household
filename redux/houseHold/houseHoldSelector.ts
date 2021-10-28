@@ -1,7 +1,7 @@
 import { avatars } from "../../assets/AvatarData/data";
 import { RootState } from "../reduxStore";
 
-export const getUserHouseholds = (state: RootState) =>
+export const selectUserHouseholds = (state: RootState) =>
   state.houseHoldList.houseHoldList.map(house => {
     const user = state.userList.activeUser;
     const member = state.memberList.members.find(
@@ -14,7 +14,7 @@ export const getUserHouseholds = (state: RootState) =>
     };
   });
 
-export const getHouseholdCodes = (state: RootState) => {
+export const selectHouseholdCodes = (state: RootState) => {
   const householdCodes = state.houseHoldList.houseHoldList.filter(
     house => house.houseHoldCode
   );
@@ -28,3 +28,7 @@ export const getAvailableAvatars = (state: RootState) => {
   );
   return availableAvatars;
 };
+
+export const selectHouseholdById =
+  (householdId: string) => (state: RootState) =>
+    state.houseHoldList.houseHoldList.find(house => house.id === householdId);
