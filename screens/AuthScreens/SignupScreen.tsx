@@ -86,15 +86,15 @@ export default function SignupScreen({
               }}
               leftIcon="email"
               placeholder="Email"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              textContentType="emailAddress"
-              autoFocus
-              value={email}
+              // autoCapitalize="none"
+              // keyboardType="email-address"
+              // textContentType="emailAddress"
+              // autoFocus
+              // value={email}
               onChangeText={(text: string) => setEmail(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              autoCorrect={false}
+              // autoCorrect={false}
             />
 
             <InputField
@@ -103,15 +103,15 @@ export default function SignupScreen({
               }}
               leftIcon="account"
               placeholder="Användarnamn"
-              autoCapitalize="none"
-              keyboardType=""
-              textContentType="userName"
-              autoFocus={false}
-              value={userName}
+              // autoCapitalize="none"
+              // keyboardType=""
+              // textContentType="userName"
+              // autoFocus={false}
+              // value={userName}
               onChangeText={(text: string) => setUserName(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              autoCorrect={false}
+              // autoCorrect={false}
             />
 
             <InputField
@@ -120,16 +120,16 @@ export default function SignupScreen({
               }}
               leftIcon="lock"
               placeholder="Lösenord"
-              autoCapitalize="none"
-              autoCorrect={false}
+              // autoCapitalize="none"
+              // autoCorrect={false}
               secureTextEntry={passwordVisibility}
-              textContentType="password"
+              // textContentType="password"
               rightIcon={rightIcon}
-              value={password}
+              // value={password}
               onChangeText={(text: string) => setPassword(text)}
               handlePasswordVisibility={handlePasswordVisibility}
-              keyboardType=""
-              autoFocus={false}
+              // keyboardType=""
+              // autoFocus={false}
             />
 
             {signupError ? <ErrorMessage error={signupError} visible /> : null}

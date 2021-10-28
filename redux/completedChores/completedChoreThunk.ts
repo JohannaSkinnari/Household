@@ -21,10 +21,17 @@ export const createCompletedChore = createAsyncThunk<
       new Date().getFullYear(),
       new Date().getMonth(),
       new Date().getDate()
-    ).toDateString(),
+    ).toString(),
     weight: createData.weight,
   };
   // prata med API
 
   return completedChore;
 });
+
+export const deleteCompletedChore = createAsyncThunk<string, string, ThunkApi>(
+  "chore/deleteCompletedChore",
+  async choreId =>
+    // prata med API
+    choreId
+);

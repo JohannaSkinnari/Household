@@ -16,6 +16,7 @@ export const initialState: ChoresState = {
       description: "gör tallriken ren",
       interval: 1,
       weight: 2,
+      isArchived: false,
     },
     {
       id: "2",
@@ -24,6 +25,7 @@ export const initialState: ChoresState = {
       description: "gör tallriken ren",
       interval: 1,
       weight: 2,
+      isArchived: false,
     },
     {
       id: "3",
@@ -32,6 +34,8 @@ export const initialState: ChoresState = {
       description: "gör tallriken ren",
       interval: 1,
       weight: 2,
+      lastCompleted: "2021-10-20T22:00:00.000Z",
+      isArchived: false,
     },
     {
       id: "4",
@@ -40,6 +44,7 @@ export const initialState: ChoresState = {
       description: "sug upp damm",
       interval: 3,
       weight: 2,
+      isArchived: false,
     },
     {
       id: "5",
@@ -48,6 +53,7 @@ export const initialState: ChoresState = {
       description: "häll vatten på blomman",
       interval: 3,
       weight: 2,
+      isArchived: false,
     },
     {
       id: "6",
@@ -56,6 +62,7 @@ export const initialState: ChoresState = {
       description: "ställ saker på hyllan om ramlat ner",
       interval: 1,
       weight: 1,
+      isArchived: false,
     },
   ],
   loading: false,

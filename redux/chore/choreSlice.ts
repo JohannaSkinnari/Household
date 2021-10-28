@@ -1,15 +1,18 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./choreState";
-import { completeChore, createChore, deleteChore, editChore, getChores } from "./choreThunk";
+import {
+  archiveChore,
+  completeChore,
+  createChore,
+  deleteChore,
+  editChore,
+  getChores,
+} from "./choreThunk";
 
 const choreSlice = createSlice({
   name: "chores",
   initialState,
-  reducers: {
-    // deleteChore(state, action: PayloadAction<string>) {
-    //   state.chores = state.chores.filter(chore => chore.id !== action.payload);
-    // },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(createChore.fulfilled, (state, { payload }) => {
       state.loading = false;
@@ -40,6 +43,24 @@ const choreSlice = createSlice({
       state.error = "No data found";
     });
     builder.addCase(editChore.pending, state => {
+      state.loading = true;
+    });
+
+    builder.addCase(archiveChore.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.isCreatedSuccess = true;
+      const index = state.chores.findIndex(chore => chore.id === payload.id);
+      state.chores[index] = {
+        ...state.chores[index],
+        ...payload,
+      };
+    });
+    builder.addCase(archiveChore.rejected, state => {
+      state.loading = false;
+      state.isCreatedSuccess = false;
+      state.error = "No data found";
+    });
+    builder.addCase(archiveChore.pending, state => {
       state.loading = true;
     });
 
@@ -87,6 +108,6 @@ const choreSlice = createSlice({
   },
 });
 
-export const { } = choreSlice.actions;
+export const {} = choreSlice.actions;
 
 export default choreSlice.reducer;

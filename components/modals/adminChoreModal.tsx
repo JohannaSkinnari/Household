@@ -23,7 +23,7 @@ import WeightPicker from "../WeightPicker";
 type ChoreValidationSchema = Record<
   keyof Omit<
     IModefideChore,
-    "lastCompleted" | "householdId" | "interval" | "weight"
+    "lastCompleted" | "householdId" | "interval" | "weight" | "isArchived"
   >,
   yup.AnySchema
 >;
@@ -77,6 +77,7 @@ export default function AdminChoreModal({
       description: chore.description,
       interval: chore.interval,
       weight: chore.weight,
+      isArchived: false,
     };
     useEffect(() => {
       if (chore) {
@@ -94,6 +95,7 @@ export default function AdminChoreModal({
       description: "",
       interval: 7,
       weight: 1,
+      isArchived: false,
     };
   }
 
@@ -258,7 +260,6 @@ export default function AdminChoreModal({
                   </Pressable>
                 ) : (
                   <IntervalPicker
-                    value={values.interval}
                     selectPickerIntervalValue={value => {
                       setFieldValue("interval", value);
                       setShowInterval(false);
@@ -302,7 +303,6 @@ export default function AdminChoreModal({
                   </Pressable>
                 ) : (
                   <WeightPicker
-                    value={values.weight}
                     selectPickerWeightValue={value => {
                       setFieldValue("weight", value);
                       setShowValue(false);

@@ -3,7 +3,6 @@ import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
 
 interface Props {
-  value: number;
   selectPickerWeightValue: (value: number) => void;
 }
 
