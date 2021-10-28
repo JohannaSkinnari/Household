@@ -9,12 +9,13 @@ import {
   View,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import firebase from "firebase";
 import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
-import firebase from "firebase";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
+
 const auth = firebase.auth();
 
 export default function SignupScreen({
