@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IHouseHold } from "../../interfaces/IHouseHold";
+import { ICreateHouseHold, IEditHouseHold, IHouseHold } from "../../interfaces/IHouseHold";
 import { initialState } from "./houseHoldState";
 import { createHouseHold } from "./houseHoldThunk";
 
@@ -7,7 +7,7 @@ const houseHoldSlice = createSlice({
   name: "households",
   initialState,
   reducers: {
-    editHouseHold(state, action: PayloadAction<IHouseHold>) {
+    editHouseHold(state, action: PayloadAction<IEditHouseHold>) {
       const index = state.houseHoldList.findIndex(
         (house) => house.id === action.payload.id
       );
@@ -31,6 +31,19 @@ const houseHoldSlice = createSlice({
     builder.addCase(createHouseHold.pending, (state, { payload }) => {
       state.loading = true;
     });
+      //   builder.addCase(editHouseHold.fulfilled, (state, { payload }) => {
+      //   state.loading = false;
+      //   state.isCreatedSuccess = true;
+      //   state.houseHoldList.push(...payload, {id:"", name: "", houseHoldCode:0});
+      // });
+      // builder.addCase(editHouseHold.rejected, (state, { payload }) => {
+      //   state.loading = false;
+      //   state.isCreatedSuccess = false;
+      //   state.error = "No data found";
+      // });
+      // builder.addCase(editHouseHold.pending, (state, { payload }) => {
+      //   state.loading = true;
+      // });
   },
 });
 
