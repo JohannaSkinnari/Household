@@ -16,7 +16,7 @@ export default function App() {
 
   if (firebase.apps.length === 0) {
    firebase.initializeApp(firebaseConfig);
-    console.log("Firebase initialized");
+    
   }
 
   const scheme = useColorScheme();

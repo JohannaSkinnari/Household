@@ -12,10 +12,8 @@ const firebaseConfig = {
   measurementId: "G-3WWJTBGF85",
 };
 
-let Firebase: any;
-
-  Firebase = firebase.initializeApp(firebaseConfig);
-  console.log("firebase initialized from setup file");
-
+const Firebase = !firebase.apps.length
+  ? firebase.initializeApp(firebaseConfig)
+  : firebase.app();
 
 export default Firebase;

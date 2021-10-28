@@ -9,13 +9,12 @@ import {
   View,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { RootStackScreenProps } from "../../navigation/RootNavigation";
 import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
 import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
 import firebase from "firebase";
-
+import { RootStackScreenProps } from "../../navigation/RootNavigation";
 const auth = firebase.auth();
 
 export default function SignupScreen({
@@ -44,9 +43,7 @@ export default function SignupScreen({
       if (email !== "" && userName !== "" && password !== "") {
         await auth.createUserWithEmailAndPassword(email, password);
 
-        const user = Firebase.auth().currentUser;
-        user
-          .updateProfile({
+        Firebase.auth().currentUser?.updateProfile({
             displayName: userName,
           })
           .then(() => {
@@ -86,15 +83,9 @@ export default function SignupScreen({
               }}
               leftIcon="email"
               placeholder="Email"
-              // autoCapitalize="none"
-              // keyboardType="email-address"
-              // textContentType="emailAddress"
-              // autoFocus
-              // value={email}
               onChangeText={(text: string) => setEmail(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              // autoCorrect={false}
             />
 
             <InputField
@@ -103,15 +94,9 @@ export default function SignupScreen({
               }}
               leftIcon="account"
               placeholder="Användarnamn"
-              // autoCapitalize="none"
-              // keyboardType=""
-              // textContentType="userName"
-              // autoFocus={false}
-              // value={userName}
               onChangeText={(text: string) => setUserName(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              // autoCorrect={false}
             />
 
             <InputField
@@ -120,16 +105,10 @@ export default function SignupScreen({
               }}
               leftIcon="lock"
               placeholder="Lösenord"
-              // autoCapitalize="none"
-              // autoCorrect={false}
               secureTextEntry={passwordVisibility}
-              // textContentType="password"
               rightIcon={rightIcon}
-              // value={password}
               onChangeText={(text: string) => setPassword(text)}
               handlePasswordVisibility={handlePasswordVisibility}
-              // keyboardType=""
-              // autoFocus={false}
             />
 
             {signupError ? <ErrorMessage error={signupError} visible /> : null}

@@ -1,10 +1,11 @@
 import React from "react";
+import { SimpleLineIcons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { getUserHouseholds } from "../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../redux/reduxHooks";
-import { SimpleLineIcons } from "@expo/vector-icons";
+
 
 
 interface Props {
