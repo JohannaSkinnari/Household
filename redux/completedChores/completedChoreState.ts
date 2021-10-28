@@ -11,7 +11,7 @@ export const initialState: completedChoreState = {
   completedChores: [
     {
       id: "1",
-      choreId: "1",
+      choreId: "3",
       memberId: "4",
       houseHoldId: "3",
       completed: "2021-10-10T22:00:00.000Z",
@@ -19,7 +19,7 @@ export const initialState: completedChoreState = {
     },
     {
       id: "2",
-      choreId: "1",
+      choreId: "3",
       memberId: "5",
       houseHoldId: "3",
       completed: "2021-10-12T22:00:00.000Z",
@@ -27,7 +27,7 @@ export const initialState: completedChoreState = {
     },
     {
       id: "3",
-      choreId: "1",
+      choreId: "3",
       memberId: "5",
       houseHoldId: "3",
       completed: "2021-10-15T22:00:00.000Z",
@@ -35,7 +35,7 @@ export const initialState: completedChoreState = {
     },
     {
       id: "4",
-      choreId: "1",
+      choreId: "3",
       memberId: "4",
       houseHoldId: "3",
       completed: "2021-10-20T22:00:00.000Z",

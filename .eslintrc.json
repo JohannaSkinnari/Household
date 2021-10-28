@@ -58,7 +58,8 @@
     // "react/no-unused-prop-types": "off",
     // "no-unused-vars": "off",
     "@typescript-eslint/no-namespace": "off",
-    "import/no-mutable-exports": "off"
+    "import/no-mutable-exports": "off",
+    "react/no-array-index-key": "off"
   },
   "settings": {
     "import/parsers": {

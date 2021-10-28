@@ -1,21 +1,37 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
+import { avatars } from "../assets/AvatarData/data";
+import { selectLastCompletedChores } from "../redux/completedChores/completedChoreSelectors";
+import { useAppSelector } from "../redux/reduxHooks";
 
+interface IAvatar {
+  icon: any;
+  id: number;
+}
 interface Props {
   choreId: string;
 }
 
 export default function AvatarsThatLastCompletedChore({ choreId }: Props) {
-  const members = [
-    { id: "1", userId: "1", householdId: "1", isAdmin: true, avatarId: 1 },
-    { id: "1", userId: "2", householdId: "1", isAdmin: true, avatarId: 2 },
-  ];
+  const lastCompletedChores = useAppSelector(
+    selectLastCompletedChores(choreId)
+  );
+
+  const memberAvatars: IAvatar[] = [];
+  lastCompletedChores.forEach(c => {
+    const member = useAppSelector(state =>
+      state.memberList.members.find(m => m.id === c.memberId)
+    );
+    const avatar = avatars.find(a => a.id === member?.avatarId);
+    if (avatar) {
+      memberAvatars.push(avatar);
+    }
+  });
 
   return (
     <>
-      {members.map(member => (
-        // <Image style={styles.avatar} source={require("..")} />
-        <Image style={styles.avatar} source={require("..")} />
+      {memberAvatars.map((avatar, i) => (
+        <Image key={i} style={styles.avatar} source={avatar.icon} />
       ))}
     </>
   );
