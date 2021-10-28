@@ -21,26 +21,32 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
       return rejectWithValue("bip bop");
     }
     // hämta alla egna members och även members i hushållen
-    const members = (
+    const myMembers = (
       await Firebase.firestore()
         .collection("/member")
         .where("userId", "==", user.uid)
         .get()
-    ).docs.map((doc) => ({ id: doc.id, ...doc.data() } as IMember));
+    ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IMember));
 
     // hämta alla hushåll som användaren tillhör.
-    const housholdIds = members.map((member) => member.householdId);
+    const housholdIds = myMembers.map(member => member.householdId);
 
     const households = (
       await Firebase.firestore()
         .collection("/household")
         .where("id", "in", housholdIds)
         .get()
-    ).docs.map((doc) => ({ id: doc.id, ...doc.data() } as IHouseHold));
+    ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IHouseHold));
 
-    // const households = (
-    //   await Firebase.firestore().collection("/household").get()
-    // ).docs as unknown as IHouseHold[];
+    const houseId = households.map(h => h.id);
+
+    const houseHoldMembers = (
+      await Firebase.firestore()
+        .collection("/member")
+        .where("householdId", "in", houseId)
+        .get()
+    ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IMember));
+
     // // hämta alla chores för hushållen
     // const chores = (await Firebase.firestore().collection("/chores").get())
     //   .docs as unknown as IChore[];
@@ -49,6 +55,12 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
     //   await Firebase.firestore().collection("/completedChore").get()
     // ).docs as unknown as ICompletedChore[];
 
-    return { members, households, chores: [], completedChores: [] };
+    return {
+      members: myMembers,
+      houseHoldMembers,
+      households,
+      chores: [],
+      completedChores: [],
+    };
   }
 );

@@ -19,6 +19,7 @@ export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
       .collection("/member")
       .doc(state.userList.activeUser?.uid)
       .set(member);
+    console.log(member);
     return member;
   }
 );

@@ -23,7 +23,7 @@ export const createHouseHold = createAsyncThunk<
   await Firebase.firestore()
     .collection("/household")
     .add(household)
-    .then((docRef) => {
+    .then(docRef => {
       Firebase.firestore()
         .collection("/household")
         .doc(docRef.id)
@@ -33,3 +33,15 @@ export const createHouseHold = createAsyncThunk<
     });
   return household;
 });
+
+export const findHouseHoldCode = createAsyncThunk<number, number, ThunkApi>(
+  "household/findHouseHoldCode",
+  async data => {
+    const code = Firebase.firestore()
+      .collection("/household")
+      .where("HouseholdCode", "==", data)
+      .get();
+
+    return Number(code);
+  }
+);

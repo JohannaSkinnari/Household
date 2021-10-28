@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import firebase from "firebase";
+import { ILoginData } from "../../interfaces/ILoginData";
 import { ISignUpData } from "../../interfaces/ISignupData";
 import { ThunkApi } from "../reduxStore";
 
