@@ -33,24 +33,27 @@ export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
 );
 
 export const pauseMember = createAsyncThunk<IMember, IMember, ThunkApi>(
-  "chore/pauseMember",
+  "member/pauseMember",
   async memberToPause => {
     const member: IMember = {
       ...memberToPause,
       isActive: false,
     };
     // prata med API
+    console.log("pausethunk");
+
     return member;
   }
 );
 
 export const activateMember = createAsyncThunk<IMember, IMember, ThunkApi>(
-  "chore/pauseMember",
+  "member/activateMember",
   async memberToActivate => {
     const member: IMember = {
       ...memberToActivate,
       isActive: true,
     };
+    console.log("activethunk");
     // prata med API
     return member;
   }

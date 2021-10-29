@@ -39,11 +39,13 @@ const memberSlice = createSlice({
     builder.addCase(pauseMember.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.isCreatedSuccess = true;
+      console.log("pauseSlice");
       const index = state.members.findIndex(m => m.id === payload.id);
       state.members[index] = {
         ...state.members[index],
         ...payload,
       };
+      console.log(state.members[index]);
     });
     builder.addCase(pauseMember.rejected, state => {
       state.loading = false;
@@ -57,11 +59,14 @@ const memberSlice = createSlice({
     builder.addCase(activateMember.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.isCreatedSuccess = true;
+      console.log("activateSlice");
+
       const index = state.members.findIndex(m => m.id === payload.id);
       state.members[index] = {
         ...state.members[index],
         ...payload,
       };
+      console.log(state.members[index]);
     });
     builder.addCase(activateMember.rejected, state => {
       state.loading = false;

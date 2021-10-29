@@ -10,6 +10,8 @@ import {
 } from "../redux/member/memberSelectors";
 import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 import { IMember } from "../interfaces/IMember";
+import { activateMember, pauseMember } from "../redux/member/memberThunk";
+// import { pauseMember } from "../redux/member/memberThunk";
 
 interface Props {
   householdId: string;
@@ -23,18 +25,18 @@ export default function MemberView({ householdId }: Props) {
 
   const admin = useAppSelector(selectOwnerOfHousehold(householdId));
 
-  //  const pauseMember = (member: IMember) => {
-  //     dispatch(pauseMember(member));
-  //   };
-  //   const activetMember = (member: IMember)  => {
-  //     dispatch(activetMember(member));
-  //   };
+  const pauseThisMember = (member: IMember) => {
+    dispatch(pauseMember(member));
+  };
+  const activetThisMember = (member: IMember) => {
+    dispatch(activateMember(member));
+  };
 
   return (
     <>
       {MemberList.map(({ member, user, avatar }) => (
         <View key={member.id}>
-          <TouchableOpacity
+          <View
             style={[styles.householdCard, { backgroundColor: colors.surface }]}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -48,26 +50,21 @@ export default function MemberView({ householdId }: Props) {
             </View>
             <View style={styles.iconsContainer}>
               <Image style={styles.avatar} source={avatar?.icon} />
-              <View
-                style={[
-                  styles.active,
-                  {
-                    height: member.id === admin?.id ? 30 : 0,
-                  },
-                ]}
-              >
-                {member.isActive ? (
-                  <Pressable>
-                    <Feather name="play" size={24} color={colors.green} />
-                  </Pressable>
-                ) : (
-                  <Pressable>
-                    <Feather name="pause" size={24} color={colors.darkPink} />
-                  </Pressable>
-                )}
-              </View>
+              {admin?.isAdmin && (
+                <View style={[styles.active]}>
+                  {member.isActive ? (
+                    <Pressable onPress={() => pauseThisMember(member)}>
+                      <Feather name="pause" size={24} color={colors.darkPink} />
+                    </Pressable>
+                  ) : (
+                    <Pressable onPress={() => activetThisMember(member)}>
+                      <Feather name="play" size={24} color={colors.green} />
+                    </Pressable>
+                  )}
+                </View>
+              )}
             </View>
-          </TouchableOpacity>
+          </View>
         </View>
       ))}
     </>
@@ -115,3 +112,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
 });
+function activetMember(member: IMember): any {
+  throw new Error("Function not implemented.");
+}
