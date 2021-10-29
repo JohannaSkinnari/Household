@@ -40,7 +40,6 @@ export const pauseMember = createAsyncThunk<IMember, IMember, ThunkApi>(
       isActive: false,
     };
     // prata med API
-    console.log("pausethunk");
 
     return member;
   }
@@ -53,7 +52,6 @@ export const activateMember = createAsyncThunk<IMember, IMember, ThunkApi>(
       ...memberToActivate,
       isActive: true,
     };
-    console.log("activethunk");
     // prata med API
     return member;
   }
