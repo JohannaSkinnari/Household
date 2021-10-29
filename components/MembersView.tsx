@@ -51,11 +51,11 @@ export default function MemberView({ householdId }: Props) {
                 <View style={[styles.active]}>
                   {member.isActive ? (
                     <Pressable onPress={() => pauseThisMember(member)}>
-                      <Feather name="pause" size={24} color={colors.darkPink} />
+                      <Feather name="play" size={24} color={colors.green} />
                     </Pressable>
                   ) : (
                     <Pressable onPress={() => activetThisMember(member)}>
-                      <Feather name="play" size={24} color={colors.green} />
+                      <Feather name="pause" size={24} color={colors.darkPink} />
                     </Pressable>
                   )}
                 </View>
