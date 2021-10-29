@@ -1,17 +1,14 @@
+import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { IMember } from "../interfaces/IMember";
 import {
   selectMembersByHouseholdId,
   selectOwnerOfHousehold,
 } from "../redux/member/memberSelectors";
-import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
-import { IMember } from "../interfaces/IMember";
 import { activateMember, pauseMember } from "../redux/member/memberThunk";
-// import { pauseMember } from "../redux/member/memberThunk";
+import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
   householdId: string;
