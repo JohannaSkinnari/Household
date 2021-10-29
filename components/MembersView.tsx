@@ -1,9 +1,15 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-import { selectMembersByHouseholdId } from "../redux/member/memberSelectors";
-import { useAppSelector } from "../redux/reduxHooks";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import {
+  selectMembersByHouseholdId,
+  selectOwnerOfHousehold,
+} from "../redux/member/memberSelectors";
+import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
+import { IMember } from "../interfaces/IMember";
 
 interface Props {
   householdId: string;
@@ -11,8 +17,18 @@ interface Props {
 
 export default function MemberView({ householdId }: Props) {
   const { colors } = useTheme();
+  const dispatch = useAppDispatch();
 
   const MemberList = useAppSelector(selectMembersByHouseholdId(householdId));
+
+  const admin = useAppSelector(selectOwnerOfHousehold(householdId));
+
+  //  const pauseMember = (member: IMember) => {
+  //     dispatch(pauseMember(member));
+  //   };
+  //   const activetMember = (member: IMember)  => {
+  //     dispatch(activetMember(member));
+  //   };
 
   return (
     <>
@@ -32,7 +48,24 @@ export default function MemberView({ householdId }: Props) {
             </View>
             <View style={styles.iconsContainer}>
               <Image style={styles.avatar} source={avatar?.icon} />
-              <View style={styles.active} />
+              <View
+                style={[
+                  styles.active,
+                  {
+                    height: member.id === admin?.id ? 30 : 0,
+                  },
+                ]}
+              >
+                {member.isActive ? (
+                  <Pressable>
+                    <Feather name="play" size={24} color={colors.green} />
+                  </Pressable>
+                ) : (
+                  <Pressable>
+                    <Feather name="pause" size={24} color={colors.darkPink} />
+                  </Pressable>
+                )}
+              </View>
             </View>
           </TouchableOpacity>
         </View>
@@ -79,5 +112,6 @@ const styles = StyleSheet.create({
   active: {
     height: 30,
     width: 30,
+    marginLeft: 20,
   },
 });
