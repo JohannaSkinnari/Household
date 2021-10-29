@@ -8,6 +8,10 @@ const houseHoldSlice = createSlice({
   name: "households",
   initialState,
   reducers: {
+    removeHouseholdState(state, action: PayloadAction<[]>) {
+      state.houseHoldList = action.payload;
+      state.otherHouseholds = action.payload;
+    },
     editHouseHold(state, action: PayloadAction<IHouseHold>) {
       const index = state.houseHoldList.findIndex(
         house => house.id === action.payload.id
@@ -34,10 +38,12 @@ const houseHoldSlice = createSlice({
     });
     builder.addCase(loadData.fulfilled, (state, { payload }) => {
       state.houseHoldList = payload.households;
+      state.otherHouseholds = payload.otherHouseholds;
+      console.log(payload);
     });
   },
 });
 
-export const { editHouseHold } = houseHoldSlice.actions;
+export const { editHouseHold, removeHouseholdState } = houseHoldSlice.actions;
 
 export default houseHoldSlice.reducer;

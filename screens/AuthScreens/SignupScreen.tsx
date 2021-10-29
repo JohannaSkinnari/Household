@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -16,6 +16,7 @@ import Logo from "../../components/Logo";
 import { ISignUpData } from "../../interfaces/ISignupData";
 import { useAppDispatch } from "../../redux/reduxHooks";
 import { signupUser } from "../../redux/user/userThunk";
+import Firebase from "../../database/config";
 
 export default function SignupScreen({
   navigation,
@@ -40,6 +41,16 @@ export default function SignupScreen({
     }
   };
 
+  // useEffect(() => {
+  //   const unsubscribe = Firebase.auth().onAuthStateChanged(user => {
+  //     if (user) {
+  //       console
+  //     }
+  //   })
+  //   return unsubscribe
+
+  // }, [])
+
   const onHandleSignup = async () => {
     if (email !== "" && userName !== "" && password !== "") {
       const newUser: ISignUpData = {
@@ -48,7 +59,7 @@ export default function SignupScreen({
         name: userName,
       };
       await dispatch(signupUser(newUser));
-      navigation.navigate("ProfileNav");
+      navigation.navigate("Login");
     } else {
       setSignupError("Fyll i alla fält");
     }

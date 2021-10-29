@@ -9,7 +9,9 @@ import { ThunkApi } from "../reduxStore";
 
 type AppDataPayload = {
   members: IMember[];
+  houseHoldMembers: IMember[];
   households: IHouseHold[];
+  otherHouseholds: IHouseHold[];
   chores: IChore[];
   completedChores: ICompletedChore[];
 };
@@ -29,15 +31,25 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
     ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IMember));
 
     // hämta alla hushåll som användaren tillhör.
-    const housholdIds = myMembers.map(member => member.householdId);
+    const householdIds = myMembers.map(member => member.householdId);
 
-    const households = (
+    const households = householdIds.length
+      ? (
+          await Firebase.firestore()
+            .collection("/household")
+            .where("id", "in", householdIds)
+            .get()
+        ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IHouseHold))
+      : [];
+    console.log(households);
+    // de andra hushållen
+    const otherHouseholds = (
       await Firebase.firestore()
         .collection("/household")
-        .where("id", "in", housholdIds)
+        .where("id", "not-in", householdIds)
         .get()
     ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IHouseHold));
-
+    console.log(otherHouseholds);
     const houseId = households.map(h => h.id);
 
     const houseHoldMembers = (
@@ -59,6 +71,7 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
       members: myMembers,
       houseHoldMembers,
       households,
+      otherHouseholds,
       chores: [],
       completedChores: [],
     };

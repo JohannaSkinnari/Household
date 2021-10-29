@@ -7,39 +7,52 @@ import {
   selectHouseholdCodes,
   selectUserHouseholds,
 } from "../../redux/houseHold/houseHoldSelector";
+
 import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function JoinHouseholdScreen({
   navigation,
 }: ProfileStackScreenProps<"JoinHousehold">) {
-  const households = useAppSelector(selectHouseholdCodes);
+  const codes = useAppSelector(selectHouseholdCodes);
   const userHouseHolds = useAppSelector(selectUserHouseholds);
   const { colors } = useTheme();
   const [error, setError] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  // const one = useAppSelector(state => state.houseHoldList.houseHoldList);
+  // console.log("householdlist: ");
+  // console.log(one);
+  // const two = useAppSelector(state => state.houseHoldList.otherHouseholds);
+  // console.log("otherHouseholds: ");
+  // console.log(two);
 
-  function checkCode(code: number) {
-    const householdCode: boolean = households.some(
-      house => house.houseHoldCode === code
-    );
-    const foundHouse = households.find(h => h.houseHoldCode === code); // tog bort h.id, innan h.houseHoldCode === code
-    const alreadyMember = userHouseHolds.some(
-      h => h.member?.householdId === foundHouse?.id
-    );
+  async function checkCode(code: number) {
+    console.log(`koden är: ${code}`);
+    console.log(codes);
+
+    const householdCode = codes.some(c => c == code);
+    console.log(`Resultatet är: ${householdCode}`);
+    // console.log(householdCode);
+    // const foundHouse = households.find(h => h.houseHoldCode === code); // tog bort h.id, innan h.houseHoldCode === code
+    // const alreadyMember = userHouseHolds.some(
+    //   h => h.member?.householdId === foundHouse?.id
+    // );
 
     if (!householdCode) {
       setError(true);
       setErrorMessage("Hushållet finns inte");
     }
-    if (alreadyMember) {
-      setError(true);
-      setErrorMessage("Du är redan medlem i hushållet");
-    }
-    if (!alreadyMember && householdCode && foundHouse) {
+    if (householdCode) {
       setError(false);
-      navigation.navigate("HouseholdInfo", { id: foundHouse.id });
     }
+    // if (alreadyMember) {
+    //   setError(true);
+    //   setErrorMessage("Du är redan medlem i hushållet");
+    // }
+    // if (!alreadyMember && householdCode && foundHouse) {
+    //   setError(false);
+    //   navigation.navigate("HouseholdInfo", { id: foundHouse.id });
+    // }
   }
   useEffect(() => {
     if (error === true) {

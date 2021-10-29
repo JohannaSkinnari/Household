@@ -13,7 +13,7 @@ export const selectUserHouseholds = (state: RootState) =>
   });
 
 export const selectHouseholdCodes = (state: RootState) => {
-  const householdCodes = state.houseHoldList.houseHoldList.filter(
+  const householdCodes = state.houseHoldList.otherHouseholds.map(
     house => house.houseHoldCode
   );
   return householdCodes;

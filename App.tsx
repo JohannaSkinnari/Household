@@ -11,6 +11,10 @@ import Firebase from "./database/config";
 import { IUser } from "./interfaces/IUser";
 import RootNavigation from "./navigation/RootNavigation";
 import { loadData } from "./redux/auth/authThunk";
+import { removeChoreState } from "./redux/chore/choreSlice";
+import { removeCompletedChoreState } from "./redux/completedChores/completedChoreSlice";
+import { removeHouseholdState } from "./redux/houseHold/houseHoldSlice";
+import { removeMemberState } from "./redux/member/memberSlice";
 import store, { useAppDispatch } from "./redux/reduxStore";
 import { removeUser, setUser } from "./redux/user/userSlice";
 
@@ -42,17 +46,22 @@ const FirebaseSetup = () => {
 
   useEffect(() => {
     const unsubscribe = Firebase.auth().onAuthStateChanged(user => {
+      console.log("IN USEFFECT");
+      // console.log(user?.toJSON() as IUser);
       if (user) {
+        console.log("SETTING DATA NOW");
         dispatch(setUser(user.toJSON() as IUser));
         dispatch(loadData(user.toJSON() as IUser));
       } else {
+        console.log("REMOVING DATA NOW");
         dispatch(removeUser(null));
-        // clear data vanlig action. till tomma []
-        // User is signed out
-        // Remove user from redux store!
+        dispatch(removeHouseholdState([]));
+        dispatch(removeChoreState([]));
+        dispatch(removeCompletedChoreState([]));
+        dispatch(removeMemberState([]));
       }
     });
-    return () => unsubscribe();
+    return unsubscribe;
   }, []);
 
   return null;

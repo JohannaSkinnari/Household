@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadData } from "../auth/authThunk";
 import { initialState } from "./choreState";
 import {
@@ -13,7 +13,11 @@ import {
 const choreSlice = createSlice({
   name: "chores",
   initialState,
-  reducers: {},
+  reducers: {
+    removeChoreState(state, action: PayloadAction<[]>) {
+      state.chores = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(createChore.fulfilled, (state, { payload }) => {
       state.loading = false;
@@ -112,6 +116,6 @@ const choreSlice = createSlice({
   },
 });
 
-export const {} = choreSlice.actions;
+export const { removeChoreState } = choreSlice.actions;
 
 export default choreSlice.reducer;

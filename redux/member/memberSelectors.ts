@@ -4,7 +4,7 @@ import { RootState } from "../reduxStore";
 
 export const selectMembersByHouseholdId =
   (householdId: string, currentUser: IUser) => (state: RootState) =>
-    state.memberList.members
+    state.memberList.householdMembers
       .filter(member => member.householdId === householdId)
       .map(member => {
         const currentMember = state.memberList.members.find(

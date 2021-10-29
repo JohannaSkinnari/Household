@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadData } from "../auth/authThunk";
 import { initialState } from "./memberState";
 import { createMember, createOwner } from "./memberThunk";
@@ -6,7 +6,11 @@ import { createMember, createOwner } from "./memberThunk";
 const memberSlice = createSlice({
   name: "members",
   initialState,
-  reducers: {},
+  reducers: {
+    removeMemberState(state, action: PayloadAction<[]>) {
+      state.householdMembers = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(createMember.fulfilled, (state, { payload }) => {
       state.loading = false;
@@ -36,6 +40,6 @@ const memberSlice = createSlice({
   },
 });
 
-export const {} = memberSlice.actions;
+export const { removeMemberState } = memberSlice.actions;
 
 export default memberSlice.reducer;

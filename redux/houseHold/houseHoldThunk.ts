@@ -37,11 +37,29 @@ export const createHouseHold = createAsyncThunk<
 export const findHouseHoldCode = createAsyncThunk<number, number, ThunkApi>(
   "household/findHouseHoldCode",
   async data => {
-    const code = Firebase.firestore()
+    const code = await Firebase.firestore()
       .collection("/household")
-      .where("HouseholdCode", "==", data)
+      .where("houseHoldCode", "==", data)
       .get();
 
     return Number(code);
   }
 );
+
+// export const findHouseHoldCode = createAsyncThunk<IHouseHold, number, ThunkApi>(
+//   "household/findHouseHoldCode",
+//   async data => {
+//     const householdData = await (
+//       await Firebase.firestore()
+//         .collection("/household")
+//         .where("houseHoldCode", "==", data)
+//         .get()
+//     ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IHouseHold));
+
+//     const household = householdData.find(
+//       h => h.houseHoldCode == data
+//     ) as IHouseHold;
+
+//     return household;
+//   }
+// );
