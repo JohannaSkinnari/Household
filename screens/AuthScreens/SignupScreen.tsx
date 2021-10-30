@@ -16,8 +16,8 @@ import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
 
 const auth = Firebase.auth();
-// Är funktionsnamnet rätt för LoginScreen??
-export default function LoginScreen({
+
+export default function SignupScreen({
   navigation,
 }: RootStackScreenProps<"Login">) {
   const { colors } = useTheme();

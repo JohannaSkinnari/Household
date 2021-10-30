@@ -59,7 +59,7 @@ export default function ProfileScreen({
       <View style={{ flex: 1 }} />
       <View style={[styles.houseList, { flex: 6 }]}>
         <ScrollView>
-          <HouseHoldView onSelectedHouse={navigateTo} />
+        <HouseHoldView onSelectedHouse={navigateTo} onSelectedHouseSetup ={navigation.navigate}/>
         </ScrollView>
       </View>
       <View style={[{ justifyContent: "flex-end", flex: 6 }]}>

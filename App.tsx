@@ -12,11 +12,9 @@ import RootNavigation from "./navigation/RootNavigation";
 import store from "./redux/reduxStore";
 
 export default function App() {
-  let Firebase: any;
 
   if (firebase.apps.length === 0) {
-    Firebase = firebase.initializeApp(firebaseConfig);
-    console.log(firebase.app().options);
+    firebase.initializeApp(firebaseConfig);
   }
 
   const scheme = useColorScheme();
