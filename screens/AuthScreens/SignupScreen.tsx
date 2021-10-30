@@ -17,7 +17,6 @@ import Logo from "../../components/Logo";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 
 const auth = firebase.auth();
-
 export default function SignupScreen({
   navigation,
 }: RootStackScreenProps<"Login">) {
