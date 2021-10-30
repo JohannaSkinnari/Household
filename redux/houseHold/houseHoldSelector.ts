@@ -19,6 +19,11 @@ export const selectHouseholdCodes = (state: RootState) => {
   return householdCodes;
 };
 
+export const selectOtherHouseholds = (state: RootState) => {
+  const households = state.houseHoldList.otherHouseholds.map(house => house);
+  return households;
+};
+
 export const getAvailableAvatars = (state: RootState) => {
   const availableAvatars = avatars.filter(
     avatar =>

@@ -17,9 +17,14 @@ export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
     };
     await Firebase.firestore()
       .collection("/member")
-      .doc(state.userList.activeUser?.uid)
-      .set(member);
-    console.log(member);
+      .add(member)
+      .then(docRef => {
+        Firebase.firestore()
+          .collection("/member")
+          .doc(docRef.id)
+          .update({ id: docRef.id });
+        member.id = docRef.id;
+      });
     return member;
   }
 );

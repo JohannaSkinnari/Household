@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useTheme } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -8,15 +9,13 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import { RootStackScreenProps } from "../../navigation/RootNavigation";
+import { ErrorMessage, InputField } from "../../components";
 import CustomButton from "../../components/common/CustomButton";
-import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
 import { ISignUpData } from "../../interfaces/ISignupData";
+import { RootStackScreenProps } from "../../navigation/RootNavigation";
 import { useAppDispatch } from "../../redux/reduxHooks";
 import { signupUser } from "../../redux/user/userThunk";
-import Firebase from "../../database/config";
 
 export default function SignupScreen({
   navigation,
@@ -40,16 +39,6 @@ export default function SignupScreen({
       setPasswordVisibility(!passwordVisibility);
     }
   };
-
-  // useEffect(() => {
-  //   const unsubscribe = Firebase.auth().onAuthStateChanged(user => {
-  //     if (user) {
-  //       console
-  //     }
-  //   })
-  //   return unsubscribe
-
-  // }, [])
 
   const onHandleSignup = async () => {
     if (email !== "" && userName !== "" && password !== "") {

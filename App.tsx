@@ -47,7 +47,6 @@ const FirebaseSetup = () => {
   useEffect(() => {
     const unsubscribe = Firebase.auth().onAuthStateChanged(user => {
       console.log("IN USEFFECT");
-      // console.log(user?.toJSON() as IUser);
       if (user) {
         console.log("SETTING DATA NOW");
         dispatch(setUser(user.toJSON() as IUser));
