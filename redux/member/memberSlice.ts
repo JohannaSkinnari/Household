@@ -44,9 +44,6 @@ const memberSlice = createSlice({
         ...state.members[index],
         ...payload,
       };
-      console.log("pauseMember");
-
-      console.log(state.members[index]);
     });
     builder.addCase(pauseMember.rejected, state => {
       state.loading = false;
@@ -65,9 +62,6 @@ const memberSlice = createSlice({
         ...state.members[index],
         ...payload,
       };
-      console.log("activateMember");
-
-      console.log(state.members[index]);
     });
     builder.addCase(activateMember.rejected, state => {
       state.loading = false;
