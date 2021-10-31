@@ -46,9 +46,7 @@ export default function SignupScreen({
         const user = Firebase.auth().currentUser;
         user
           .updateProfile({
-            displayName: userName,
-            photoURL:
-              "https://alextrenoweth.co.uk/wp-content/uploads/2015/11/rowan-atkinson.jpg",
+            displayName: userName
           })
           .then(() => {
             navigation.navigate("ProfileNav");

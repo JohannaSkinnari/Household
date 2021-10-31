@@ -9,7 +9,6 @@ import {
   View,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import firebase from "firebase";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";

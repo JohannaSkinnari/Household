@@ -12,6 +12,7 @@ export default function ProfileScreen({
   navigation,
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
+
   const user = firebase.auth().currentUser;
 
   const onSignOut = () => {
@@ -20,10 +21,8 @@ export default function ProfileScreen({
       .signOut()
       .then(() => {
         navigation.navigate("Login");
-        console.log("Signed Out");
-        console.log(firebase.auth().currentUser);
       })
-      .catch(e => {
+      .catch((e) => {
         console.error("Sign Out Error", e);
       });
   };
@@ -38,7 +37,7 @@ export default function ProfileScreen({
         <View style={styles.userNameContainer}>
           <FontAwesome name="user-circle-o" size={24} color="#c75267" />
           <Text style={[styles.headerText, { color: colors.text }]}>
-            {"   "}
+            {"  "}
             {user?.displayName}
             {"  "}
           </Text>
@@ -50,7 +49,7 @@ export default function ProfileScreen({
           activeOpacity={0.5}
         >
           <View style={styles.buttonIconStyle}>
-            <AntDesign name="logout" size={18} color="white" />
+            <AntDesign name="logout" size={16} color="white" />
           </View>
           <Text style={styles.buttonTextStyle}>Logga ut </Text>
         </TouchableOpacity>
@@ -59,7 +58,10 @@ export default function ProfileScreen({
       <View style={{ flex: 1 }} />
       <View style={[styles.houseList, { flex: 6 }]}>
         <ScrollView>
-        <HouseHoldView onSelectedHouse={navigateTo} onSelectedHouseSetup ={navigation.navigate}/>
+          <HouseHoldView
+            onSelectedHouse={navigateTo}
+            onSelectedHouseSetup={navigation.navigate}
+          />
         </ScrollView>
       </View>
       <View style={[{ justifyContent: "flex-end", flex: 6 }]}>
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#485a96",
     borderWidth: 0.5,
     borderColor: "#fff",
-    height: 35,
+    height: 25,
     borderRadius: 20,
     margin: 5,
     justifyContent: "space-evenly",
@@ -123,6 +125,7 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: "#fff",
     marginHorizontal: 5,
+    fontSize: 12,
   },
 
   root: {

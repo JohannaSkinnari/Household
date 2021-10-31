@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -8,19 +8,34 @@ import { useAppSelector } from "../redux/reduxHooks";
 
 
 
+
 interface Props {
   onSelectedHouse: (id: string) => void;
   onSelectedHouseSetup: (id: string) => void;
 }
 
 export default function HouseHoldView({ onSelectedHouse,onSelectedHouseSetup }: Props) {
-  const { colors } = useTheme();
-
+  const { colors } = useTheme(); 
   const houseList = useAppSelector(selectUserHouseholds);
+  const [isVisible, setIsVisible] = useState(false);
 
-  
+  const toggleEnableSetup = () => {
+    setIsVisible(!isVisible);
+  };
+
+
+
   return (
     <>
+    
+    <View   style={styles.toggleButtonContainer}>
+        <TouchableOpacity 
+          onPress={toggleEnableSetup} 
+          activeOpacity={0.5}
+          style={[styles.toggleButton, { backgroundColor: colors.surface}]}>
+          <Text style={[styles.toggleButtonText,{ color: colors.text}]}>Ändra hushåll</Text>
+        </TouchableOpacity>
+      </View>
       {houseList.map(({ house, member, avatar }) => (
         <View key={house.id}>
           <TouchableOpacity
@@ -44,10 +59,9 @@ export default function HouseHoldView({ onSelectedHouse,onSelectedHouseSetup }: 
               <Image style={styles.avatar} source={avatar?.icon} />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
+          {isVisible ? <TouchableOpacity
           onPress={() => onSelectedHouseSetup("HouseholdSettings")} 
-          
-          style={[styles.buttonStyle, { backgroundColor: colors.surface},{ display: member?.isAdmin ? "flex" : "none" }]}
+          style={[styles.buttonStyle, { backgroundColor: colors.surface},{ display: member?.isAdmin? "flex" : "none"}]}
           activeOpacity={0.5}
         >
           <View style={styles.buttonIconStyle}>
@@ -55,7 +69,8 @@ export default function HouseHoldView({ onSelectedHouse,onSelectedHouseSetup }: 
           </View>
           
           <Text style={[{ color: colors.text}]}>Inställningar</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
+          
         </View>
       ))}
     </>
@@ -65,7 +80,7 @@ export default function HouseHoldView({ onSelectedHouse,onSelectedHouseSetup }: 
 const styles = StyleSheet.create({
   householdCard: {
     margin: 10,
-    height: 60,
+    height: 50,
     width: 330,
     borderRadius: 12,
     paddingLeft: 5,
@@ -115,4 +130,35 @@ const styles = StyleSheet.create({
   buttonIconStyle: {
     padding: 8,
   },
+  toggleButtonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginBottom:4,
+  },
+  toggleButton: {
+    flexDirection: "row",
+    justifyContent:"center",
+    alignItems: "center",
+    borderWidth: 0.5,
+    borderColor: "#485a96",
+    height: 25,
+    marginHorizontal:10,
+    borderRadius: 15,
+    marginBottom: 10,
+    width:90,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+
+  toggleButtonText: {
+    fontSize:12,
+  },
+
 });
