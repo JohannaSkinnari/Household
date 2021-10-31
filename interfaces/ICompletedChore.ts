@@ -1,7 +1,7 @@
 export interface ICompletedChore {
   id: string;
   choreId: string;
-  userId: string;
+  memberId: string;
   houseHoldId: string;
   completed: string;
   weight: number;

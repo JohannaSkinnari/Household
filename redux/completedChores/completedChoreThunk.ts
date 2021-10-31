@@ -12,10 +12,16 @@ export const createCompletedChore = createAsyncThunk<
 >("chore/createCompletedChore", async (createData, { getState }) => {
   const state = getState();
   // servern ska lösa id istället.
+  const activeMember = state.memberList.members.find(
+    m => m.userId === state.userList.activeUser.id
+  );
+  if (!activeMember) {
+    throw console.error("PANIIIIIIIK!"); // Det här kan göras bättre
+  }
   const completedChore: ICompletedChore = {
     id: Math.random().toString(),
     choreId: createData.id,
-    userId: state.userList.activeUser.id,
+    memberId: activeMember.id, // state.userList.activeUser.id borde vara något i stil med state.memberList.activeMember
     houseHoldId: createData.householdId,
     completed: new Date(
       new Date().getFullYear(),
