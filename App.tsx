@@ -8,9 +8,10 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider as ReduxProvider } from "react-redux";
 import { getTheme } from "./components/common/Theme";
 import Firebase from "./database/config";
+import { Listener } from "./database/listeners";
 import { IUser } from "./interfaces/IUser";
 import RootNavigation from "./navigation/RootNavigation";
-import { loadData } from "./redux/auth/authThunk";
+import { loadBackgroundData, loadData } from "./redux/auth/authThunk";
 import { removeChoreState } from "./redux/chore/choreSlice";
 import { removeCompletedChoreState } from "./redux/completedChores/completedChoreSlice";
 import { removeHouseholdState } from "./redux/houseHold/houseHoldSlice";
@@ -33,6 +34,7 @@ export default function App() {
               <StatusBar style="auto" />
               <RootNavigation />
               <FirebaseSetup />
+              <Listener />
             </PaperProvider>
           </NavigationContainer>
         </SafeAreaProvider>
@@ -48,11 +50,15 @@ const FirebaseSetup = () => {
     const unsubscribe = Firebase.auth().onAuthStateChanged(user => {
       console.log("IN USEFFECT");
       if (user) {
+        console.log(`USERNAME: ${user.displayName}`);
+        console.log("---------------------------");
         console.log("SETTING DATA NOW");
         dispatch(setUser(user.toJSON() as IUser));
         dispatch(loadData(user.toJSON() as IUser));
+        dispatch(loadBackgroundData(user.toJSON() as IUser));
       } else {
         console.log("REMOVING DATA NOW");
+        console.log(`USER IS NOW: ${user}`);
         dispatch(removeUser(null));
         dispatch(removeHouseholdState([]));
         dispatch(removeChoreState([]));

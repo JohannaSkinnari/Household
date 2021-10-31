@@ -19,7 +19,6 @@ export default function HouseholdInfoScreen({
   const houseId = route.params.id;
   const { colors } = useTheme();
   const dispatch = useAppDispatch();
-
   const members = useAppSelector(selectMembersFromHousehold(houseId));
   // sak vi ersätta koden i householdSelectorn med denna kod??
   const availableAvatars = avatars.filter(
@@ -43,7 +42,7 @@ export default function HouseholdInfoScreen({
 
   async function handleOnSubmit(values: ICreateMember) {
     const response = await dispatch(createMember(values));
-    if (response) {
+    if (response.meta.requestStatus === "fulfilled") {
       navigation.navigate("Profile");
     }
   }

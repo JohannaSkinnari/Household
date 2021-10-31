@@ -11,10 +11,26 @@ type AppDataPayload = {
   members: IMember[];
   houseHoldMembers: IMember[];
   households: IHouseHold[];
-  otherHouseholds: IHouseHold[];
   chores: IChore[];
   completedChores: ICompletedChore[];
 };
+
+export const loadBackgroundData = createAsyncThunk<
+  IHouseHold[],
+  IUser,
+  ThunkApi
+>("auth/loadBackgroundData", async (user, { rejectWithValue }) => {
+  if (!user) {
+    rejectWithValue("Rejected,no user");
+  }
+  const households = (
+    await Firebase.firestore().collection("/household").get()
+  ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IHouseHold));
+  console.log("otherhouseholds");
+  console.log(households);
+
+  return households;
+});
 
 export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
   "auth/loadData",
@@ -32,6 +48,7 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
 
     // hämta alla hushåll som användaren tillhör.
     const householdIds = myMembers.map(member => member.householdId);
+    console.log(`householdIDS: ${householdIds}`);
 
     const households = householdIds.length
       ? (
@@ -41,15 +58,31 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
             .get()
         ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IHouseHold))
       : [];
+    console.log("households");
     console.log(households);
     // de andra hushållen
-    const otherHouseholds = (
-      await Firebase.firestore()
-        .collection("/household")
-        .where("id", "not-in", householdIds)
-        .get()
-    ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IHouseHold));
-    console.log(otherHouseholds);
+    // const otherHouseholds = (
+    //   await Firebase.firestore()
+    //     .collection("/household")
+    //     // .where("id", "not-in", householdIds)
+    //     .get()
+    // ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IHouseHold));
+    // console.log("otherhouseholds");
+    // console.log(otherHouseholds);
+
+    // samma som ovan
+    // const otherHouseholds: IHouseHold[] = [];
+    // await Firebase.firestore()
+    //   .collection("/household")
+    //   .get()
+    //   .then(querySnapshot => {
+    //     querySnapshot.forEach(doc =>
+    //       otherHouseholds.push({ ...doc.data() } as IHouseHold)
+    //     );
+    //   });
+    // console.log("otherhouseholds");
+    // console.log(otherHouseholds);
+
     const houseId = households.map(h => h.id);
 
     const houseHoldMembers = (
@@ -71,7 +104,6 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
       members: myMembers,
       houseHoldMembers,
       households,
-      otherHouseholds,
       chores: [],
       completedChores: [],
     };

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import firebase from "firebase";
+import Firebase from "../../database/config";
 import { ILoginData } from "../../interfaces/ILoginData";
 import { ISignUpData } from "../../interfaces/ISignupData";
 import { ThunkApi } from "../reduxStore";
@@ -24,6 +25,7 @@ export const signupUser = createAsyncThunk<ISignUpData, ISignUpData, ThunkApi>(
 export const loginUser = createAsyncThunk<ILoginData, ILoginData, ThunkApi>(
   "user/loginUser",
   async (userData, { rejectWithValue }) => {
+    Firebase.auth().signOut();
     firebase
       .auth()
       .signInWithEmailAndPassword(userData.email, userData.password)
