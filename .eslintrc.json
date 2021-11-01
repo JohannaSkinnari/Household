@@ -29,6 +29,7 @@
     ],
     "linebreak-style": "off",
     "no-use-before-define": "off",
+    "eqeqeq":"off",
     "import/extensions": "off",
     "import/no-unresolved": "error",
     "import/no-cycle": "off",

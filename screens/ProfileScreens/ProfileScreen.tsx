@@ -1,27 +1,25 @@
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
-import firebase from "firebase";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import CustomButton from "../../components/common/CustomButton";
 import HouseHoldView from "../../components/HouseHoldsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import { useAppSelector } from "../../redux/reduxHooks";
+import Firebase from "../../database/config";
 
 export default function ProfileScreen({
   navigation,
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
-  const user = firebase.auth().currentUser;
+  const user = useAppSelector(u => u.userList.activeUser);
 
   const onSignOut = () => {
-    firebase
-      .auth()
+    Firebase.auth()
       .signOut()
       .then(() => {
         navigation.navigate("Login");
-        console.log("Signed Out");
-        console.log(firebase.auth().currentUser);
       })
       .catch(e => {
         console.error("Sign Out Error", e);
@@ -62,7 +60,7 @@ export default function ProfileScreen({
           <HouseHoldView onSelectedHouse={navigateTo} />
         </ScrollView>
       </View>
-      <View style={[{ justifyContent: "flex-end", flex: 6 }]}>
+      <View style={[{ justifyContent: "flex-end", flex: 1 }]}>
         <View
           style={{
             justifyContent: "space-evenly",
