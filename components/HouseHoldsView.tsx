@@ -14,28 +14,25 @@ interface Props {
   onSelectedHouseSetup: (id: string) => void;
 }
 
-export default function HouseHoldView({ onSelectedHouse,onSelectedHouseSetup }: Props) {
-  const { colors } = useTheme(); 
-  const houseList = useAppSelector(selectUserHouseholds);
-  const [isVisible, setIsVisible] = useState(false);
+/* export const [isVisible, setIsVisible] = useState(false);
 
   const toggleEnableSetup = () => {
     setIsVisible(!isVisible);
   };
+   */
+
+  export const [isVisible, setIsVisible] = useState(false);
+export default function HouseHoldView({ onSelectedHouse,onSelectedHouseSetup }: Props) {
+  const { colors } = useTheme(); 
+  const houseList = useAppSelector(selectUserHouseholds);
+  
+  
+  
 
 
 
   return (
     <>
-    
-    <View   style={styles.toggleButtonContainer}>
-        <TouchableOpacity 
-          onPress={toggleEnableSetup} 
-          activeOpacity={0.5}
-          style={[styles.toggleButton, { backgroundColor: colors.surface}]}>
-          <Text style={[styles.toggleButtonText,{ color: colors.text}]}>Ändra hushåll</Text>
-        </TouchableOpacity>
-      </View>
       {houseList.map(({ house, member, avatar }) => (
         <View key={house.id}>
           <TouchableOpacity
