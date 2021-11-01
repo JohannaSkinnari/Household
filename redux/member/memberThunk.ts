@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { avatars } from "../../assets/AvatarData/data";
 import Firebase from "../../database/config";
+import { IAvatar } from "../../interfaces/IAvatar";
 import { ICreateMember, IMember } from "../../interfaces/IMember";
 import { ThunkApi } from "../reduxStore";
 
@@ -54,3 +56,22 @@ export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
     return member;
   }
 );
+
+export const getAvailableAvatars = createAsyncThunk<
+  IAvatar[],
+  string,
+  ThunkApi
+>("member/getMembers", async data => {
+  const members = (
+    await Firebase.firestore()
+      .collection("/member")
+      .where("householdId", "==", data)
+      .get()
+  ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IMember));
+
+  const availableAvatars = avatars.filter(
+    avatar => !members.some(member => avatar.id === member.avatarId)
+  );
+
+  return availableAvatars;
+});

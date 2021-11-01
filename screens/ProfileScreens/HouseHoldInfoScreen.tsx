@@ -3,12 +3,10 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import * as yup from "yup";
-import { avatars } from "../../assets/AvatarData/data";
 import AvatarList from "../../components/AvatarList";
 import CustomButton from "../../components/common/CustomButton";
 import { ICreateMember } from "../../interfaces/IMember";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import { selectMembersFromHousehold } from "../../redux/member/memberSelectors";
 import { createMember } from "../../redux/member/memberThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 
@@ -19,10 +17,8 @@ export default function HouseholdInfoScreen({
   const houseId = route.params.id;
   const { colors } = useTheme();
   const dispatch = useAppDispatch();
-  const members = useAppSelector(selectMembersFromHousehold(houseId));
-  // sak vi ersätta koden i householdSelectorn med denna kod??
-  const availableAvatars = avatars.filter(
-    avatar => !members.some(member => avatar.id === member.avatarId)
+  const avatars = useAppSelector(
+    a => a.memberList.availableHouseholdMemberAvatars
   );
 
   type RootValidationSchema = Record<keyof FormData, yup.AnySchema>;
@@ -67,7 +63,7 @@ export default function HouseholdInfoScreen({
             <AvatarList
               value={values.avatarId}
               onChange={value => setFieldValue("avatarId", parseFloat(value))}
-              dataArray={availableAvatars}
+              dataArray={avatars}
             />
           </View>
           <View style={{ flex: 1 }}>

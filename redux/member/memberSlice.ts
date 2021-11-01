@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadData } from "../auth/authThunk";
 import { initialState } from "./memberState";
-import { createMember, createOwner } from "./memberThunk";
+import { createMember, createOwner, getAvailableAvatars } from "./memberThunk";
 
 const memberSlice = createSlice({
   name: "members",
@@ -37,6 +37,17 @@ const memberSlice = createSlice({
     builder.addCase(loadData.fulfilled, (state, { payload }) => {
       state.members = payload.members;
       state.householdMembers = payload.houseHoldMembers;
+    });
+    builder.addCase(getAvailableAvatars.fulfilled, (state, { payload }) => {
+      state.availableHouseholdMemberAvatars = payload;
+      state.loading = false;
+    });
+    builder.addCase(getAvailableAvatars.rejected, state => {
+      state.loading = false;
+      state.error = "No data found";
+    });
+    builder.addCase(getAvailableAvatars.pending, state => {
+      state.loading = true;
     });
   },
 });

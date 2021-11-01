@@ -26,14 +26,6 @@ export const selectOtherHouseholds = (state: RootState) => {
   return households;
 };
 
-export const getAvailableAvatars = (state: RootState) => {
-  const availableAvatars = avatars.filter(
-    avatar =>
-      !state.memberList.members.some(member => avatar.id === member.avatarId)
-  );
-  return availableAvatars;
-};
-
 export const selectHouseholdById =
   (householdId: string) => (state: RootState) =>
     state.houseHoldList.houseHoldList.find(house => house.id === householdId);

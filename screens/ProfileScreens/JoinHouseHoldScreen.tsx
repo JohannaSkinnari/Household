@@ -6,26 +6,21 @@ import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import {
   selectHouseholdCodes,
   selectOtherHouseholds,
-  selectUserHouseholds,
 } from "../../redux/houseHold/houseHoldSelector";
-
-import { useAppSelector } from "../../redux/reduxHooks";
+import { getAvailableAvatars } from "../../redux/member/memberThunk";
+import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 
 export default function JoinHouseholdScreen({
   navigation,
 }: ProfileStackScreenProps<"JoinHousehold">) {
   const codes = useAppSelector(selectHouseholdCodes);
   const households = useAppSelector(selectOtherHouseholds);
+  const myMemberships = useAppSelector(h => h.memberList.members);
+  const dispatch = useAppDispatch();
   const { colors } = useTheme();
   const [error, setError] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  // const one = useAppSelector(state => state.houseHoldList.houseHoldList);
-  // console.log("householdlist: ");
-  // console.log(one);
-  // const two = useAppSelector(state => state.houseHoldList.otherHouseholds);
-  // console.log("otherHouseholds: ");
-  // console.log(two);
 
   async function checkCode(code: number) {
     const foundHouseholdCode = codes.some(c => c == code);
@@ -34,13 +29,22 @@ export default function JoinHouseholdScreen({
       setError(true);
       setErrorMessage("Hushållet finns inte");
     }
+
     if (foundHouseholdCode) {
       const foundHouse = households.find(h => h.houseHoldCode == code);
+      const alreadyMember = myMemberships.some(
+        m => m.householdId == foundHouse?.id
+      );
       if (foundHouse === undefined) {
         throw new TypeError("Something that was supposed to be here wasnt");
+      } else if (alreadyMember) {
+        setError(true);
+        setErrorMessage("du är redan medlem!");
+      } else {
+        setError(false);
+        dispatch(getAvailableAvatars(foundHouse.id));
+        navigation.navigate("HouseholdInfo", { id: foundHouse.id });
       }
-      setError(false);
-      navigation.navigate("HouseholdInfo", { id: foundHouse.id });
     }
   }
   useEffect(() => {
