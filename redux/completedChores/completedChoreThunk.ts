@@ -11,13 +11,6 @@ export const createCompletedChore = createAsyncThunk<
   ThunkApi
 >("chore/createCompletedChore", async (createData, { getState }) => {
   const state = getState();
-  // servern ska lösa id istället.
-  const activeMember = state.memberList.members.find(
-    m => m.userId === state.userList.activeUser?.uid
-  );
-  if (!activeMember) {
-    throw console.error("PANIIIIIIIK!"); // Det här kan göras bättre
-  }
   const completedChore: ICompletedChore = {
     id: Math.random().toString(),
     choreId: createData.id,
