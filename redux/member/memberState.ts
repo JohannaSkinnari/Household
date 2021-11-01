@@ -49,6 +49,13 @@ export const initialState: MemberState = {
       isActive: true,
       avatarId: 8,
     },
+    {
+      id: "7",
+      userId: "2",
+      householdId: "2",
+      isAdmin: false,
+      avatarId: 1,
+    },
   ],
   loading: false,
   isCreatedSuccess: true,
