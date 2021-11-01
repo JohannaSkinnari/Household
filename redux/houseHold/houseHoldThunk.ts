@@ -36,12 +36,19 @@ export const createHouseHold = createAsyncThunk<
 
 export const editHouseHold = createAsyncThunk<
   ICreateHouseHold, 
-  ICreateHouseHold,
+  IHouseHold,
   ThunkApi
 >("household/editHouseHold", async (updateData) => {  
   const household: ICreateHouseHold = {
     ...updateData,  
-    name: updateData.name    
+      
   };  
+  await Firebase.firestore()
+  .collection("/household")
+  .doc(updateData.id).update({
+    houseHoldCode: updateData.houseHoldCode,
+    id: updateData.id ,
+    name: updateData.name,
+  })
   return household;
 });
