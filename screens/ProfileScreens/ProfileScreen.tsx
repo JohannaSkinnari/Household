@@ -1,18 +1,22 @@
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import firebase from "firebase";
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View ,Image} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useTheme} from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import CustomButton from "../../components/common/CustomButton";
-import HouseHoldView, { isVisible, setIsVisible } from "../../components/HouseHoldsView";
-import ShowSettings  from "../../components/ShowSettings";
+import HouseHoldView from // setIsVisible, // isVisible,
+"../../components/HouseHoldsView";
+import ShowSettings from "../../components/ShowSettings";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
+import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function ProfileScreen({
   navigation,
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
+  const [showToggle, setShowToggle] = useState<boolean>(false);
+
   const onSignOut = () => {
     firebase
       .auth()
@@ -20,7 +24,7 @@ export default function ProfileScreen({
       .then(() => {
         navigation.navigate("Login");
       })
-      .catch((e) => {
+      .catch(e => {
         console.error("Sign Out Error", e);
       });
   };
@@ -29,21 +33,30 @@ export default function ProfileScreen({
     navigation.navigate("Household", { id });
   }
 
-  const  toggleEnableSetup  = ShowSettings();
+  // skapade denna funktionen istället som togglar värdet i ett state högre upp (showToggle) det statet skickas in i householdView som en prop. och används där föra att visa eller inte visa knapparana.
+  const toggleEnableSetup = () => {
+    setShowToggle(!showToggle);
+  };
+  // const  toggleEnableSetup  = ShowSettings();
 
   return (
     <View style={{ flex: 1 }}>
       <View style={[styles.header, { backgroundColor: colors.background }]}>
         <TouchableOpacity
           onPress={toggleEnableSetup}
-          style={[styles.buttonStyle, { borderColor: colors.darkPink,borderWidth: 0.5,}]}
+          style={[
+            styles.buttonStyle,
+            { borderColor: colors.darkPink, borderWidth: 0.5 },
+          ]}
           activeOpacity={0.5}
         >
           <Image
             source={require("../../assets/images/icon.png")}
             style={styles.logoIcon}
-          />      
-          <Text style={[styles.buttonTextStyle, { color: colors.text }]}>Ändra</Text>
+          />
+          <Text style={[styles.buttonTextStyle, { color: colors.text }]}>
+            Ändra
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -64,6 +77,7 @@ export default function ProfileScreen({
           <HouseHoldView
             onSelectedHouse={navigateTo}
             onSelectedHouseSetup={navigation.navigate}
+            isVisible={showToggle}
           />
         </ScrollView>
       </View>
@@ -116,10 +130,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#fff",
     height: 25,
-    paddingHorizontal:2,
+    paddingHorizontal: 2,
     borderRadius: 20,
     marginHorizontal: 10,
-    marginVertical:5,
+    marginVertical: 5,
     justifyContent: "space-evenly",
   },
   buttonIconStyle: {
@@ -138,7 +152,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  
+
   logoIcon: {
     height: 25,
     width: 25,
