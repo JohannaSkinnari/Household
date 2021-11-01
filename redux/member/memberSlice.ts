@@ -36,6 +36,7 @@ const memberSlice = createSlice({
     });
     builder.addCase(loadData.fulfilled, (state, { payload }) => {
       state.members = payload.members;
+      state.householdMembers = payload.houseHoldMembers;
     });
   },
 });

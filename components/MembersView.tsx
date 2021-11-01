@@ -11,28 +11,22 @@ interface Props {
 
 export default function MemberView({ householdId }: Props) {
   const { colors } = useTheme();
-  const currentUser = useAppSelector(state => state.userList.activeUser);
-  const MemberList = useAppSelector(
-    selectMembersByHouseholdId(householdId, currentUser)
-  );
+  const MemberList = useAppSelector(selectMembersByHouseholdId(householdId));
 
   return (
     <>
-      {MemberList.map(({ currentMember, avatar }) => (
-        <View key={currentMember?.id}>
+      {MemberList.map(({ member, avatar }) => (
+        <View key={member?.id}>
           <TouchableOpacity
             style={[styles.householdCard, { backgroundColor: colors.surface }]}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
-                style={[
-                  styles.crown,
-                  { height: currentMember?.isAdmin ? 30 : 0 },
-                ]}
+                style={[styles.crown, { height: member?.isAdmin ? 30 : 0 }]}
                 source={require("../assets/images/crown.png")}
               />
               <Text style={[styles.text, { color: colors.onSurface }]}>
-                {currentMember?.name}
+                {member?.name}
               </Text>
             </View>
             <View style={styles.iconsContainer}>

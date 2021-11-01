@@ -21,7 +21,7 @@ export const createCompletedChore = createAsyncThunk<
   const completedChore: ICompletedChore = {
     id: Math.random().toString(),
     choreId: createData.id,
-    memberId: activeMember.id, // state.userList.activeUser.id borde vara något i stil med state.memberList.activeMember
+    memberId: state.userList.activeUser?.uid as string, // state.userList.activeUser.id borde vara något i stil med state.memberList.activeMember
     houseHoldId: createData.householdId,
     completed: new Date(
       new Date().getFullYear(),

@@ -60,28 +60,6 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
       : [];
     console.log("households");
     console.log(households);
-    // de andra hushållen
-    // const otherHouseholds = (
-    //   await Firebase.firestore()
-    //     .collection("/household")
-    //     // .where("id", "not-in", householdIds)
-    //     .get()
-    // ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IHouseHold));
-    // console.log("otherhouseholds");
-    // console.log(otherHouseholds);
-
-    // samma som ovan
-    // const otherHouseholds: IHouseHold[] = [];
-    // await Firebase.firestore()
-    //   .collection("/household")
-    //   .get()
-    //   .then(querySnapshot => {
-    //     querySnapshot.forEach(doc =>
-    //       otherHouseholds.push({ ...doc.data() } as IHouseHold)
-    //     );
-    //   });
-    // console.log("otherhouseholds");
-    // console.log(otherHouseholds);
 
     const houseId = households.map(h => h.id);
 
@@ -91,6 +69,8 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
         .where("householdId", "in", houseId)
         .get()
     ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IMember));
+    console.log("HOUSEHOLDMEMBERS");
+    console.log(houseHoldMembers);
 
     // // hämta alla chores för hushållen
     // const chores = (await Firebase.firestore().collection("/chores").get())
