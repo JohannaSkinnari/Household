@@ -20,8 +20,6 @@ export default function ProfileScreen({
       .signOut()
       .then(() => {
         navigation.navigate("Login");
-        console.log("Signed Out");
-        console.log(firebase.auth().currentUser);
       })
       .catch(e => {
         console.error("Sign Out Error", e);

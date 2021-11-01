@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useTheme } from "react-native-paper";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
 import Firebase from "../../database/firebase";
 import CustomButton from "../../components/common/CustomButton";
@@ -42,13 +42,10 @@ export default function LoginScreen({
     try {
       if (email !== "" && userName !== "" && password !== "") {
         await auth.createUserWithEmailAndPassword(email, password);
-
-        const user = Firebase.auth().currentUser;
-        user
-          .updateProfile({
+        
+        Firebase.auth().currentUser?.updateProfile({
             displayName: userName,
-            photoURL:
-              "https://alextrenoweth.co.uk/wp-content/uploads/2015/11/rowan-atkinson.jpg",
+           
           })
           .then(() => {
             navigation.navigate("ProfileNav");
@@ -77,7 +74,7 @@ export default function LoginScreen({
           </View>
 
           <View
-            style={[styles.authContainer, { backgroundColor: colors.card }]}
+            style={[styles.authContainer, { backgroundColor: colors.background }]}
           >
             <Text style={styles.title}>Registrera nytt konto</Text>
 
