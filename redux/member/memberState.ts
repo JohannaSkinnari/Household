@@ -43,6 +43,13 @@ export const initialState: MemberState = {
       isAdmin: false,
       avatarId: 8,
     },
+    {
+      id: "7",
+      userId: "2",
+      householdId: "2",
+      isAdmin: false,
+      avatarId: 1,
+    },
   ],
   loading: false,
   error: "",

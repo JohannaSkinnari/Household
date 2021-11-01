@@ -6,8 +6,15 @@ export const selectLastCompletedChores =
       c => c.choreId === choreId
     );
 
+    if (!completedChores) {
+      return undefined;
+    }
+
+    completedChores.sort((a, b) => (b.completed > a.completed ? -1 : 1));
+
     const lastThree = completedChores.slice(
       Math.max(completedChores.length - 3, 0)
     );
+
     return lastThree;
   };
