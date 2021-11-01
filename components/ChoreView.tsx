@@ -1,8 +1,10 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
+import { selectChoresByHouseholdId } from "../redux/chore/choreSelectors";
 import { useAppSelector } from "../redux/reduxHooks";
+import AvatarsThatLastCompletedChore from "./AvatarsThatLastCompletedChore";
 import LastCompletedView from "./LastCompletedView";
 
 interface Props {
@@ -13,11 +15,7 @@ interface Props {
 export default function ChoreView({ onSelectedChore, householdId }: Props) {
   const { colors } = useTheme();
 
-  const ChoreList = useAppSelector(state =>
-    state.choresList.chores.filter(
-      chore => chore.householdId === householdId && chore.isArchived === false
-    )
-  );
+  const ChoreList = useAppSelector(selectChoresByHouseholdId(householdId));
 
   return (
     <>
@@ -31,9 +29,7 @@ export default function ChoreView({ onSelectedChore, householdId }: Props) {
               {chore.name}
             </Text>
             <View style={styles.iconsContainer}>
-              <Image style={styles.avatar} source={require("..")} />
-              <Image style={styles.avatar} source={require("..")} />
-              <Image style={styles.avatar} source={require("..")} />
+              <AvatarsThatLastCompletedChore choreId={chore.id} />
               <LastCompletedView chore={chore} />
             </View>
           </TouchableOpacity>

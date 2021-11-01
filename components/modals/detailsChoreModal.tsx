@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Card, useTheme } from "react-native-paper";
+import { selectChoreById } from "../../redux/chore/choreSelectors";
 import { completeChore } from "../../redux/chore/choreThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 import CustomButton from "../common/CustomButton";
@@ -23,18 +24,16 @@ export default function DetailsChoreModal({
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
 
-  const chore = useAppSelector(state =>
-    state.choresList.chores.find(c => c.id === choreId)
-  );
+  const chore = useAppSelector(selectChoreById(choreId));
 
   if (!chore) {
     throw new Error("No chore found");
   }
-  
+
   const admin = useAppSelector(state =>
     state.memberList.members.find(
       m =>
-        m.userId === state.userList.activeUser.id &&
+        m.userId === state.userList.activeUser?.uid &&
         m.householdId === householdId
     )
   );

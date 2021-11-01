@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ICreateHouseHold, IEditHouseHold, IHouseHold } from "../../interfaces/IHouseHold";
+import Firebase from "../../database/config";
+import { ICreateHouseHold, IHouseHold } from "../../interfaces/IHouseHold";
 import { ICreateMember } from "../../interfaces/IMember";
 import { createOwner } from "../member/memberThunk";
 import { ThunkApi } from "../reduxStore";
@@ -14,13 +15,22 @@ export const createHouseHold = createAsyncThunk<
   ThunkParam,
   ThunkApi
 >("household/createHouseHold", async (createData, { dispatch }) => {
-  // servern ska lösa det här istället.
   const household: IHouseHold = {
     ...createData.house,
-    id: Math.random().toString(),
+    id: "",
     houseHoldCode: Math.floor(Math.random() * 90000) + 10000,
   };
-  dispatch(createOwner({ ...createData.member, householdId: household.id }));
+  await Firebase.firestore()
+    .collection("/household")
+    .add(household)
+    .then(docRef => {
+      Firebase.firestore()
+        .collection("/household")
+        .doc(docRef.id)
+        .update({ id: docRef.id });
+      household.id = docRef.id;
+      dispatch(createOwner({ ...createData.member, householdId: docRef.id }));
+    });
   return household;
 });
 

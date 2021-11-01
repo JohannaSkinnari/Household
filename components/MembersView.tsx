@@ -1,9 +1,15 @@
+import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-import { avatars } from "../assets/AvatarData/data";
-import { useAppSelector } from "../redux/reduxHooks";
+import { IMember } from "../interfaces/IMember";
+import {
+  selectMembersByHouseholdId,
+  selectOwnerOfHousehold,
+} from "../redux/member/memberSelectors";
+import { activateMember, pauseMember } from "../redux/member/memberThunk";
+import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
   householdId: string;
@@ -11,25 +17,24 @@ interface Props {
 
 export default function MemberView({ householdId }: Props) {
   const { colors } = useTheme();
+  const dispatch = useAppDispatch();
 
-  const MemberList = useAppSelector(state =>
-    state.memberList.members
-      .filter(member => member.householdId === householdId)
-      .map(member => {
-        const user = state.userList.users.find(u => u.id === member.userId);
-        return {
-          member,
-          user,
-          avatar: avatars.find(avatar => avatar.id === member?.avatarId),
-        };
-      })
-  );
+  const MemberList = useAppSelector(selectMembersByHouseholdId(householdId));
+
+  const admin = useAppSelector(selectOwnerOfHousehold(householdId));
+
+  const pauseThisMember = (member: IMember) => {
+    dispatch(pauseMember(member));
+  };
+  const activetThisMember = (member: IMember) => {
+    dispatch(activateMember(member));
+  };
 
   return (
     <>
-      {MemberList.map(({ member, user, avatar }) => (
+      {MemberList.map(({ member, avatar }) => (
         <View key={member.id}>
-          <TouchableOpacity
+          <View
             style={[styles.householdCard, { backgroundColor: colors.surface }]}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -38,14 +43,26 @@ export default function MemberView({ householdId }: Props) {
                 source={require("../assets/images/crown.png")}
               />
               <Text style={[styles.text, { color: colors.onSurface }]}>
-                {user?.name}
+                {member?.name}
               </Text>
             </View>
             <View style={styles.iconsContainer}>
               <Image style={styles.avatar} source={avatar?.icon} />
-              <View style={styles.active} />
+              {admin?.isAdmin && (
+                <View style={[styles.active]}>
+                  {member.isActive ? (
+                    <TouchableOpacity onPress={() => pauseThisMember(member)}>
+                      <Feather name="play" size={24} color={colors.green} />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity onPress={() => activetThisMember(member)}>
+                      <Feather name="pause" size={24} color={colors.darkPink} />
+                    </TouchableOpacity>
+                  )}
+                </View>
+              )}
             </View>
-          </TouchableOpacity>
+          </View>
         </View>
       ))}
     </>
@@ -90,5 +107,6 @@ const styles = StyleSheet.create({
   active: {
     height: 30,
     width: 30,
+    marginLeft: 20,
   },
 });

@@ -11,11 +11,10 @@ export const createCompletedChore = createAsyncThunk<
   ThunkApi
 >("chore/createCompletedChore", async (createData, { getState }) => {
   const state = getState();
-  // servern ska lösa id istället.
   const completedChore: ICompletedChore = {
     id: Math.random().toString(),
     choreId: createData.id,
-    userId: state.userList.activeUser.id,
+    memberId: state.userList.activeUser?.uid as string, // state.userList.activeUser.id borde vara något i stil med state.memberList.activeMember
     houseHoldId: createData.householdId,
     completed: new Date(
       new Date().getFullYear(),

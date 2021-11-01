@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import * as yup from "yup";
+import { useAppSelector } from "../redux/reduxHooks";
 import CustomButton from "./common/CustomButton";
 
 type RootValidationSchema = Record<keyof FormData, yup.AnySchema>;
@@ -25,7 +26,6 @@ interface Props {
 
 export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
   const { colors } = useTheme();
-
   const defaultFormData: FormData = {
     houseHoldCode: 0,
   };
@@ -40,15 +40,7 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
       validationSchema={validationSchema}
       onSubmit={handleOnSubmit}
     >
-      {({
-        setFieldValue,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        values,
-        touched,
-        errors,
-      }) => (
+      {({ handleChange, handleBlur, handleSubmit, touched, errors }) => (
         <View>
           <View style={[{ flex: 1 }]}>
             <TextInput

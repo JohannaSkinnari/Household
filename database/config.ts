@@ -1,8 +1,7 @@
-import firebase from "firebase/";
+import firebase from "firebase/app";
 import "firebase/auth";
 
-// Initialize Firebase
-const firebaseConfig = {
+const config = {
   apiKey: "AIzaSyABL2ch17eRIgySDn24CzBDnklQCFUDJ_0",
   authDomain: "household-6563e.firebaseapp.com",
   projectId: "household-6563e",
@@ -12,11 +11,8 @@ const firebaseConfig = {
   measurementId: "G-3WWJTBGF85",
 };
 
-let Firebase: any;
-
-if (firebase.apps.length === 0) {
-  Firebase = firebase.initializeApp(firebaseConfig);
-  console.log(firebase.app().options);
-}
+const Firebase = !firebase.apps.length
+  ? firebase.initializeApp(config)
+  : firebase.app();
 
 export default Firebase;

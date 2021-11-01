@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Card, useTheme } from "react-native-paper";
 import MemberView from "../../components/MembersView";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
+import { selectHouseholdById } from "../../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function MemberScreen({
@@ -10,9 +11,7 @@ export default function MemberScreen({
 }: HouseholdStackScreenProps<"medlemmar">) {
   const householdId = route.params.id;
   const { colors } = useTheme();
-  const household = useAppSelector(state =>
-    state.houseHoldList.houseHoldList.find(house => house.id === householdId)
-  );
+  const household = useAppSelector(selectHouseholdById(householdId));
 
   return (
     <View style={styles.choreList}>
