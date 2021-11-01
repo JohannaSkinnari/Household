@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Firebase from "../../database/config";
 import { IChore } from "../../interfaces/IChore";
 import { ICompletedChore } from "../../interfaces/ICompletedChore";
 import { ThunkApi } from "../reduxStore";
@@ -12,9 +13,9 @@ export const createCompletedChore = createAsyncThunk<
 >("chore/createCompletedChore", async (createData, { getState }) => {
   const state = getState();
   const completedChore: ICompletedChore = {
-    id: Math.random().toString(),
+    id: "",
     choreId: createData.id,
-    memberId: state.userList.activeUser?.uid as string, // state.userList.activeUser.id borde vara något i stil med state.memberList.activeMember
+    memberId: state.userList.activeUser?.uid as string,
     houseHoldId: createData.householdId,
     completed: new Date(
       new Date().getFullYear(),
@@ -23,14 +24,34 @@ export const createCompletedChore = createAsyncThunk<
     ).toString(),
     weight: createData.weight,
   };
-  // prata med API
 
+  await Firebase.firestore()
+    .collection("/completedChore")
+    .add(completedChore)
+    .then(docRef => {
+      Firebase.firestore()
+        .collection("/completedChore")
+        .doc(docRef.id)
+        .update({ id: docRef.id });
+      completedChore.id = docRef.id;
+    });
   return completedChore;
 });
 
 export const deleteCompletedChore = createAsyncThunk<string, string, ThunkApi>(
   "chore/deleteCompletedChore",
-  async choreId =>
-    // prata med API
-    choreId
+  async choreId => {
+    await Firebase.firestore()
+      .collection("/completedChore")
+      .where("choreId", "==", choreId)
+      .get()
+      .then(querySnapshot => {
+        const batch = Firebase.firestore().batch();
+        querySnapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+        return batch.commit();
+      });
+    return choreId;
+  }
 );
