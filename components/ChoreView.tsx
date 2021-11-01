@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { selectChoresByHouseholdId } from "../redux/chore/choreSelectors";

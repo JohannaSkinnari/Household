@@ -1,6 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { IMember } from "../interfaces/IMember";
 import {
@@ -31,7 +32,7 @@ export default function MemberView({ householdId }: Props) {
 
   return (
     <>
-      {MemberList.map(({ member, user, avatar }) => (
+      {MemberList.map(({ member, avatar }) => (
         <View key={member.id}>
           <View
             style={[styles.householdCard, { backgroundColor: colors.surface }]}
@@ -42,7 +43,7 @@ export default function MemberView({ householdId }: Props) {
                 source={require("../assets/images/crown.png")}
               />
               <Text style={[styles.text, { color: colors.onSurface }]}>
-                {user?.name}
+                {member?.name}
               </Text>
             </View>
             <View style={styles.iconsContainer}>
@@ -50,13 +51,13 @@ export default function MemberView({ householdId }: Props) {
               {admin?.isAdmin && (
                 <View style={[styles.active]}>
                   {member.isActive ? (
-                    <Pressable onPress={() => pauseThisMember(member)}>
+                    <TouchableOpacity onPress={() => pauseThisMember(member)}>
                       <Feather name="play" size={24} color={colors.green} />
-                    </Pressable>
+                    </TouchableOpacity>
                   ) : (
-                    <Pressable onPress={() => activetThisMember(member)}>
+                    <TouchableOpacity onPress={() => activetThisMember(member)}>
                       <Feather name="pause" size={24} color={colors.darkPink} />
-                    </Pressable>
+                    </TouchableOpacity>
                   )}
                 </View>
               )}
@@ -109,6 +110,3 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
 });
-function activetMember(member: IMember): any {
-  throw new Error("Function not implemented.");
-}
