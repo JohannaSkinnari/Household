@@ -54,6 +54,8 @@ const memberSlice = createSlice({
       state.error = "No data found";
     });
     builder.addCase(getAvailableAvatars.pending, state => {
+      state.loading = true;
+    });
 
     builder.addCase(pauseMember.fulfilled, (state, { payload }) => {
       state.loading = false;

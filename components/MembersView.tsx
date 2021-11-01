@@ -1,6 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { IMember } from "../interfaces/IMember";
 import {
@@ -50,13 +51,13 @@ export default function MemberView({ householdId }: Props) {
               {admin?.isAdmin && (
                 <View style={[styles.active]}>
                   {member.isActive ? (
-                    <Pressable onPress={() => pauseThisMember(member)}>
+                    <TouchableOpacity onPress={() => pauseThisMember(member)}>
                       <Feather name="play" size={24} color={colors.green} />
-                    </Pressable>
+                    </TouchableOpacity>
                   ) : (
-                    <Pressable onPress={() => activetThisMember(member)}>
+                    <TouchableOpacity onPress={() => activetThisMember(member)}>
                       <Feather name="pause" size={24} color={colors.darkPink} />
-                    </Pressable>
+                    </TouchableOpacity>
                   )}
                 </View>
               )}
