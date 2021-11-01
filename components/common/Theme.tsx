@@ -31,7 +31,7 @@ declare global {
 }
 
 // för navigationen
-const CustomDarkTheme = {
+export const CustomDarkTheme = {
   ...NavigationDarkTheme,
   dark: true,
   colors: {
@@ -39,7 +39,7 @@ const CustomDarkTheme = {
   },
 };
 
-const CustomDefaultTheme = {
+export const CustomDefaultTheme = {
   ...NavigationDefaultTheme,
   dark: false,
   colors: {
@@ -48,7 +48,7 @@ const CustomDefaultTheme = {
 };
 
 // för Paper componenter
-const CustomPaperDarkTheme: ReactNativePaper.Theme = {
+export const CustomPaperDarkTheme: ReactNativePaper.Theme = {
   ...PaperDarkTheme,
   dark: true,
   colors: {
@@ -70,7 +70,7 @@ const CustomPaperDarkTheme: ReactNativePaper.Theme = {
   },
 };
 
-const CustomPaperDefaultTheme: ReactNativePaper.Theme = {
+export const CustomPaperDefaultTheme: ReactNativePaper.Theme = {
   ...PaperDefaultTheme,
   dark: false,
   colors: {

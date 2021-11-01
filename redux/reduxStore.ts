@@ -5,6 +5,7 @@ import choreSlice from "./chore/choreSlice";
 import completedChoreSlice from "./completedChores/completedChoreSlice";
 import houseHoldSlice from "./houseHold/houseHoldSlice";
 import memberSlice from "./member/memberSlice";
+import { themeReducer } from "./theme/themeReducer";
 import userSlice from "./user/userSlice";
 
 export interface ThunkApi {
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   completedChoresList: completedChoreSlice,
   memberList: memberSlice,
   userList: userSlice,
+  DarkMode: themeReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
