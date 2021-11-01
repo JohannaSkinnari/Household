@@ -54,6 +54,7 @@ export const initialState: MemberState = {
       userId: "2",
       householdId: "2",
       isAdmin: false,
+      isActive: true,
       avatarId: 1,
     },
   ],
