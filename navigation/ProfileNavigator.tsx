@@ -1,6 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
-import firebase from "firebase";
 import React from "react";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
@@ -26,8 +25,6 @@ export type ProfileStackScreenProps<
 const Stack = createStackNavigator<ProfileStackParamList>();
 
 export default function ProfileNavigation() {
-  // const user = firebase.auth().currentUser;
-  // const userName = user?.displayName;
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>

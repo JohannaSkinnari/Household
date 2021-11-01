@@ -26,12 +26,6 @@ interface Props {
 
 export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
   const { colors } = useTheme();
-  const test = useAppSelector(state => state.houseHoldList.otherHouseholds);
-  const test2 = useAppSelector(state => state.houseHoldList.houseHoldList);
-  console.log("OTHERHOUSEHOLD LIST IN STATE:");
-  console.log(`${test.map(s => s.name)}`);
-  console.log("HouseholdLIST IN STATE:");
-  console.log(`${test2.map(s => s.name)}`);
   const defaultFormData: FormData = {
     houseHoldCode: 0,
   };

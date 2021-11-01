@@ -48,17 +48,11 @@ const FirebaseSetup = () => {
 
   useEffect(() => {
     const unsubscribe = Firebase.auth().onAuthStateChanged(user => {
-      console.log("IN USEFFECT");
       if (user) {
-        console.log(`USERNAME: ${user.displayName}`);
-        console.log("---------------------------");
-        console.log("SETTING DATA NOW");
         dispatch(setUser(user.toJSON() as IUser));
         dispatch(loadData(user.toJSON() as IUser));
         dispatch(loadBackgroundData(user.toJSON() as IUser));
       } else {
-        console.log("REMOVING DATA NOW");
-        console.log(`USER IS NOW: ${user}`);
         dispatch(removeUser(null));
         dispatch(removeHouseholdState([]));
         dispatch(removeChoreState([]));
