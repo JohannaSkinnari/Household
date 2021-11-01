@@ -7,7 +7,6 @@ import {
   createChore,
   deleteChore,
   editChore,
-  getChores,
 } from "./choreThunk";
 
 const choreSlice = createSlice({
@@ -98,16 +97,6 @@ const choreSlice = createSlice({
       state.error = "No data found";
     });
     builder.addCase(deleteChore.pending, state => {
-      state.loading = true;
-    });
-
-    builder.addCase(getChores.fulfilled, (state, { payload }) => {
-      state.chores.push(...payload);
-    });
-    builder.addCase(getChores.rejected, state => {
-      state.error = "No data found";
-    });
-    builder.addCase(getChores.pending, state => {
       state.loading = true;
     });
     builder.addCase(loadData.fulfilled, (state, { payload }) => {
