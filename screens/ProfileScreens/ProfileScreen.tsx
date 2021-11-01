@@ -1,4 +1,4 @@
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import firebase from "firebase";
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
@@ -7,9 +7,8 @@ import { useTheme } from "react-native-paper";
 import CustomButton from "../../components/common/CustomButton";
 import HouseHoldView from // setIsVisible, // isVisible,
 "../../components/HouseHoldsView";
-import ShowSettings from "../../components/ShowSettings";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-import { useAppSelector } from "../../redux/reduxHooks";
+
 
 export default function ProfileScreen({
   navigation,
@@ -33,11 +32,9 @@ export default function ProfileScreen({
     navigation.navigate("Household", { id });
   }
 
-  // skapade denna funktionen istället som togglar värdet i ett state högre upp (showToggle) det statet skickas in i householdView som en prop. och används där föra att visa eller inte visa knapparana.
   const toggleEnableSetup = () => {
     setShowToggle(!showToggle);
   };
-  // const  toggleEnableSetup  = ShowSettings();
 
   return (
     <View style={{ flex: 1 }}>

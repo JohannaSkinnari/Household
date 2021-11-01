@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -12,14 +12,6 @@ interface Props {
   isVisible: boolean;
 }
 
-/* export const [isVisible, setIsVisible] = useState(false);
-
-  const toggleEnableSetup = () => {
-    setIsVisible(!isVisible);
-  };
-   */
-
-// export const [isVisible, setIsVisible] = useState(false);
 export default function HouseHoldView({
   onSelectedHouse,
   onSelectedHouseSetup,
