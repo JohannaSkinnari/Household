@@ -17,16 +17,21 @@ export default function AvatarsThatLastCompletedChore({ choreId }: Props) {
     selectLastCompletedChores(choreId)
   );
 
+  const allMembers = useAppSelector(state =>
+    state.memberList.members.filter(m => m)
+  );
+
   const memberAvatars: IAvatar[] = [];
-  lastCompletedChores.forEach(c => {
-    const member = useAppSelector(state =>
-      state.memberList.members.find(m => m.id === c.memberId)
-    );
-    const avatar = avatars.find(a => a.id === member?.avatarId);
-    if (avatar) {
-      memberAvatars.push(avatar);
-    }
-  });
+
+  if (lastCompletedChores) {
+    lastCompletedChores.forEach(c => {
+      const member = allMembers?.find(m => m.id === c.memberId);
+      const avatar = avatars.find(a => a.id === member?.avatarId);
+      if (avatar) {
+        memberAvatars.push(avatar);
+      }
+    });
+  }
 
   return (
     <>
