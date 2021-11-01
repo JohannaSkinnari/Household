@@ -11,6 +11,7 @@ export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
       id: Math.random().toString(),
       userId: state.userList.activeUser.id,
       isAdmin: false,
+      isActive: true,
     };
     return member;
   }
@@ -25,7 +26,33 @@ export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
       id: Math.random().toString(),
       userId: state.userList.activeUser.id,
       isAdmin: true,
+      isActive: true,
     };
+    return member;
+  }
+);
+
+export const pauseMember = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/pauseMember",
+  async memberToPause => {
+    const member: IMember = {
+      ...memberToPause,
+      isActive: false,
+    };
+    // prata med API
+
+    return member;
+  }
+);
+
+export const activateMember = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/activateMember",
+  async memberToActivate => {
+    const member: IMember = {
+      ...memberToActivate,
+      isActive: true,
+    };
+    // prata med API
     return member;
   }
 );

@@ -3,7 +3,11 @@ export interface IMember {
   userId: string;
   householdId: string;
   isAdmin: boolean;
+  isActive: boolean;
   avatarId: number;
 }
 
-export type ICreateMember = Omit<IMember, "id" | "userId" | "isAdmin">;
+export type ICreateMember = Omit<
+  IMember,
+  "id" | "userId" | "isAdmin" | "isActive"
+>;
