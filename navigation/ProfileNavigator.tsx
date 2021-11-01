@@ -1,7 +1,10 @@
+import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import firebase from "firebase";
 import React from "react";
+import { View,Text,StyleSheet} from "react-native";
+import { useTheme } from "react-native-paper";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
 import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettingsScreen";
@@ -25,19 +28,33 @@ export type ProfileStackScreenProps<
 
 const Stack = createStackNavigator<ProfileStackParamList>();
 
-export default function ProfileNavigation() {
-  const user = firebase.auth().currentUser;
-  const userName = user?.displayName;
+
+
+
+
+export default function ProfileNavigation() { 
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{
-            title: "Profil sidan", // userName istället
+          options={() => ({
+            header: () => {
+              const user = firebase.auth().currentUser;
+              const userName = user?.displayName;
+              const { colors } = useTheme();
+              return (
+                <View style={styles.header}>
+                 <FontAwesome name="user-circle-o" size={27} color="#c75267" />
+                <Text style={[styles.headerText, { color: colors.text }]}>{userName}</Text>
+                </View>
+                
+              );
+            }
+            ,
             headerLeft: () => null,
-          }}
+          })}
         />
         <Stack.Screen
           name="JoinHousehold"
@@ -77,3 +94,30 @@ export default function ProfileNavigation() {
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    height:70,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop:20,
+  },
+
+  userNameContainer: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
+
+  headerText: {
+    fontSize: 20,
+    marginHorizontal: 10,
+  },
+
+  logo: {
+    height: 30,
+    width: 30,
+  },
+});
