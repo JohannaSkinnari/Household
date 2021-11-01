@@ -6,6 +6,7 @@ export interface MemberState {
   householdMembers: IMember[];
   availableHouseholdMemberAvatars: IAvatar[];
   loading: boolean;
+  isCreatedSuccess: boolean;
   error: string;
 }
 
@@ -14,5 +15,6 @@ export const initialState: MemberState = {
   householdMembers: [],
   availableHouseholdMemberAvatars: [],
   loading: false,
+  isCreatedSuccess: true,
   error: "",
 };

@@ -1,9 +1,14 @@
+import { Feather } from "@expo/vector-icons";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
-import { selectMembersByHouseholdId } from "../redux/member/memberSelectors";
-import { useAppSelector } from "../redux/reduxHooks";
+import { IMember } from "../interfaces/IMember";
+import {
+  selectMembersByHouseholdId,
+  selectOwnerOfHousehold,
+} from "../redux/member/memberSelectors";
+import { activateMember, pauseMember } from "../redux/member/memberThunk";
+import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
   householdId: string;
@@ -11,13 +16,24 @@ interface Props {
 
 export default function MemberView({ householdId }: Props) {
   const { colors } = useTheme();
+  const dispatch = useAppDispatch();
+
   const MemberList = useAppSelector(selectMembersByHouseholdId(householdId));
+
+  const admin = useAppSelector(selectOwnerOfHousehold(householdId));
+
+  const pauseThisMember = (member: IMember) => {
+    dispatch(pauseMember(member));
+  };
+  const activetThisMember = (member: IMember) => {
+    dispatch(activateMember(member));
+  };
 
   return (
     <>
       {MemberList.map(({ member, avatar }) => (
-        <View key={member?.id}>
-          <TouchableOpacity
+        <View key={member.id}>
+          <View
             style={[styles.householdCard, { backgroundColor: colors.surface }]}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -31,9 +47,21 @@ export default function MemberView({ householdId }: Props) {
             </View>
             <View style={styles.iconsContainer}>
               <Image style={styles.avatar} source={avatar?.icon} />
-              <View style={styles.active} />
+              {admin?.isAdmin && (
+                <View style={[styles.active]}>
+                  {member.isActive ? (
+                    <Pressable onPress={() => pauseThisMember(member)}>
+                      <Feather name="play" size={24} color={colors.green} />
+                    </Pressable>
+                  ) : (
+                    <Pressable onPress={() => activetThisMember(member)}>
+                      <Feather name="pause" size={24} color={colors.darkPink} />
+                    </Pressable>
+                  )}
+                </View>
+              )}
             </View>
-          </TouchableOpacity>
+          </View>
         </View>
       ))}
     </>
@@ -78,5 +106,6 @@ const styles = StyleSheet.create({
   active: {
     height: 30,
     width: 30,
+    marginLeft: 20,
   },
 });

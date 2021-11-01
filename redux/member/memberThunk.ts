@@ -16,6 +16,7 @@ export const createMember = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
       name: state.userList.activeUser?.displayName as string,
       isAdmin: false,
       isApproved: false,
+      isActive: true,
     };
     await Firebase.firestore()
       .collection("/member")
@@ -42,6 +43,7 @@ export const createOwner = createAsyncThunk<IMember, ICreateMember, ThunkApi>(
       name: state.userList.activeUser?.displayName as string,
       isAdmin: true,
       isApproved: true,
+      isActive: true,
     };
     await Firebase.firestore()
       .collection("/member")
@@ -75,3 +77,27 @@ export const getAvailableAvatars = createAsyncThunk<
 
   return availableAvatars;
 });
+export const pauseMember = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/pauseMember",
+  async memberToPause => {
+    const member: IMember = {
+      ...memberToPause,
+      isActive: false,
+    };
+    // prata med API
+
+    return member;
+  }
+);
+
+export const activateMember = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/activateMember",
+  async memberToActivate => {
+    const member: IMember = {
+      ...memberToActivate,
+      isActive: true,
+    };
+    // prata med API
+    return member;
+  }
+);

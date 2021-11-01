@@ -5,10 +5,11 @@ export interface IMember {
   householdId: string;
   isAdmin: boolean;
   isApproved: boolean;
+  isActive: boolean;
   avatarId: number;
 }
 
 export type ICreateMember = Omit<
   IMember,
-  "id" | "userId" | "isAdmin" | "name" | "isApproved"
+  "id" | "userId" | "isAdmin" | "name" | "isApproved" | "isActive"
 >;
