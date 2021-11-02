@@ -3,9 +3,8 @@ import { RootState } from "../reduxStore";
 
 export const selectUserHouseholds = (state: RootState) =>
   state.houseHoldList.houseHoldList.map(house => {
-    const user = state.userList.activeUser;
     const member = state.memberList.members.find(
-      m => user?.uid === m.userId && m.householdId == house.id
+      m => m.householdId == house.id
     );
     return {
       house,
