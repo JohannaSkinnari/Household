@@ -1,4 +1,4 @@
-
+import { useTheme } from "react-native-paper";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOpacity: 0.9,
-    elevation: 40,
+    elevation: 20,
     shadowOffset: { width: 3, height: 3 },
   },
 
