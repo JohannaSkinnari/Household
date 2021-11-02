@@ -113,8 +113,9 @@ export default function LoginScreen({
             <View style={styles.buttonField}>
               <CustomButton onPress={onLogin} title="Logga in" />
               <CustomButton
-                onPress={() => navigation.navigate("SignUp")}
+                onPress={() => navigation.navigate("SignUp") }
                 title="Registrera"
+                
               />
             </View>
             <View>
@@ -144,7 +145,6 @@ const styles = StyleSheet.create({
   authContainer: {
     marginHorizontal: 18,
     paddingHorizontal: 12,
-
     borderRadius: 10,
     paddingVertical: 40,
     shadowColor: "rgba(0, 0, 0, 0.15)",

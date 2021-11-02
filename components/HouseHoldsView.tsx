@@ -1,4 +1,5 @@
 import React from "react";
+import { SimpleLineIcons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
@@ -7,11 +8,16 @@ import { useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
   onSelectedHouse: (id: string) => void;
+  onSelectedHouseSetup: (id: string) => void;
+  isVisible: boolean;
 }
 
-export default function HouseHoldView({ onSelectedHouse }: Props) {
+export default function HouseHoldView({
+  onSelectedHouse,
+  onSelectedHouseSetup,
+  isVisible,
+}: Props) {
   const { colors } = useTheme();
-
   const houseList = useAppSelector(selectUserHouseholds);
 
   return (
@@ -39,6 +45,27 @@ export default function HouseHoldView({ onSelectedHouse }: Props) {
               <Image style={styles.avatar} source={avatar?.icon} />
             </View>
           </TouchableOpacity>
+          {isVisible ? (
+            <TouchableOpacity
+              onPress={() => onSelectedHouseSetup("HouseholdSettings")}
+              style={[
+                styles.buttonStyle,
+                { backgroundColor: colors.surface },
+                { display: member?.isAdmin ? "flex" : "none" },
+              ]}
+              activeOpacity={0.5}
+            >
+              <View style={styles.buttonIconStyle}>
+                <SimpleLineIcons
+                  name="settings"
+                  size={18}
+                  color={colors.darkPink}
+                />
+              </View>
+
+              <Text style={[{ color: colors.text }]}>Inställningar</Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
       ))}
     </>
@@ -48,7 +75,7 @@ export default function HouseHoldView({ onSelectedHouse }: Props) {
 const styles = StyleSheet.create({
   householdCard: {
     margin: 10,
-    height: 60,
+    height: 50,
     width: 330,
     borderRadius: 12,
     paddingLeft: 5,
@@ -75,5 +102,57 @@ const styles = StyleSheet.create({
   iconsContainer: {
     marginRight: 8,
     flexDirection: "row",
+  },
+
+  buttonStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 0.5,
+    borderColor: "#485a96",
+    height: 25,
+    marginHorizontal: 10,
+    borderRadius: 15,
+    marginBottom: 10,
+    width: 120,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+  buttonIconStyle: {
+    padding: 8,
+  },
+  toggleButtonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginBottom: 4,
+  },
+  toggleButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 0.5,
+    borderColor: "#485a96",
+    height: 25,
+    marginHorizontal: 10,
+    borderRadius: 15,
+    marginBottom: 10,
+    width: 90,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+
+  toggleButtonText: {
+    fontSize: 12,
   },
 });
