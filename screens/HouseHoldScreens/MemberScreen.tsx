@@ -1,9 +1,11 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Card, useTheme } from "react-native-paper";
+import ApproveView from "../../components/ApproveView";
 import MemberView from "../../components/MembersView";
 import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { selectHouseholdById } from "../../redux/houseHold/houseHoldSelector";
+import { selectOwnerOfHousehold } from "../../redux/member/memberSelectors";
 import { useAppSelector } from "../../redux/reduxHooks";
 
 export default function MemberScreen({
@@ -12,11 +14,18 @@ export default function MemberScreen({
   const householdId = route.params.id;
   const { colors } = useTheme();
   const household = useAppSelector(selectHouseholdById(householdId));
+  const admin = useAppSelector(selectOwnerOfHousehold(householdId));
 
   return (
     <View style={styles.choreList}>
       <ScrollView>
         <MemberView householdId={householdId} />
+      </ScrollView>
+      <ScrollView>
+        <Text style={{ margin: 10, color: colors.text, width: 330 }}>
+          Förfrågan:
+        </Text>
+        <ApproveView householdId={householdId} />
       </ScrollView>
       <View style={styles.bottomView}>
         <Card style={[styles.card, { backgroundColor: colors.surface }]}>
