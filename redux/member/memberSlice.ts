@@ -7,8 +7,10 @@ import {
   createMember,
   createOwner,
   getAvailableAvatars,
+  makeOwner,
   pauseMember,
   rejectMember,
+  unMakeOwner,
 } from "./memberThunk";
 
 const memberSlice = createSlice({
@@ -129,6 +131,36 @@ const memberSlice = createSlice({
     });
     builder.addCase(rejectMember.pending, state => {
       state.loading = true;
+    });
+    builder.addCase(makeOwner.fulfilled, (state, { payload }) => {
+      state.householdMembers = state.householdMembers.filter(
+        m => m.id === payload.id
+      );
+      state.isCreatedSuccess = true;
+      state.loading = false;
+    });
+    builder.addCase(makeOwner.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(makeOwner.rejected, state => {
+      state.loading = false;
+      state.isCreatedSuccess = false;
+      state.error = "Error occurred";
+    });
+    builder.addCase(unMakeOwner.fulfilled, (state, { payload }) => {
+      state.householdMembers = state.householdMembers.filter(
+        m => m.id === payload.id
+      );
+      state.isCreatedSuccess = true;
+      state.loading = false;
+    });
+    builder.addCase(unMakeOwner.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(unMakeOwner.rejected, state => {
+      state.loading = false;
+      state.isCreatedSuccess = false;
+      state.error = "Error occurred";
     });
   },
 });
