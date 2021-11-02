@@ -1,17 +1,9 @@
-import { Feather } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/build/AntDesign";
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-import { avatars } from "../assets/AvatarData/data";
-import { IMember } from "../interfaces/IMember";
-import {
-  selectMembersByHouseholdId,
-  selectMembersToApprove,
-  selectOwnerOfHousehold,
-} from "../redux/member/memberSelectors";
-import { activateMember, pauseMember } from "../redux/member/memberThunk";
+import { selectMembersToApprove } from "../redux/member/memberSelectors";
 import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
@@ -25,8 +17,6 @@ export default function ApproveView({ householdId }: Props) {
 
   const memberList = useAppSelector(selectMembersToApprove(householdId));
 
-  const admin = useAppSelector(selectOwnerOfHousehold(householdId));
-
   // const pauseThisMember = (member: IMember) => {
   //   dispatch(pauseMember(member));
   // };
@@ -36,59 +26,58 @@ export default function ApproveView({ householdId }: Props) {
 
   return (
     <>
-      {admin?.isAdmin &&
-        memberList.map(({ member, avatar }) => (
-          <TouchableOpacity key={member.id} onPress={() => setOpen(!open)}>
+      {memberList.map(({ member, avatar }) => (
+        <TouchableOpacity key={member.id} onPress={() => setOpen(!open)}>
+          <View
+            style={[
+              styles.householdCard,
+              { backgroundColor: colors.surface, height: open ? 80 : 60 },
+            ]}
+          >
             <View
-              style={[
-                styles.householdCard,
-                { backgroundColor: colors.surface, height: open ? 80 : 60 },
-              ]}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
             >
+              <View>
+                <Text style={[styles.text, { color: colors.onSurface }]}>
+                  {member?.name}
+                </Text>
+              </View>
+              <View style={styles.iconsContainer}>
+                <Image style={styles.avatar} source={avatar?.icon} />
+              </View>
+            </View>
+            {open && (
               <View
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  justifyContent: "space-between",
+                  justifyContent: "space-around",
+                  paddingBottom: 10,
                 }}
               >
-                <View>
-                  <Text style={[styles.text, { color: colors.onSurface }]}>
-                    {member?.name}
-                  </Text>
-                </View>
-                <View style={styles.iconsContainer}>
-                  <Image style={styles.avatar} source={avatar?.icon} />
-                </View>
+                <TouchableOpacity>
+                  <AntDesign
+                    name="checkcircleo"
+                    size={24}
+                    color={colors.green}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <AntDesign
+                    name="minuscircleo"
+                    size={24}
+                    color={colors.darkPink}
+                  />
+                </TouchableOpacity>
               </View>
-              {open && (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-around",
-                    paddingBottom: 10,
-                  }}
-                >
-                  <TouchableOpacity>
-                    <AntDesign
-                      name="checkcircleo"
-                      size={24}
-                      color={colors.green}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesign
-                      name="minuscircleo"
-                      size={24}
-                      color={colors.darkPink}
-                    />
-                  </TouchableOpacity>
-                </View>
-              )}
-            </View>
-          </TouchableOpacity>
-        ))}
+            )}
+          </View>
+        </TouchableOpacity>
+      ))}
     </>
   );
 }

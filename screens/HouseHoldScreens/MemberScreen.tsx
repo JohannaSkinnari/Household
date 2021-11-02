@@ -21,12 +21,14 @@ export default function MemberScreen({
       <ScrollView>
         <MemberView householdId={householdId} />
       </ScrollView>
-      <ScrollView>
-        <Text style={{ margin: 10, color: colors.text, width: 330 }}>
-          Förfrågan:
-        </Text>
-        <ApproveView householdId={householdId} />
-      </ScrollView>
+      {admin?.isAdmin && (
+        <ScrollView>
+          <Text style={{ margin: 10, color: colors.text, width: 330 }}>
+            Förfrågan:
+          </Text>
+          <ApproveView householdId={householdId} />
+        </ScrollView>
+      )}
       <View style={styles.bottomView}>
         <Card style={[styles.card, { backgroundColor: colors.surface }]}>
           <Card.Content style={styles.cardContent}>
