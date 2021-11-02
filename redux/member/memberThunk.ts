@@ -84,7 +84,9 @@ export const pauseMember = createAsyncThunk<IMember, IMember, ThunkApi>(
       ...memberToPause,
       isActive: false,
     };
-    // prata med API
+    await Firebase.firestore().collection("/member").doc(member.id).update({
+      isActive: member.isActive,
+    });
 
     return member;
   }
@@ -97,7 +99,9 @@ export const activateMember = createAsyncThunk<IMember, IMember, ThunkApi>(
       ...memberToActivate,
       isActive: true,
     };
-    // prata med API
+    await Firebase.firestore().collection("/member").doc(member.id).update({
+      isActive: member.isActive,
+    });
     return member;
   }
 );
