@@ -74,6 +74,7 @@ export const initialState: completedChoreState = {
       weight: 1,
     },
   ],
+  // Ska kommenteras in när hårdkodade värden ersätts med data från databasen
   // completedChores: [],
   loading: false,
   error: "",

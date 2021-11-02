@@ -74,6 +74,7 @@ export const initialState: ChoresState = {
       isArchived: false,
     },
   ],
+  // Ska kommenteras in när hårdkodade värden ersätts med data från databasen
   // chores: [],
   loading: false,
   isCreatedSuccess: true,
