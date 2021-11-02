@@ -39,7 +39,7 @@ const dispatch = useAppDispatch();
 
 const currentTheme = useAppSelector(state=>state.DarkMode)
 const user = useAppSelector(u=>u.userList.activeUser)
-
+const userName = user?.displayName;
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
@@ -47,16 +47,22 @@ const user = useAppSelector(u=>u.userList.activeUser)
           name="Profile"
           component={ProfileScreen}
           options={() => ({
-            header: () => { 
-              const userName = user?.displayName;
-              return (
-                <View style={styles.header}>
+            header: () => (
+                <View style={styles.headerContainer}>
                  <FontAwesome name="user-circle-o" size={27} color="#c75267" />
                 <Text style={[styles.headerText, { color: colors.text }]}>{userName}</Text>
+<View style={[styles.toggleDarkLightContainer]}>
+                <TouchableOpacity
+                    onPress={()=>dispatch({type:"change_theme",payload:!currentTheme})}
+                    style={styles.toggleDarkLightContainer}
+                    activeOpacity={0.5}>
+                    <Text style={[styles.toggleSwitchText, { color: colors.darkPink }]}> Dark/Light</Text>
+                    <MaterialCommunityIcons name="theme-light-dark" size={25} color="black"  style={[styles.buttonIconStyle, { color: colors.text }]} />
+                </TouchableOpacity>
+                </View>
                 </View>
                 
-              );
-            }
+              )
             ,
             headerLeft: () => null,
             headerRight: ()=> (
@@ -110,27 +116,28 @@ const user = useAppSelector(u=>u.userList.activeUser)
 }
 
 const styles = StyleSheet.create({
-  header: {
+  headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     shadowColor: "#c75267",
     shadowOpacity: 0.8,
     elevation: 20,
+    paddingHorizontal: 20,
     shadowOffset: { width: 3, height: 3 },
     justifyContent: "center",
     height:70,
-    marginTop:20,
+    marginTop:30,
   },
 
   userNameContainer: {
-    justifyContent: "space-between",
+   
     flexDirection: "row",
     alignItems: "center",
-    marginHorizontal: 10,
+    marginHorizontal: 20,
   },
 
   headerText: {
-    textTransform: "uppercase",
+    marginHorizontal: 10,
     fontSize: 18,
   },
   buttonStyle: {
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   buttonIconStyle: {
-    padding: 8,
+    paddingLeft: 8,
     marginRight:5,
   },
   buttonTextStyle: {
@@ -165,8 +172,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    margin: 5,
-    justifyContent: "space-evenly",
+    justifyContent: "flex-end",
   },
 
   toggleSwitchText: {
