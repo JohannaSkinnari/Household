@@ -12,7 +12,7 @@ export const initialState: completedChoreState = {
     {
       id: "1",
       choreId: "3",
-      userId: "1",
+      memberId: "1",
       houseHoldId: "3",
       completed: "2021-10-21T22:00:00.000Z",
       weight: 1,
@@ -20,7 +20,7 @@ export const initialState: completedChoreState = {
     {
       id: "2",
       choreId: "3",
-      userId: "1",
+      memberId: "1",
       houseHoldId: "3",
       completed: "2021-10-22T22:00:00.000Z",
       weight: 1,
@@ -28,7 +28,7 @@ export const initialState: completedChoreState = {
     {
       id: "3",
       choreId: "3",
-      userId: "1",
+      memberId: "1",
       houseHoldId: "3",
       completed: "2021-10-23T22:00:00.000Z",
       weight: 1,
@@ -36,7 +36,7 @@ export const initialState: completedChoreState = {
     {
       id: "4",
       choreId: "3",
-      userId: "2",
+      memberId: "2",
       houseHoldId: "3",
       completed: "2021-10-24T22:00:00.000Z",
       weight: 1,
@@ -44,7 +44,7 @@ export const initialState: completedChoreState = {
     {
       id: "5",
       choreId: "3",
-      userId: "2",
+      memberId: "2",
       houseHoldId: "3",
       completed: "2021-10-06T22:00:00.000Z",
       weight: 1,
@@ -52,7 +52,7 @@ export const initialState: completedChoreState = {
     {
       id: "6",
       choreId: "2",
-      userId: "1",
+      memberId: "1",
       houseHoldId: "3",
       completed: "2021-10-21T22:00:00.000Z",
       weight: 1,
@@ -60,7 +60,7 @@ export const initialState: completedChoreState = {
     {
       id: "7",
       choreId: "2",
-      userId: "2",
+      memberId: "2",
       houseHoldId: "3",
       completed: "2021-10-21T22:00:00.000Z",
       weight: 1,
@@ -68,12 +68,13 @@ export const initialState: completedChoreState = {
     {
       id: "8",
       choreId: "7",
-      userId: "1",
+      memberId: "1",
       houseHoldId: "3",
       completed: "2021-10-21T22:00:00.000Z",
       weight: 1,
     },
   ],
+  // completedChores: [],
   loading: false,
   error: "",
   isCreatedSuccess: true,

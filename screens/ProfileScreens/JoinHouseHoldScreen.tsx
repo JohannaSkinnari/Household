@@ -5,40 +5,46 @@ import JoinHouseHoldForm from "../../components/JoinHouseHoldForm";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import {
   selectHouseholdCodes,
-  selectUserHouseholds,
+  selectOtherHouseholds,
 } from "../../redux/houseHold/houseHoldSelector";
-import { useAppSelector } from "../../redux/reduxHooks";
+import { getAvailableAvatars } from "../../redux/member/memberThunk";
+import { useAppDispatch, useAppSelector } from "../../redux/reduxHooks";
 
 export default function JoinHouseholdScreen({
   navigation,
 }: ProfileStackScreenProps<"JoinHousehold">) {
-  const households = useAppSelector(selectHouseholdCodes);
-  const userHouseHolds = useAppSelector(selectUserHouseholds);
+  const codes = useAppSelector(selectHouseholdCodes);
+  const households = useAppSelector(selectOtherHouseholds);
+  const myMemberships = useAppSelector(h => h.memberList.members);
+  const dispatch = useAppDispatch();
   const { colors } = useTheme();
   const [error, setError] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  function checkCode(code: number) {
-    const householdCode: boolean = households.some(
-      house => house.houseHoldCode === code
-    );
-    const foundHouse = households.find(h => h.houseHoldCode === code); // tog bort h.id, innan h.houseHoldCode === code
-    const alreadyMember = userHouseHolds.some(
-      h => h.member?.householdId === foundHouse?.id
-    );
+  async function checkCode(code: number) {
+    const foundHouseholdCode = codes.some(c => c == code);
 
-    if (!householdCode) {
+    if (!foundHouseholdCode) {
       setError(true);
       setErrorMessage("Hushållet finns inte");
     }
-    if (alreadyMember) {
-      setError(true);
-      setErrorMessage("Du är redan medlem i hushållet");
-    }
-    if (!alreadyMember && householdCode && foundHouse) {
-      setError(false);
-      navigation.navigate("HouseholdInfo", { id: foundHouse.id });
+
+    if (foundHouseholdCode) {
+      const foundHouse = households.find(h => h.houseHoldCode == code);
+      const alreadyMember = myMemberships.some(
+        m => m.householdId == foundHouse?.id
+      );
+      if (foundHouse === undefined) {
+        throw new TypeError("Something that was supposed to be here wasnt");
+      } else if (alreadyMember) {
+        setError(true);
+        setErrorMessage("du är redan medlem!");
+      } else {
+        setError(false);
+        dispatch(getAvailableAvatars(foundHouse.id));
+        navigation.navigate("HouseholdInfo", { id: foundHouse.id });
+      }
     }
   }
   useEffect(() => {

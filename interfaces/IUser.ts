@@ -1,6 +1,3 @@
-export interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-}
+import firebase from "firebase";
+
+export type IUser = Pick<firebase.User, "displayName" | "uid"> | null;

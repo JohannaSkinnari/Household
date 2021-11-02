@@ -5,7 +5,7 @@ export const selectUserHouseholds = (state: RootState) =>
   state.houseHoldList.houseHoldList.map(house => {
     const user = state.userList.activeUser;
     const member = state.memberList.members.find(
-      m => m.householdId === house.id && user.id === m.userId
+      m => user?.uid === m.userId && m.householdId == house.id
     );
     return {
       house,
@@ -15,18 +15,15 @@ export const selectUserHouseholds = (state: RootState) =>
   });
 
 export const selectHouseholdCodes = (state: RootState) => {
-  const householdCodes = state.houseHoldList.houseHoldList.filter(
+  const householdCodes = state.houseHoldList.otherHouseholds.map(
     house => house.houseHoldCode
   );
   return householdCodes;
 };
 
-export const getAvailableAvatars = (state: RootState) => {
-  const availableAvatars = avatars.filter(
-    avatar =>
-      !state.memberList.members.some(member => avatar.id === member.avatarId)
-  );
-  return availableAvatars;
+export const selectOtherHouseholds = (state: RootState) => {
+  const households = state.houseHoldList.otherHouseholds.map(house => house);
+  return households;
 };
 
 export const selectHouseholdById =

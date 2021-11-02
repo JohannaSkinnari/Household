@@ -3,25 +3,21 @@ import { RootState } from "../reduxStore";
 
 export const selectMembersByHouseholdId =
   (householdId: string) => (state: RootState) =>
-    state.memberList.members
-      .filter(member => member.householdId === householdId)
-      .map(member => {
-        const user = state.userList.users.find(u => u.id === member.userId);
-        return {
-          member,
-          user,
-          avatar: avatars.find(avatar => avatar.id === member?.avatarId),
-        };
-      });
+    state.memberList.householdMembers
+      .filter(m => m.householdId == householdId)
+      .map(member => ({
+        member,
+        avatar: avatars.find(avatar => avatar.id == member.avatarId),
+      }));
 
 export const selectOwnerOfHousehold =
   (householdId: string) => (state: RootState) =>
     state.memberList.members.find(
       m =>
-        m.userId === state.userList.activeUser.id &&
+        m.userId === state.userList.activeUser?.uid &&
         m.householdId === householdId
     );
 
 export const selectMembersFromHousehold =
   (houseId: string) => (state: RootState) =>
-    state.memberList.members.filter(s => s.householdId === houseId);
+    state.memberList.householdMembers.filter(s => s.householdId === houseId);

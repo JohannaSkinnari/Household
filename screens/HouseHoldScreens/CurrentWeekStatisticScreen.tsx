@@ -38,12 +38,12 @@ export default function CurrentWeekStatisticScreen({
     // eslint-disable-next-line no-restricted-syntax
     for (const completedChore of completedChores) {
       const member = totalMembersData.find(
-        m => m.memberId === completedChore.userId // memberId
+        m => m.memberId === completedChore.memberId // memberId
       );
       const avatar = allMembers.find(aM => aM.id === member?.memberId);
       if (!member) {
         totalMembersData.push({
-          memberId: completedChore.userId,
+          memberId: completedChore.memberId,
           totalWeight: completedChore.weight,
           avatar: avatar?.avatarId,
         });
@@ -64,7 +64,7 @@ export default function CurrentWeekStatisticScreen({
       );
       if (!chore) {
         memData.push({
-          memberId: completedChore.userId,
+          memberId: completedChore.memberId,
           totalWeight: completedChore.weight,
           avatar: avatar?.avatarId,
         });
@@ -84,7 +84,7 @@ export default function CurrentWeekStatisticScreen({
         // eslint-disable-next-line no-restricted-syntax
         for (const totalChoreData of totalChoresData) {
           const choreMember = totalChoreData.membersData.find(
-            tcd => tcd.memberId === completedChore.userId
+            tcd => tcd.memberId === completedChore.memberId
           );
           if (!choreMember) {
             console.log("No ChoreMember!");
@@ -162,13 +162,13 @@ export default function CurrentWeekStatisticScreen({
 
     const members = completedChores.map(completedChore => {
       const memberCount = completedChores.filter(
-        member => member.userId
+        member => member.memberId
       ).length;
       // console.log(`memberCount: ${memberCount}`);
       // console.log(`completedChoreId: ${completedChore.id}`);
 
       return {
-        memberId: completedChore.userId,
+        memberId: completedChore.memberId,
         totalWeight: memberCount * completedChore.weight,
       };
     });

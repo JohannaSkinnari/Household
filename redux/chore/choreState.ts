@@ -74,6 +74,7 @@ export const initialState: ChoresState = {
       isArchived: false,
     },
   ],
+  // chores: [],
   loading: false,
   isCreatedSuccess: true,
 };
