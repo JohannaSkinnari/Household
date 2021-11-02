@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IHouseHold } from "../../interfaces/IHouseHold";
+import { ICreateHouseHold, IEditHouseHold, IHouseHold } from "../../interfaces/IHouseHold";
 import { loadBackgroundData, loadData } from "../auth/authThunk";
 import { initialState } from "./houseHoldState";
-import { createHouseHold } from "./houseHoldThunk";
+import { createHouseHold, editHouseHold } from "./houseHoldThunk";
 
 const houseHoldSlice = createSlice({
   name: "households",
@@ -12,15 +12,15 @@ const houseHoldSlice = createSlice({
       state.houseHoldList = action.payload;
       state.otherHouseholds = action.payload;
     },
-    editHouseHold(state, action: PayloadAction<IHouseHold>) {
-      const index = state.houseHoldList.findIndex(
-        house => house.id === action.payload.id
-      );
-      state.houseHoldList[index] = {
-        ...state.houseHoldList[index],
-        ...action.payload,
-      };
-    },
+    // editHouseHold(state, action: PayloadAction<IEditHouseHold>) {
+    //   const index = state.houseHoldList.findIndex(
+    //     house => house.id === action.payload.id
+    //   );
+    //   state.houseHoldList[index] = {
+    //     ...state.houseHoldList[index],
+    //     ...action.payload,
+    //   };
+    // },
   },
   extraReducers: builder => {
     builder.addCase(createHouseHold.fulfilled, (state, { payload }) => {
@@ -58,9 +58,26 @@ const houseHoldSlice = createSlice({
     builder.addCase(loadBackgroundData.pending, state => {
       state.loading = true;
     });
-  },
-});
+    builder.addCase(editHouseHold.fulfilled, (state, { payload }) => {
+      const index = state.houseHoldList.findIndex(
+            house => house.id === payload.id
+          );
+          state.houseHoldList[index] = {
+            ...state.houseHoldList[index],
+            ...payload,
+          }
+      state.loading = false;
+    });
+    builder.addCase(editHouseHold.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(editHouseHold.rejected, (state, { payload }) => {
+      state.error = "No household found"
+      state.loading = false;
+    });
+  }
+});  
 
-export const { editHouseHold, removeHouseholdState } = houseHoldSlice.actions;
+export const { removeHouseholdState } = houseHoldSlice.actions;
 
 export default houseHoldSlice.reducer;

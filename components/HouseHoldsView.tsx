@@ -47,7 +47,7 @@ export default function HouseHoldView({
           </TouchableOpacity>
           {isVisible ? (
             <TouchableOpacity
-              onPress={() => onSelectedHouseSetup("HouseholdSettings")}
+              onPress={() => onSelectedHouseSetup(house.id)}
               style={[
                 styles.buttonStyle,
                 { backgroundColor: colors.surface },
