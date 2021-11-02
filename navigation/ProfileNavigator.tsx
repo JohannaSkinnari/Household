@@ -1,11 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import firebase from "firebase";
-import React, { useState } from "react";
-import { Switch,StyleSheet,View,Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { StyleSheet,Text, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons"; 
 import { useTheme } from "react-native-paper";
-import { useAppDispatch } from "../redux/reduxStore";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
 import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettingsScreen";
@@ -13,6 +12,7 @@ import JoinHouseholdScreen from "../screens/ProfileScreens/JoinHouseHoldScreen";
 import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
 import HouseholdNavigator from "./HouseHoldNavigator";
 import { useAppSelector } from "../redux/reduxHooks";
+import { useAppDispatch } from "../redux/reduxStore";
 
 
 type ProfileStackParamList = {
@@ -51,7 +51,7 @@ const currentTheme = useAppSelector(state=>state.DarkMode)
           name="Profile"
           component={ProfileScreen}
           options={{
-            title: "Profil sidan", // userName istället
+            title: "Profilsidan", // userName istället
             headerLeft: () => null,
             headerRight: ()=> (
                 <TouchableOpacity

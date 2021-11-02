@@ -35,7 +35,7 @@ const InputField: FC<Props> = ({
       style={[
         styles.container,
         inputContainerStyle,
-        { backgroundColor: colors.background },
+        { backgroundColor: colors.textInput },
       ]}
     >
       {leftIcon ? (
@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 12,
     shadowColor: "rgba(0, 0, 0, 0.15)",
-    shadowOpacity: 0.8,
-    elevation: 40,
+    shadowOpacity: 0.3,
+    elevation: 10,
     shadowOffset: { width: 3, height: 3 },
   },
   leftIcon: {

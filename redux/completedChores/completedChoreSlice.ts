@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialState } from "./completedChoreState";
 import {
   createCompletedChore,
@@ -8,7 +8,11 @@ import {
 const completedChoreSlice = createSlice({
   name: "completedChores",
   initialState,
-  reducers: {},
+  reducers: {
+    removeCompletedChoreState(state, action: PayloadAction<[]>) {
+      state.completedChores = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(createCompletedChore.fulfilled, (state, { payload }) => {
       state.loading = false;
@@ -42,6 +46,6 @@ const completedChoreSlice = createSlice({
   },
 });
 
-export const {} = completedChoreSlice.actions;
+export const { removeCompletedChoreState } = completedChoreSlice.actions;
 
 export default completedChoreSlice.reducer;

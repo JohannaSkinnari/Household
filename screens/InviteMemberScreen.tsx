@@ -1,4 +1,4 @@
-import { useTheme } from "@react-navigation/native";
+import { useTheme } from "react-native-paper";
 import React from "react";
 import { View, Text } from "react-native";
 
