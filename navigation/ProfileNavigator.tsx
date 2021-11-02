@@ -1,18 +1,18 @@
+import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
-import firebase from "firebase";
 import React from "react";
-import { StyleSheet,Text, TouchableOpacity } from "react-native";
+import { StyleSheet,Text, TouchableOpacity,View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons"; 
 import { useTheme } from "react-native-paper";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
 import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettingsScreen";
 import JoinHouseholdScreen from "../screens/ProfileScreens/JoinHouseHoldScreen";
-import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
 import HouseholdNavigator from "./HouseHoldNavigator";
 import { useAppSelector } from "../redux/reduxHooks";
 import { useAppDispatch } from "../redux/reduxStore";
+import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
 
 
 type ProfileStackParamList = {
@@ -32,17 +32,13 @@ export type ProfileStackScreenProps<
 const Stack = createStackNavigator<ProfileStackParamList>();
 
 export default function ProfileNavigation() {
-  const user = firebase.auth().currentUser;
-  const userName = user?.displayName;
+
   const { colors } = useTheme();
 
-// const state = store.getState();
-// const isEnabledStateValue = initialState.isSetupEnabled;
-// console.log(isEnabledStateValue)
 const dispatch = useAppDispatch();
 
 const currentTheme = useAppSelector(state=>state.DarkMode)
-
+const user = useAppSelector(u=>u.userList.activeUser)
 
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
@@ -50,8 +46,18 @@ const currentTheme = useAppSelector(state=>state.DarkMode)
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{
-            title: "Profilsidan", // userName istället
+          options={() => ({
+            header: () => { 
+              const userName = user?.displayName;
+              return (
+                <View style={styles.header}>
+                 <FontAwesome name="user-circle-o" size={27} color="#c75267" />
+                <Text style={[styles.headerText, { color: colors.text }]}>{userName}</Text>
+                </View>
+                
+              );
+            }
+            ,
             headerLeft: () => null,
             headerRight: ()=> (
                 <TouchableOpacity
@@ -62,7 +68,7 @@ const currentTheme = useAppSelector(state=>state.DarkMode)
                     <MaterialCommunityIcons name="theme-light-dark" size={25} color="black"  style={[styles.buttonIconStyle, { color: colors.text }]} />
                 </TouchableOpacity>
             ) ,
-          }}
+          })}
         />
         <Stack.Screen
           name="JoinHousehold"
@@ -111,7 +117,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     elevation: 20,
     shadowOffset: { width: 3, height: 3 },
-    justifyContent: "space-between",
+    justifyContent: "center",
+    height:70,
+    marginTop:20,
   },
 
   userNameContainer: {
@@ -165,5 +173,9 @@ const styles = StyleSheet.create({
     fontSize:12,
     fontWeight: "700",
   },
-});
 
+  logo: {
+    height: 30,
+    width: 30,
+  },
+});

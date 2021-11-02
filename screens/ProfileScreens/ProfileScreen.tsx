@@ -1,11 +1,10 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View,Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { AntDesign} from "@expo/vector-icons";
 import CustomButton from "../../components/common/CustomButton";
 import HouseHoldView from "../../components/HouseHoldsView";
-import { useAppSelector } from "../../redux/reduxHooks";
 import Firebase from "../../database/config";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 
@@ -13,7 +12,7 @@ export default function ProfileScreen({
   navigation,
 }: ProfileStackScreenProps<"Profile">) {
   const { colors } = useTheme();
-  const user = useAppSelector(u => u.userList.activeUser);
+  const [showToggle, setShowToggle] = useState<boolean>(false);
 
   const onSignOut = () => {
     Firebase.auth()
@@ -30,17 +29,29 @@ export default function ProfileScreen({
     navigation.navigate("Household", { id });
   }
 
+  const toggleEnableSetup = () => {
+    setShowToggle(!showToggle);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={[styles.header, { backgroundColor: colors.background }]}>
-        <View style={styles.userNameContainer}>
-          <FontAwesome name="user-circle-o" size={24} color="#c75267" />
-          <Text style={[styles.headerText, { color: colors.text }]}>
-            {"   "}
-            {user?.displayName}
-            {"  "}
+        <TouchableOpacity
+          onPress={toggleEnableSetup}
+          style={[
+            styles.buttonStyle,
+            { borderColor: colors.darkPink, borderWidth: 0.5 },
+          ]}
+          activeOpacity={0.5}
+        >
+          <Image
+            source={require("../../assets/images/icon.png")}
+            style={styles.logoIcon}
+          />
+          <Text style={[styles.buttonTextStyle, { color: colors.text }]}>
+            Ändra
           </Text>
-        </View>
+        </TouchableOpacity>
 
         <TouchableOpacity
           onPress={onSignOut}
@@ -48,7 +59,7 @@ export default function ProfileScreen({
           activeOpacity={0.5}
         >
           <View style={styles.buttonIconStyle}>
-            <AntDesign name="logout" size={18} color="white" />
+            <AntDesign name="logout" size={16} color="white" />
           </View>
           <Text style={styles.buttonTextStyle}>Logga ut </Text>
         </TouchableOpacity>
@@ -57,7 +68,11 @@ export default function ProfileScreen({
       <View style={{ flex: 1 }} />
       <View style={[styles.houseList, { flex: 6 }]}>
         <ScrollView>
-          <HouseHoldView onSelectedHouse={navigateTo} />
+          <HouseHoldView
+            onSelectedHouse={navigateTo}
+            onSelectedHouseSetup={navigation.navigate}
+            isVisible={showToggle}
+          />
         </ScrollView>
       </View>
       <View style={[{ justifyContent: "flex-end", flex: 1 }]}>
@@ -107,20 +122,21 @@ const styles = StyleSheet.create({
   buttonStyle: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#485a96",
-    borderWidth: 0.5,
     borderColor: "#fff",
-    height: 35,
+    height: 25,
+    paddingHorizontal: 2,
     borderRadius: 20,
-    margin: 5,
+    marginHorizontal: 10,
+    marginVertical: 5,
     justifyContent: "space-evenly",
   },
   buttonIconStyle: {
-    padding: 8,
+    margin: 5,
   },
   buttonTextStyle: {
     color: "#fff",
     marginHorizontal: 5,
+    fontSize: 13,
   },
 
   root: {
@@ -129,5 +145,11 @@ const styles = StyleSheet.create({
   houseList: {
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+
+  logoIcon: {
+    height: 25,
+    width: 25,
+    resizeMode: "stretch",
   },
 });
