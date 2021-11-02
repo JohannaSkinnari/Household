@@ -1,4 +1,4 @@
-import { useTheme } from "@react-navigation/native";
+import { useTheme } from "react-native-paper";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -71,7 +71,7 @@ export default function SignupScreen({
           </View>
 
           <View
-            style={[styles.authContainer, { backgroundColor: colors.card }]}
+            style={[styles.authContainer, { backgroundColor: colors.background }]}
           >
             <Text style={styles.title}>Registrera nytt konto</Text>
 
