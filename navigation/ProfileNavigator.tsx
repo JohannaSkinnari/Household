@@ -2,7 +2,7 @@ import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { View,Text,StyleSheet} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
 import { useAppSelector } from "../redux/reduxHooks";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
@@ -16,7 +16,7 @@ type ProfileStackParamList = {
   Profile: undefined;
   JoinHousehold: undefined;
   CreateHousehold: undefined;
-  HouseholdSettings: undefined;
+  HouseholdSettings: { id: string };
   Household: { id: string };
   HouseholdInfo: { id: string };
   Login: undefined;
@@ -29,7 +29,7 @@ export type ProfileStackScreenProps<
 const Stack = createStackNavigator<ProfileStackParamList>();
 
 export default function ProfileNavigation() {
-  const user = useAppSelector(u=>u.userList.activeUser)
+  const user = useAppSelector(u => u.userList.activeUser);
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
@@ -37,18 +37,18 @@ export default function ProfileNavigation() {
           name="Profile"
           component={ProfileScreen}
           options={() => ({
-            header: () => { 
+            header: () => {
               const userName = user?.displayName;
               const { colors } = useTheme();
               return (
                 <View style={styles.header}>
-                 <FontAwesome name="user-circle-o" size={27} color="#c75267" />
-                <Text style={[styles.headerText, { color: colors.text }]}>{userName}</Text>
+                  <FontAwesome name="user-circle-o" size={27} color="#c75267" />
+                  <Text style={[styles.headerText, { color: colors.text }]}>
+                    {userName}
+                  </Text>
                 </View>
-                
               );
-            }
-            ,
+            },
             headerLeft: () => null,
           })}
         />
@@ -86,18 +86,18 @@ export default function ProfileNavigation() {
             headerLeft: () => null,
           }}
         />
-      </Stack.Group>      
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
   header: {
-    height:70,
+    height: 70,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop:20,
+    marginTop: 20,
   },
 
   userNameContainer: {

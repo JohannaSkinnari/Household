@@ -6,27 +6,25 @@ import { useTheme } from "react-native-paper";
 import { editHouseHold } from "../redux/houseHold/houseHoldThunk";
 import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 import CustomButton from "./common/CustomButton";
-import { ICreateHouseHold, IHouseHold } from "../interfaces/IHouseHold";
 
-type RootValidationSchema = Record<keyof FormData, yup.AnySchema>;
-type HouseValidationSchema = Record<keyof FormData["house"], yup.AnySchema>;
+type RootValidationSchema = Record<keyof Omit<FormData, "id">, yup.AnySchema>;
 
 const validationSchema = yup.object().shape<RootValidationSchema>({
-  house: yup.object().shape<HouseValidationSchema>({
-    name: yup
-      .string()
-      .required("Namnge ditt hushåll")
-      .min(3, "Namnet är för kort")
-      .max(18, "Namnet är för långt"),
-  }),
+  name: yup
+    .string()
+    .required("Namnge ditt hushåll")
+    .min(3, "Namnet är för kort")
+    .max(18, "Namnet är för långt"),
 });
+
 interface Props {
   onSubmitSuccess: () => void;
   houseId: string;
 }
 
 type FormData = {
-  house: Omit<ICreateHouseHold, "id">;
+  name: string;
+  id: string;
 };
 
 export default function EditHouseHoldForm({ onSubmitSuccess, houseId }: Props) {
@@ -39,10 +37,11 @@ export default function EditHouseHoldForm({ onSubmitSuccess, houseId }: Props) {
   if (!activeHouse) throw Error;
 
   const defaultFormData: FormData = {
-    house: activeHouse,
+    name: activeHouse.name,
+    id: activeHouse.id,
   };
   async function handleOnSubmit(values: FormData) {
-    const response = await dispatch(editHouseHold(values.house));
+    const response = await dispatch(editHouseHold(values));
     if (response) {
       onSubmitSuccess();
     }
@@ -71,16 +70,17 @@ export default function EditHouseHoldForm({ onSubmitSuccess, houseId }: Props) {
                   { backgroundColor: colors.surface, color: colors.onSurface },
                 ],
               ]}
+              // ={"Ändra namn"}
               placeholderTextColor={colors.placeholder}
-              placeholder={values.house.name}
-              onChangeText={handleChange("house.name")}
-              onBlur={handleBlur("house.name")}
-              value={values.house.name}
+              placeholder={values.name}
+              onChangeText={handleChange("name")}
+              onBlur={handleBlur("name")}
+              value={values.name}
               clearTextOnFocus
             />
-            {errors.house && touched.house && (
+            {errors.name && touched.name && (
               <Text style={[styles.errors, { color: colors.darkPink }]}>
-                {errors.house.name}
+                {errors.name}
               </Text>
             )}
             <View style={styles.buttonStyle}>
