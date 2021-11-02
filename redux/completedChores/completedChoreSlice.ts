@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { loadData } from "../auth/authThunk";
 import { initialState } from "./completedChoreState";
 import {
   createCompletedChore,
@@ -41,6 +42,16 @@ const completedChoreSlice = createSlice({
       state.error = "No data found";
     });
     builder.addCase(deleteCompletedChore.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(loadData.fulfilled, (state, { payload }) => {
+      state.completedChores = payload.completedChores;
+      state.loading = false;
+    });
+    builder.addCase(loadData.rejected, state => {
+      state.loading = false;
+    });
+    builder.addCase(loadData.pending, state => {
       state.loading = true;
     });
   },

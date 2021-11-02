@@ -1,4 +1,4 @@
-import { useTheme } from "@react-navigation/native";
+import { useTheme } from "react-native-paper";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -71,7 +71,7 @@ export default function LoginScreen({
           </View>
 
           <View
-            style={[styles.authContainer, { backgroundColor: colors.card }]}
+            style={[styles.authContainer, { backgroundColor: colors.background }]}
           >
             <Text style={styles.title}>Login</Text>
             <InputField
@@ -113,8 +113,9 @@ export default function LoginScreen({
             <View style={styles.buttonField}>
               <CustomButton onPress={onLogin} title="Logga in" />
               <CustomButton
-                onPress={() => navigation.navigate("SignUp")}
+                onPress={() => navigation.navigate("SignUp") }
                 title="Registrera"
+                
               />
             </View>
             <View>
@@ -144,12 +145,11 @@ const styles = StyleSheet.create({
   authContainer: {
     marginHorizontal: 18,
     paddingHorizontal: 12,
-
     borderRadius: 10,
     paddingVertical: 40,
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOpacity: 0.9,
-    elevation: 40,
+    elevation: 20,
     shadowOffset: { width: 3, height: 3 },
   },
 
