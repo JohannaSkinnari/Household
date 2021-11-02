@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
+import { IMember } from "../interfaces/IMember";
 import { selectMembersToApprove } from "../redux/member/memberSelectors";
+import { acceptMember, rejectMember } from "../redux/member/memberThunk";
 import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
@@ -17,12 +19,12 @@ export default function ApproveView({ householdId }: Props) {
 
   const memberList = useAppSelector(selectMembersToApprove(householdId));
 
-  // const pauseThisMember = (member: IMember) => {
-  //   dispatch(pauseMember(member));
-  // };
-  // const activetThisMember = (member: IMember) => {
-  //   dispatch(activateMember(member));
-  // };
+  const acceptThisMember = (member: IMember) => {
+    dispatch(acceptMember(member));
+  };
+  const rejectThisMember = (member: IMember) => {
+    dispatch(rejectMember(member));
+  };
 
   return (
     <>
@@ -59,14 +61,14 @@ export default function ApproveView({ householdId }: Props) {
                   paddingBottom: 10,
                 }}
               >
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => acceptThisMember(member)}>
                   <AntDesign
                     name="checkcircleo"
                     size={24}
                     color={colors.green}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => rejectThisMember(member)}>
                   <AntDesign
                     name="minuscircleo"
                     size={24}

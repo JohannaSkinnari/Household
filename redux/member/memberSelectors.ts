@@ -4,7 +4,7 @@ import { RootState } from "../reduxStore";
 export const selectMembersByHouseholdId =
   (householdId: string) => (state: RootState) =>
     state.memberList.householdMembers
-      .filter(m => m.householdId == householdId)
+      .filter(m => m.householdId == householdId && m.isApproved === true)
       .map(member => ({
         member,
         avatar: avatars.find(avatar => avatar.id == member.avatarId),
