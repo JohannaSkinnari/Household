@@ -5,9 +5,9 @@ import { useTheme } from "react-native-paper";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import CustomButton from "../../components/common/CustomButton";
 import HouseHoldView from "../../components/HouseHoldsView";
-import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import { useAppSelector } from "../../redux/reduxHooks";
 import Firebase from "../../database/config";
+import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 
 export default function ProfileScreen({
   navigation,

@@ -6,7 +6,7 @@ import { AppearanceProvider } from "react-native-appearance";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider as ReduxProvider } from "react-redux";
-import { CustomDarkTheme, CustomDefaultTheme, CustomPaperDarkTheme, CustomPaperDefaultTheme } from "./components/common/Theme";
+import { CustomDarkTheme, CustomDefaultTheme, CustomPaperDarkTheme, CustomPaperDefaultTheme} from "./components/common/Theme";
 import { useAppSelector } from "./redux/reduxHooks";
 import Firebase from "./database/config";
 import { Listener } from "./database/listeners";
