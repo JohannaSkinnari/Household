@@ -66,7 +66,6 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
     ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IMember));
 
     // hämta alla chores för hushållen
-    console.log(householdIds);
     const chores = (
       await Firebase.firestore()
         .collection("/chore")
