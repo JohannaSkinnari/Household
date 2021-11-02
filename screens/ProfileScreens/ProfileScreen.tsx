@@ -1,12 +1,11 @@
-import { AntDesign } from "@expo/vector-icons";
-import firebase from "firebase";
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View,Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
+import { AntDesign} from "@expo/vector-icons";
 import CustomButton from "../../components/common/CustomButton";
-import HouseHoldView from // setIsVisible, // isVisible,
-"../../components/HouseHoldsView";
+import Firebase from "../../database/config";
+import HouseHoldView from "../../components/HouseHoldsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 
 
@@ -17,8 +16,7 @@ export default function ProfileScreen({
   const [showToggle, setShowToggle] = useState<boolean>(false);
 
   const onSignOut = () => {
-    firebase
-      .auth()
+    Firebase.auth()
       .signOut()
       .then(() => {
         navigation.navigate("Login");
@@ -78,7 +76,7 @@ export default function ProfileScreen({
           />
         </ScrollView>
       </View>
-      <View style={[{ justifyContent: "flex-end", flex: 6 }]}>
+      <View style={[{ justifyContent: "flex-end", flex: 1 }]}>
         <View
           style={{
             justifyContent: "space-evenly",

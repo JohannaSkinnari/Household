@@ -1,3 +1,4 @@
+import { useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -8,18 +9,17 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import { RootStackScreenProps } from "../../navigation/RootNavigation";
-import Firebase from "../../database/firebase";
+import { ErrorMessage, InputField } from "../../components";
 import CustomButton from "../../components/common/CustomButton";
-import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
-
-const auth = Firebase.auth();
+import { ISignUpData } from "../../interfaces/ISignupData";
+import { RootStackScreenProps } from "../../navigation/RootNavigation";
+import { useAppDispatch } from "../../redux/reduxHooks";
+import { signupUser } from "../../redux/user/userThunk";
 
 export default function SignupScreen({
   navigation,
-}: RootStackScreenProps<"Login">) {
+}: RootStackScreenProps<"SignUp">) {
   const { colors } = useTheme();
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
@@ -27,6 +27,8 @@ export default function SignupScreen({
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState("eye");
   const [signupError, setSignupError] = useState("");
+
+  const dispatch = useAppDispatch();
 
   const handlePasswordVisibility = () => {
     if (rightIcon === "eye") {
@@ -39,22 +41,16 @@ export default function SignupScreen({
   };
 
   const onHandleSignup = async () => {
-    try {
-      if (email !== "" && userName !== "" && password !== "") {
-        await auth.createUserWithEmailAndPassword(email, password);
-
-        const user = Firebase.auth().currentUser;
-        user
-          .updateProfile({
-            displayName: userName
-          })
-          .then(() => {
-            navigation.navigate("ProfileNav");
-          });
-      }
-    } catch (error: unknown) {
-      const er = error as Error;
-      setSignupError(er.message);
+    if (email !== "" && userName !== "" && password !== "") {
+      const newUser: ISignUpData = {
+        email,
+        password,
+        name: userName,
+      };
+      await dispatch(signupUser(newUser));
+      navigation.navigate("Login");
+    } else {
+      setSignupError("Fyll i alla fält");
     }
   };
 

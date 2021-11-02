@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -8,14 +9,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import { RootStackScreenProps } from "../../navigation/RootNavigation";
-import Firebase from "../../database/firebase";
+import { useTheme } from "react-native-paper";
+import { ErrorMessage, InputField } from "../../components";
 import CustomButton from "../../components/common/CustomButton";
-import { InputField, ErrorMessage } from "../../components";
 import Logo from "../../components/Logo";
-
-const auth = Firebase.auth();
+import { ILoginData } from "../../interfaces/ILoginData";
+import { RootStackScreenProps } from "../../navigation/RootNavigation";
+import { useAppDispatch } from "../../redux/reduxStore";
+import { loginUser } from "../../redux/user/userThunk";
 
 export default function LoginScreen({
   navigation,
@@ -26,6 +27,7 @@ export default function LoginScreen({
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState("eye");
   const [loginError, setLoginError] = useState("");
+  const dispatch = useAppDispatch();
 
   const handlePasswordVisibility = () => {
     if (rightIcon === "eye") {
@@ -39,7 +41,11 @@ export default function LoginScreen({
   const onLogin = async () => {
     try {
       if (email !== "" && password !== "") {
-        await auth.signInWithEmailAndPassword(email, password);
+        const user: ILoginData = {
+          email,
+          password,
+        };
+        await dispatch(loginUser(user));
         setEmail("");
         setPassword("");
         navigation.navigate("ProfileNav");
@@ -66,7 +72,7 @@ export default function LoginScreen({
           </View>
 
           <View
-            style={[styles.authContainer, { backgroundColor: colors.card }]}
+            style={[styles.authContainer, { backgroundColor: colors.background }]}
           >
             <Text style={styles.title}>Login</Text>
             <InputField

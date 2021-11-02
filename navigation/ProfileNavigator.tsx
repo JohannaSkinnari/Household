@@ -1,10 +1,10 @@
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
-import firebase from "firebase";
 import React from "react";
 import { View,Text,StyleSheet} from "react-native";
 import { useTheme } from "react-native-paper";
+import { useAppSelector } from "../redux/reduxHooks";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
 import HouseholdSettingsScreen from "../screens/ProfileScreens/HouseHoldSettingsScreen";
@@ -28,11 +28,8 @@ export type ProfileStackScreenProps<
 
 const Stack = createStackNavigator<ProfileStackParamList>();
 
-
-
-
-
-export default function ProfileNavigation() { 
+export default function ProfileNavigation() {
+  const user = useAppSelector(u=>u.userList.activeUser)
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Group>
@@ -40,8 +37,7 @@ export default function ProfileNavigation() {
           name="Profile"
           component={ProfileScreen}
           options={() => ({
-            header: () => {
-              const user = firebase.auth().currentUser;
+            header: () => { 
               const userName = user?.displayName;
               const { colors } = useTheme();
               return (
