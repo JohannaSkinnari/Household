@@ -101,6 +101,13 @@ const choreSlice = createSlice({
     });
     builder.addCase(loadData.fulfilled, (state, { payload }) => {
       state.chores = payload.chores;
+      state.loading = false;
+    });
+    builder.addCase(loadData.rejected, state => {
+      state.loading = false;
+    });
+    builder.addCase(loadData.pending, state => {
+      state.loading = true;
     });
   },
 });
