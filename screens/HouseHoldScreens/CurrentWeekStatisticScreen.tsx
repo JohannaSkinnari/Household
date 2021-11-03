@@ -51,7 +51,7 @@ export default function CurrentWeekStatisticScreen({
             const avatarColor = avatars.find(a => a.id === tmd.avatar)?.color;
             return (
               <View
-                key={activeMemberAvatar?.id}
+                key={tmd.memberId}
                 style={[
                   styles.iconContainer,
                   {
