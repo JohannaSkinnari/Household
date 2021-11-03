@@ -36,7 +36,6 @@ export default function CurrentWeekStatisticScreen({
             widthAndHeight={200}
             series={totalMembersData.map(md => md.totalWeight)}
             sliceColor={totalMembersData.map(md => {
-              console.log("AvatarId:", md);
               const avatarColor = avatars.find(a => a.id === md.avatar)?.color;
               if (!avatarColor) return colors.primary;
               return colors[avatarColor];
@@ -46,21 +45,42 @@ export default function CurrentWeekStatisticScreen({
           />
         </View>
 
-        {totalMembersData.map(tmd => {
-          const activeMemberAvatar = avatars.find(a => a.id === tmd.avatar);
-          return (
-            <View key={activeMemberAvatar?.id} style={styles.iconsContainer}>
-              <Image source={activeMemberAvatar?.icon} />
-            </View>
-          );
-        })}
+        <View style={styles.iconsContainer}>
+          {totalMembersData.map(tmd => {
+            const activeMemberAvatar = avatars.find(a => a.id === tmd.avatar);
+            const avatarColor = avatars.find(a => a.id === tmd.avatar)?.color;
+            return (
+              <View
+                key={activeMemberAvatar?.id}
+                style={[
+                  styles.iconContainer,
+                  {
+                    backgroundColor: avatarColor
+                      ? colors[avatarColor]
+                      : colors.placeholder,
+                  },
+                ]}
+              >
+                <Image source={activeMemberAvatar?.icon} style={styles.icons} />
+              </View>
+            );
+          })}
+        </View>
+
         <View style={styles.chorePiesContainer}>
           {choreMembersData.map(item => (
             <PieChartView
               key={item.choreId}
               widthAndHeight={100}
               series={item.membersData.map(m => m.totalWeight)}
-              sliceColor={[colors.blue, colors.green]}
+              // HÄR ÄR JAG!!!!!
+              sliceColor={item.membersData.map(md => {
+                const avatarColor = avatars.find(
+                  a => a.id === md.avatar
+                )?.color;
+                if (!avatarColor) return colors.primary;
+                return colors[avatarColor];
+              })}
               isTotal={false}
               title={
                 houseChores.find(
@@ -96,7 +116,22 @@ const styles = StyleSheet.create({
     marginBottom: 65,
   },
   iconsContainer: {
+    justifyContent: "center",
     marginRight: 8,
     flexDirection: "row",
+  },
+  iconContainer: {
+    // backgroundColor: "blue",
+    marginHorizontal: 5,
+    borderRadius: 100,
+    height: 30,
+    width: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+  },
+  icons: {
+    height: 20,
+    width: 20,
   },
 });

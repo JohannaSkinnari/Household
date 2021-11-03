@@ -1,4 +1,4 @@
-import { selectAllMembers } from "../member/memberSelectors";
+import { selectMembersByHouseholdId } from "../member/memberSelectors";
 import { RootState } from "../reduxStore";
 
 interface MembersData {
@@ -45,7 +45,8 @@ export const selectCompletedChoresByHouseholdId =
 
 export const selectTotalMembersData =
   (householdId: string) => (state: RootState) => {
-    const allMembers = selectAllMembers(state);
+    const allMembers = selectMembersByHouseholdId(householdId)(state);
+
     const completedChores =
       selectCompletedChoresByHouseholdId(householdId)(state);
 
@@ -55,12 +56,16 @@ export const selectTotalMembersData =
       const member = totalMembersData.find(
         m => m.memberId === completedChore.memberId // memberId
       );
-      const avatar = allMembers.find(aM => aM.id === member?.memberId);
+
+      const avatar = allMembers.find(
+        aM => aM.member.userId === completedChore.memberId
+      )?.avatar?.id;
+
       if (!member) {
         totalMembersData.push({
           memberId: completedChore.memberId,
           totalWeight: completedChore.weight,
-          avatar: avatar?.avatarId,
+          avatar,
         });
       } else {
         member.totalWeight += completedChore.weight;
@@ -72,7 +77,7 @@ export const selectTotalMembersData =
 
 export const selectChoresMembersData =
   (householdId: string) => (state: RootState) => {
-    const allMembers = selectAllMembers(state);
+    const allMembers = selectMembersByHouseholdId(householdId)(state);
 
     const completedChores =
       selectCompletedChoresByHouseholdId(householdId)(state);
@@ -83,9 +88,10 @@ export const selectChoresMembersData =
       const chore = choresMembersData.find(
         tcd => tcd.choreId === completedChore.choreId
       );
-      const avatar = allMembers.find(aM =>
-        chore?.membersData.find(md => md.memberId === aM.userId)
-      );
+      const avatar = allMembers.find(
+        aM => aM.member.userId === completedChore.memberId
+      )?.avatar?.id;
+
       if (!chore) {
         // Om sysslan inte finns så skapar vi ett nytt objekt med medlemmslistan initierad
         choresMembersData.push({
@@ -94,7 +100,7 @@ export const selectChoresMembersData =
             {
               memberId: completedChore.memberId,
               totalWeight: completedChore.weight,
-              avatar: avatar?.avatarId,
+              avatar,
             },
           ],
         });
@@ -109,7 +115,7 @@ export const selectChoresMembersData =
           chore.membersData.push({
             memberId: completedChore.memberId,
             totalWeight: completedChore.weight,
-            avatar: avatar?.avatarId,
+            avatar,
           });
         } else {
           // Om medlemmen finns så ökas endast denns totala vikt
