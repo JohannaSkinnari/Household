@@ -86,7 +86,7 @@ export default function EditHouseHoldForm({ onSubmitSuccess, houseId }: Props) {
             <View style={styles.buttonStyle}>
               <CustomButton
                 icon="plus-circle-outline"
-                title="Spara"
+                title="Spara namn"
                 onPress={handleSubmit}
               />
             </View>
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 10,
   },
   container: {
     justifyContent: "center",
@@ -135,6 +134,6 @@ const styles = StyleSheet.create({
   buttonStyle: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 10,
+    marginBottom: 20,
   },
 });

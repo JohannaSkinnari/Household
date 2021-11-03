@@ -8,7 +8,12 @@ import {
   selectMembersByHouseholdId,
   selectOwnerOfHousehold,
 } from "../redux/member/memberSelectors";
-import { makeOwner, unMakeOwner } from "../redux/member/memberThunk";
+import {
+  activateMember,
+  makeOwner,
+  pauseMember,
+  unMakeOwner,
+} from "../redux/member/memberThunk";
 import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 
 interface Props {
@@ -24,14 +29,13 @@ export default function OwnerSettingsView({ householdId }: Props) {
   );
   const memberList = householdMembers.sort(m => (m.member.isAdmin ? -1 : 1));
   const user = useAppSelector(u => u.userList.activeUser);
-  // const admin = useAppSelector(selectOwnerOfHousehold(householdId));
 
-  // const pauseThisMember = (member: IMember) => {
-  //    dispatch(pauseMember(member));
-  // };
-  // const activetThisMember = (member: IMember) => {
-  //    dispatch(activateMember(member));
-  // };
+  const pauseThisMember = (member: IMember) => {
+    dispatch(pauseMember(member));
+  };
+  const activetThisMember = (member: IMember) => {
+    dispatch(activateMember(member));
+  };
   const setAdminPrivileges = (member: IMember) => {
     if (member.userId == user?.uid) {
       return null;
@@ -70,19 +74,17 @@ export default function OwnerSettingsView({ householdId }: Props) {
             </View>
             <View style={styles.iconsContainer}>
               <Image style={styles.avatar} source={avatar?.icon} />
-              {/* {admin?.isAdmin && (
-                <View style={[styles.active]}>
-                  {member.isActive ? (
-                    <TouchableOpacity onPress={() => pauseThisMember(member)}>
-                      <Feather name="play" size={24} color={colors.green} />
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity onPress={() => activetThisMember(member)}>
-                      <Feather name="pause" size={24} color={colors.darkPink} />
-                    </TouchableOpacity>
-                  )}
-                </View>
-              )} */}
+              <View style={[styles.active]}>
+                {member.isActive ? (
+                  <TouchableOpacity onPress={() => pauseThisMember(member)}>
+                    <Feather name="play" size={24} color={colors.green} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity onPress={() => activetThisMember(member)}>
+                    <Feather name="pause" size={24} color={colors.darkPink} />
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
           </View>
         </View>

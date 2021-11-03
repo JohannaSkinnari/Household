@@ -25,7 +25,7 @@ export default function HouseholdSettingsScreen({
     <View style={styles.root}>
       <View style={[styles.formContainer]}>
         <Text style={[styles.text, { color: colors.text }]}>
-          Ändra hushållets namn:
+          Ändra hushållets namn
         </Text>
         <EditHouseHoldForm onSubmitSuccess={toggleSuccess} houseId={houseId} />
       </View>
@@ -37,7 +37,7 @@ export default function HouseholdSettingsScreen({
           marginTop: 25,
         }}
       >
-        <Text style={[styles.text, { fontSize: 20 }]}>
+        <Text style={[styles.text, { color: colors.text, marginBottom: 10 }]}>
           Ändra användarens rättigheter
         </Text>
         <ScrollView>
@@ -56,12 +56,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    marginBottom: 10,
     fontWeight: "bold",
     alignItems: "center",
   },
   formContainer: {
     flex: 1,
-    marginTop: 14,
+    marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
   },
