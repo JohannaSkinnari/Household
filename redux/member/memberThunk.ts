@@ -165,3 +165,12 @@ export const unMakeOwner = createAsyncThunk<IMember, IMember, ThunkApi>(
     return memberOwned;
   }
 );
+
+export const deleteHouseHoldMember = createAsyncThunk<string, string, ThunkApi>(
+  "member/deleteHouseHoldMember",
+  async memberId => {
+    await Firebase.firestore().collection("/member").doc(memberId).delete();
+
+    return memberId;
+  }
+);
