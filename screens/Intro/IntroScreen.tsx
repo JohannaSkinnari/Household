@@ -32,7 +32,7 @@ och i slutändan få en statistisk övervy av dom slutförda sysslorna.
           </Text>
           <TouchableWithoutFeedback
             onPress={async () => {
-              navigation.navigate("ProfileNav");
+              navigation.navigate("Login");
             }}
           >
             <View  style={[styles.button, { backgroundColor: colors.onSurface , justifyContent: "flex-end" }]}>
@@ -72,15 +72,15 @@ och i slutändan få en statistisk övervy av dom slutförda sysslorna.
               source={require("../../assets/images/Logo.png")}
             />
           </View>
-          <Text style={styles.subtitle}>Gå till din profilsida och börja skapa hushåll och sysslor !
+          <Text style={styles.subtitle}>Börja med att logga in med dina inloggnings uppgifter !
           </Text>
           <TouchableWithoutFeedback
             onPress={async () => {
-              navigation.navigate("ProfileNav");
+              navigation.navigate("Login");
             }}
           >
             <View  style={[styles.button, { backgroundColor: colors.onSurface }]}>
-              <Text style={{ color: "white" }}>Gå vidare</Text>
+              <Text style={{ color: "white" }}>Till Inloggning</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
