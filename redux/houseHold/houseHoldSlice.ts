@@ -1,9 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  ICreateHouseHold,
-  IEditHouseHold,
-  IHouseHold,
-} from "../../interfaces/IHouseHold";
 import { loadBackgroundData, loadData } from "../auth/authThunk";
 import { initialState } from "./houseHoldState";
 import { createHouseHold, editHouseHold } from "./houseHoldThunk";
@@ -63,10 +58,10 @@ const houseHoldSlice = createSlice({
       };
       state.loading = false;
     });
-    builder.addCase(editHouseHold.pending, (state, { payload }) => {
+    builder.addCase(editHouseHold.pending, state => {
       state.loading = true;
     });
-    builder.addCase(editHouseHold.rejected, (state, { payload }) => {
+    builder.addCase(editHouseHold.rejected, state => {
       state.error = "No household found";
       state.loading = false;
     });
