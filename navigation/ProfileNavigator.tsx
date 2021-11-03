@@ -2,8 +2,8 @@ import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { StyleSheet,Text, TouchableOpacity,View } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons"; 
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "react-native-paper";
 import CreateHouseholdScreen from "../screens/ProfileScreens/CreateHouseHoldScreen";
 import HouseholdInfoScreen from "../screens/ProfileScreens/HouseHoldInfoScreen";
@@ -13,7 +13,6 @@ import HouseholdNavigator from "./HouseHoldNavigator";
 import { useAppSelector } from "../redux/reduxHooks";
 import { useAppDispatch } from "../redux/reduxStore";
 import ProfileScreen from "../screens/ProfileScreens/ProfileScreen";
-
 
 type ProfileStackParamList = {
   Profile: undefined;
@@ -32,48 +31,58 @@ export type ProfileStackScreenProps<
 const Stack = createStackNavigator<ProfileStackParamList>();
 
 export default function ProfileNavigation() {
-
   const { colors } = useTheme();
 
-const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-const currentTheme = useAppSelector(state=>state.DarkMode)
-const user = useAppSelector(u=>u.userList.activeUser)
-const userName = user?.displayName;
+  const currentTheme = useAppSelector(state => state.DarkMode);
+  const user = useAppSelector(u => u.userList.activeUser);
+  const userName = user?.displayName ? user.displayName : undefined;
   return (
-    <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
       <Stack.Group>
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
           options={() => ({
-            header: () => (
-                <View style={styles.headerContainer}>
-                 <FontAwesome name="user-circle-o" size={27} color="#c75267" />
-                <Text style={[styles.headerText, { color: colors.text }]}>{userName}</Text>
-<View style={[styles.toggleDarkLightContainer]}>
-                <TouchableOpacity
-                    onPress={()=>dispatch({type:"change_theme",payload:!currentTheme})}
-                    style={styles.toggleDarkLightContainer}
-                    activeOpacity={0.5}>
-                    <Text style={[styles.toggleSwitchText, { color: colors.darkPink }]}> Dark/Light</Text>
-                    <MaterialCommunityIcons name="theme-light-dark" size={25} color="black"  style={[styles.buttonIconStyle, { color: colors.text }]} />
-                </TouchableOpacity>
-                </View>
-                </View>
-                
-              )
-            ,
+            headerTitle: () => (
+              <View style={styles.headerContainer}>
+                <FontAwesome
+                  name="user-circle-o"
+                  size={27}
+                  color={colors.darkPink}
+                />
+                <Text style={[styles.headerText, { color: colors.text }]}>
+                  {userName}
+                </Text>
+              </View>
+            ),
             headerLeft: () => null,
-            headerRight: ()=> (
-                <TouchableOpacity
-                    onPress={()=>dispatch({type:"change_theme",payload:!currentTheme})}
-                    style={styles.toggleDarkLightContainer}
-                    activeOpacity={0.5}>
-                    <Text style={[styles.toggleSwitchText, { color: colors.darkPink }]}> Dark/Light</Text>
-                    <MaterialCommunityIcons name="theme-light-dark" size={25} color="black"  style={[styles.buttonIconStyle, { color: colors.text }]} />
-                </TouchableOpacity>
-            ) ,
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() =>
+                  dispatch({ type: "change_theme", payload: !currentTheme })
+                }
+                style={styles.toggleDarkLightContainer}
+                activeOpacity={0.5}
+              >
+                <Text
+                  style={[styles.toggleSwitchText, { color: colors.darkPink }]}
+                >
+                  Dark/Light
+                </Text>
+                <MaterialCommunityIcons
+                  name="theme-light-dark"
+                  size={25}
+                  color="black"
+                  style={[styles.buttonIconStyle, { color: colors.text }]}
+                />
+              </TouchableOpacity>
+            ),
           })}
         />
         <Stack.Screen
@@ -119,18 +128,17 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    shadowColor: "#c75267",
-    shadowOpacity: 0.8,
-    elevation: 20,
-    paddingHorizontal: 20,
-    shadowOffset: { width: 3, height: 3 },
-    justifyContent: "center",
-    height:70,
-    marginTop:30,
+    // shadowColor: "#c75267",
+    // shadowOpacity: 0.8,
+    // elevation: 20,
+    // paddingHorizontal: 20,
+    // shadowOffset: { width: 3, height: 3 },
+    // justifyContent: "center",
+    // height: 70,
+    // marginTop: 30,
   },
 
   userNameContainer: {
-   
     flexDirection: "row",
     alignItems: "center",
     marginHorizontal: 20,
@@ -153,7 +161,7 @@ const styles = StyleSheet.create({
   },
   buttonIconStyle: {
     paddingLeft: 8,
-    marginRight:5,
+    marginRight: 5,
   },
   buttonTextStyle: {
     color: "#fff",
@@ -167,7 +175,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  
+
   toggleDarkLightContainer: {
     flex: 1,
     flexDirection: "row",
@@ -176,7 +184,7 @@ const styles = StyleSheet.create({
   },
 
   toggleSwitchText: {
-    fontSize:12,
+    fontSize: 12,
     fontWeight: "700",
   },
 
