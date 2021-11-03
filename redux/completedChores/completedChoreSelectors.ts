@@ -1,13 +1,15 @@
+import moment from "moment";
+import { ICompletedChore } from "../../interfaces/ICompletedChore";
 import { selectMembersByHouseholdId } from "../member/memberSelectors";
 import { RootState } from "../reduxStore";
 
-interface MembersData {
+export interface MembersData {
   memberId: string;
   totalWeight: number;
   avatar: number | undefined;
 }
 
-interface ChoresData {
+export interface ChoresData {
   choreId: string;
   membersData: MembersData[];
 }
@@ -37,24 +39,22 @@ export const selectCompletedChoresByHouseholdId =
       c => c.householdId === householdId
     );
 
-// export const selectTotalMembersDataByPeriod = (householdId: string, period: string) => (state: RootState) {
-//   const totalMembersData = selectTotalMembersData(householdId)(state);
-//   const filteredData = totalMembersData.filter(Boolean);
-//   return filteredData;
-// }
-
 export const selectTotalMembersData =
-  (householdId: string) => (state: RootState) => {
+  (householdId: string, period: string) => (state: RootState) => {
     const allMembers = selectMembersByHouseholdId(householdId)(state);
 
     const completedChores =
       selectCompletedChoresByHouseholdId(householdId)(state);
 
+    const filtredCompletedChores = filterCompletedChoresByPeriod(
+      completedChores,
+      period
+    );
+
     const totalMembersData: MembersData[] = [];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const completedChore of completedChores) {
+    for (const completedChore of filtredCompletedChores) {
       const member = totalMembersData.find(
-        m => m.memberId === completedChore.memberId // memberId
+        m => m.memberId === completedChore.memberId
       );
 
       const avatar = allMembers.find(
@@ -76,15 +76,19 @@ export const selectTotalMembersData =
   };
 
 export const selectChoresMembersData =
-  (householdId: string) => (state: RootState) => {
+  (householdId: string, period: string) => (state: RootState) => {
     const allMembers = selectMembersByHouseholdId(householdId)(state);
 
     const completedChores =
       selectCompletedChoresByHouseholdId(householdId)(state);
 
+    const filtredCompletedChores = filterCompletedChoresByPeriod(
+      completedChores,
+      period
+    );
+
     const choresMembersData: ChoresData[] = [];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const completedChore of completedChores) {
+    for (const completedChore of filtredCompletedChores) {
       const chore = choresMembersData.find(
         tcd => tcd.choreId === completedChore.choreId
       );
@@ -106,7 +110,6 @@ export const selectChoresMembersData =
         });
       } else {
         // Om sysslan finns så kollar vi vidare om medlemmen finns.
-        // eslint-disable-next-line no-restricted-syntax
         const choreMember = chore.membersData.find(
           tcd => tcd.memberId === completedChore.memberId
         );
@@ -125,3 +128,43 @@ export const selectChoresMembersData =
     }
     return choresMembersData;
   };
+
+/* ------- HELPERS BELOW --------*/
+
+export const filterCompletedChoresByPeriod = (
+  completedChores: ICompletedChore[],
+  period: string
+) => {
+  switch (period) {
+    case "currentWeek": {
+      const periodStart = moment().startOf("week");
+      const periodEnd = moment().endOf("week");
+      return completedChores.filter(cc =>
+        moment(cc.completed).isBetween(periodStart, periodEnd)
+      );
+    }
+    case "previousWeek": {
+      const periodStart = moment().subtract(1, "week").startOf("isoWeek");
+      const periodEnd = moment().subtract(1, "week").endOf("isoWeek");
+      return completedChores.filter(cc =>
+        moment(cc.completed).isBetween(periodStart, periodEnd)
+      );
+    }
+    case "currentMonth": {
+      const periodStart = moment().startOf("month");
+      const periodEnd = moment().endOf("month");
+      return completedChores.filter(cc =>
+        moment(cc.completed).isBetween(periodStart, periodEnd)
+      );
+    }
+    case "previousMonth": {
+      const periodStart = moment().subtract(1, "months").startOf("month");
+      const periodEnd = moment().subtract(1, "months").endOf("month");
+      return completedChores.filter(cc =>
+        moment(cc.completed).isBetween(periodStart, periodEnd)
+      );
+    }
+    default:
+      return completedChores;
+  }
+};
