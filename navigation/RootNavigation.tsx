@@ -4,10 +4,10 @@ import React from "react";
 import ProfileNavigator from "./ProfileNavigator";
 import LoginScreen from "../screens/AuthScreens/LoginScreen";
 import SignupScreen from "../screens/AuthScreens/SignupScreen";
-import SplashScreen from "../screens/SplashScreens/SplashScreen";
+import IntroScreen from "../screens/Intro/IntroScreen";
 
 type RootStackParamList = {
-  Splash: undefined;
+  Intro: undefined;
   Login: undefined;
   ProfileNav: undefined;
   SignUp: undefined;
@@ -21,11 +21,11 @@ const Stack = createStackNavigator<RootStackParamList>();
 export default function RootNavigation() {
   return (
     <Stack.Navigator
-    initialRouteName="Splash" // initial screen
+    initialRouteName="Login" // initial screen
     screenOptions={{
       headerShown: false,
     }}>
-      <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="Intro" component={IntroScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="SignUp" component={SignupScreen} />
       <Stack.Screen name="ProfileNav" component={ProfileNavigator} />
