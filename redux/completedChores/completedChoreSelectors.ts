@@ -140,28 +140,28 @@ export const filterCompletedChoresByPeriod = (
       const periodStart = moment().startOf("week");
       const periodEnd = moment().endOf("week");
       return completedChores.filter(cc =>
-        moment(cc.completed).isBetween(periodStart, periodEnd)
+        moment(new Date(cc.completed)).isBetween(periodStart, periodEnd)
       );
     }
     case "previousWeek": {
       const periodStart = moment().subtract(1, "week").startOf("isoWeek");
       const periodEnd = moment().subtract(1, "week").endOf("isoWeek");
       return completedChores.filter(cc =>
-        moment(cc.completed).isBetween(periodStart, periodEnd)
+        moment(new Date(cc.completed)).isBetween(periodStart, periodEnd)
       );
     }
     case "currentMonth": {
       const periodStart = moment().startOf("month");
       const periodEnd = moment().endOf("month");
       return completedChores.filter(cc =>
-        moment(cc.completed).isBetween(periodStart, periodEnd)
+        moment(new Date(cc.completed)).isBetween(periodStart, periodEnd)
       );
     }
     case "previousMonth": {
       const periodStart = moment().subtract(1, "months").startOf("month");
       const periodEnd = moment().subtract(1, "months").endOf("month");
       return completedChores.filter(cc =>
-        moment(cc.completed).isBetween(periodStart, periodEnd)
+        moment(new Date(cc.completed)).isBetween(periodStart, periodEnd)
       );
     }
     default:
