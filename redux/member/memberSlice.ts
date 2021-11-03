@@ -6,6 +6,7 @@ import {
   activateMember,
   createMember,
   createOwner,
+  deleteHouseHoldMember,
   getAvailableAvatars,
   pauseMember,
   rejectMember,
@@ -129,6 +130,17 @@ const memberSlice = createSlice({
     });
     builder.addCase(rejectMember.pending, state => {
       state.loading = true;
+    });
+    builder.addCase(deleteHouseHoldMember.fulfilled, (state, { payload }) => {
+      state.members = state.members.filter(m => m.id !== payload);
+      state.loading = false;
+    });
+    builder.addCase(deleteHouseHoldMember.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(deleteHouseHoldMember.rejected, state => {
+      state.error = "No member found";
+      state.loading = false;
     });
   },
 });
