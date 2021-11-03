@@ -9,8 +9,12 @@ export const Listener = () => {
   const dispatch = useAppDispatch();
   // checks when a user is approved in members-section
   useEffect(() => {
-    dispatch(loadData(user.activeUser));
-  }, [members.isCreatedSuccess == true]);
+    const interaval = setInterval(() => {
+      dispatch(loadData(user.activeUser));
+    }, 1000 * 10);
+
+    return () => clearInterval(interaval);
+  }, []);
   // checks when a user has made a request to join.
   useEffect(() => {
     dispatch(loadData(user.activeUser));

@@ -34,7 +34,7 @@ export default function EditHouseHoldForm({ onSubmitSuccess, houseId }: Props) {
   const activeHouse = useAppSelector(state =>
     state.houseHoldList.houseHoldList.find(h => h.id === houseId)
   );
-  if (!activeHouse) throw Error;
+  if (!activeHouse) return null;
 
   const defaultFormData: FormData = {
     name: activeHouse.name,
