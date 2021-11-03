@@ -131,6 +131,41 @@ export const rejectMember = createAsyncThunk<string, IMember, ThunkApi>(
     return memberToReject.id;
   }
 );
+
+export const makeOwner = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/makeOwner",
+  async updateMember => {
+    const memberOwned = {
+      ...updateMember,
+      isAdmin: true,
+    };
+    await Firebase.firestore()
+      .collection("/member")
+      .doc(updateMember.id)
+      .update({
+        isAdmin: true,
+      });
+    return memberOwned;
+  }
+);
+
+export const unMakeOwner = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/unMakeOwner",
+  async updateMember => {
+    const memberOwned = {
+      ...updateMember,
+      isAdmin: false,
+    };
+    await Firebase.firestore()
+      .collection("/member")
+      .doc(updateMember.id)
+      .update({
+        isAdmin: false,
+      });
+    return memberOwned;
+  }
+);
+
 export const deleteHouseHoldMember = createAsyncThunk<string, string, ThunkApi>(
   "member/deleteHouseHoldMember",
   async memberId => {
