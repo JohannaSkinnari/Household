@@ -105,3 +105,29 @@ export const activateMember = createAsyncThunk<IMember, IMember, ThunkApi>(
     return member;
   }
 );
+
+export const acceptMember = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/acceptMember",
+  async memberToAccept => {
+    const member: IMember = {
+      ...memberToAccept,
+      isApproved: true,
+    };
+    await Firebase.firestore().collection("/member").doc(member.id).update({
+      isApproved: member.isApproved,
+    });
+
+    return member;
+  }
+);
+
+export const rejectMember = createAsyncThunk<string, IMember, ThunkApi>(
+  "member/rejectMember",
+  async memberToReject => {
+    await Firebase.firestore()
+      .collection("/member")
+      .doc(memberToReject.id)
+      .delete();
+    return memberToReject.id;
+  }
+);

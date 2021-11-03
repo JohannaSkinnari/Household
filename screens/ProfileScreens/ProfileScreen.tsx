@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View,Image } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
-import { AntDesign} from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import CustomButton from "../../components/common/CustomButton";
 import Firebase from "../../database/config";
 import HouseHoldView from "../../components/HouseHoldsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
-
 
 export default function ProfileScreen({
   navigation,
@@ -26,8 +25,12 @@ export default function ProfileScreen({
       });
   };
 
-  function navigateTo(id: string) {
+  function navigateToHousehold(id: string) {
     navigation.navigate("Household", { id });
+  }
+
+  function navigateToSettings(id: string) {
+    navigation.navigate("HouseholdSettings", { id });
   }
 
   const toggleEnableSetup = () => {
@@ -70,8 +73,8 @@ export default function ProfileScreen({
       <View style={[styles.houseList, { flex: 6 }]}>
         <ScrollView>
           <HouseHoldView
-            onSelectedHouse={navigateTo}
-            onSelectedHouseSetup={navigation.navigate}
+            onSelectedHouse={navigateToHousehold}
+            onSelectedHouseSetup={navigateToSettings}
             isVisible={showToggle}
           />
         </ScrollView>

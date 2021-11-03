@@ -44,8 +44,10 @@ export const loadData = createAsyncThunk<AppDataPayload, IUser, ThunkApi>(
         .get()
     ).docs.map(doc => ({ id: doc.id, ...doc.data() } as IMember));
 
+    const members = myMembers.filter(m => m.isApproved === true);
+
     // hämta alla hushåll som användaren tillhör.
-    const householdIds = myMembers.map(member => member.householdId);
+    const householdIds = members.map(member => member.householdId);
 
     const households = householdIds.length
       ? (

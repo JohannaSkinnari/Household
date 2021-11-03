@@ -5,3 +5,6 @@ export interface IHouseHold {
 }
 
 export type ICreateHouseHold = Omit<IHouseHold, "id" | "houseHoldCode">;
+
+export type IEditHouseHold = Omit<IHouseHold, "houseHoldCode">;
+
