@@ -3,8 +3,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import CustomTabBar from "../components/CustomTabBar";
 import ChoresScreen from "../screens/HouseHoldScreens/ChoresScreen";
+import CurrentMonthStatisticScreen from "../screens/HouseHoldScreens/CurrentMonthStatisticScreen";
 import CurrentWeekStatisticScreen from "../screens/HouseHoldScreens/CurrentWeekStatisticScreen";
 import MemberScreen from "../screens/HouseHoldScreens/MemberScreen";
+import PreviousMonthStatisticScreen from "../screens/HouseHoldScreens/PreviousMonthStatisticScreen";
 import PreviousWeekStatisticScreen from "../screens/HouseHoldScreens/PreviousWeekStatisticScreen";
 import { ProfileStackScreenProps } from "./ProfileNavigator";
 
@@ -13,6 +15,8 @@ export type HouseholdStackParamList = {
   medlemmar: { id: string };
   veckan: { id: string };
   ["förra veckan"]: { id: string };
+  ["denna månaden"]: { id: string };
+  ["förra månaden"]: { id: string };
 };
 
 export type HouseholdStackScreenProps<
@@ -52,6 +56,18 @@ export default function HouseholdNavigator({
         initialParams={route.params}
         component={PreviousWeekStatisticScreen}
         options={{ title: "Förra veckan" }}
+      />
+      <Tab.Screen
+        name="denna månaden"
+        initialParams={route.params}
+        component={CurrentMonthStatisticScreen}
+        options={{ title: "Denna månaden" }}
+      />
+      <Tab.Screen
+        name="förra månaden"
+        initialParams={route.params}
+        component={PreviousMonthStatisticScreen}
+        options={{ title: "Förra månaden" }}
       />
     </Tab.Navigator>
   );
