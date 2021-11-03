@@ -1,6 +1,8 @@
 import { avatars } from "../../assets/AvatarData/data";
 import { RootState } from "../reduxStore";
 
+export const selectAllMembers = (state: RootState) => state.memberList.members;
+
 export const selectMembersByHouseholdId =
   (householdId: string) => (state: RootState) =>
     state.memberList.householdMembers
