@@ -18,7 +18,7 @@ type ProfileStackParamList = {
   Profile: undefined;
   JoinHousehold: undefined;
   CreateHousehold: undefined;
-  HouseholdSettings: undefined;
+  HouseholdSettings: { id: string };
   Household: { id: string };
   HouseholdInfo: { id: string };
   Login: undefined;
@@ -34,7 +34,6 @@ export default function ProfileNavigation() {
   const { colors } = useTheme();
 
   const dispatch = useAppDispatch();
-
   const currentTheme = useAppSelector(state => state.DarkMode);
   const user = useAppSelector(u => u.userList.activeUser);
   const userName = user?.displayName ? user.displayName : undefined;
@@ -128,14 +127,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    // shadowColor: "#c75267",
-    // shadowOpacity: 0.8,
-    // elevation: 20,
-    // paddingHorizontal: 20,
-    // shadowOffset: { width: 3, height: 3 },
-    // justifyContent: "center",
-    // height: 70,
-    // marginTop: 30,
   },
 
   userNameContainer: {

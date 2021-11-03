@@ -25,8 +25,12 @@ export default function ProfileScreen({
       });
   };
 
-  function navigateTo(id: string) {
+  function navigateToHousehold(id: string) {
     navigation.navigate("Household", { id });
+  }
+
+  function navigateToSettings(id: string) {
+    navigation.navigate("HouseholdSettings", { id });
   }
 
   const toggleEnableSetup = () => {
@@ -69,8 +73,8 @@ export default function ProfileScreen({
       <View style={[styles.houseList, { flex: 6 }]}>
         <ScrollView>
           <HouseHoldView
-            onSelectedHouse={navigateTo}
-            onSelectedHouseSetup={navigation.navigate}
+            onSelectedHouse={navigateToHousehold}
+            onSelectedHouseSetup={navigateToSettings}
             isVisible={showToggle}
           />
         </ScrollView>
