@@ -105,3 +105,72 @@ export const activateMember = createAsyncThunk<IMember, IMember, ThunkApi>(
     return member;
   }
 );
+
+export const acceptMember = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/acceptMember",
+  async memberToAccept => {
+    const member: IMember = {
+      ...memberToAccept,
+      isApproved: true,
+    };
+    await Firebase.firestore().collection("/member").doc(member.id).update({
+      isApproved: member.isApproved,
+    });
+
+    return member;
+  }
+);
+
+export const rejectMember = createAsyncThunk<string, IMember, ThunkApi>(
+  "member/rejectMember",
+  async memberToReject => {
+    await Firebase.firestore()
+      .collection("/member")
+      .doc(memberToReject.id)
+      .delete();
+    return memberToReject.id;
+  }
+);
+
+export const makeOwner = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/makeOwner",
+  async updateMember => {
+    const memberOwned = {
+      ...updateMember,
+      isAdmin: true,
+    };
+    await Firebase.firestore()
+      .collection("/member")
+      .doc(updateMember.id)
+      .update({
+        isAdmin: true,
+      });
+    return memberOwned;
+  }
+);
+
+export const unMakeOwner = createAsyncThunk<IMember, IMember, ThunkApi>(
+  "member/unMakeOwner",
+  async updateMember => {
+    const memberOwned = {
+      ...updateMember,
+      isAdmin: false,
+    };
+    await Firebase.firestore()
+      .collection("/member")
+      .doc(updateMember.id)
+      .update({
+        isAdmin: false,
+      });
+    return memberOwned;
+  }
+);
+
+export const deleteHouseHoldMember = createAsyncThunk<string, string, ThunkApi>(
+  "member/deleteHouseHoldMember",
+  async memberId => {
+    await Firebase.firestore().collection("/member").doc(memberId).delete();
+
+    return memberId;
+  }
+);

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Modal, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { selectUserHouseholds } from "../redux/houseHold/houseHoldSelector";
 import { useAppSelector } from "../redux/reduxHooks";
+import ConfirmLeaveHouseModal from "./modals/leaveHouseModal";
 
 interface Props {
   onSelectedHouse: (id: string) => void;
@@ -19,7 +20,8 @@ export default function HouseHoldView({
 }: Props) {
   const { colors } = useTheme();
   const houseList = useAppSelector(selectUserHouseholds);
-
+  const [openModal, setOpenModal] = useState(false);
+  const [currentHouseId, setCurrentHouseId] = useState("");
   return (
     <>
       {houseList.map(({ house, member, avatar }) => (
@@ -46,26 +48,67 @@ export default function HouseHoldView({
             </View>
           </TouchableOpacity>
           {isVisible ? (
-            <TouchableOpacity
-              onPress={() => onSelectedHouseSetup("HouseholdSettings")}
-              style={[
-                styles.buttonStyle,
-                { backgroundColor: colors.surface },
-                { display: member?.isAdmin ? "flex" : "none" },
-              ]}
-              activeOpacity={0.5}
-            >
-              <View style={styles.buttonIconStyle}>
-                <SimpleLineIcons
-                  name="settings"
-                  size={18}
-                  color={colors.darkPink}
-                />
-              </View>
+            <View>
+              <TouchableOpacity
+                onPress={() => onSelectedHouseSetup(house.id)}
+                style={[
+                  styles.buttonStyle,
+                  { backgroundColor: colors.surface },
+                  { display: member?.isAdmin ? "flex" : "none" },
+                ]}
+                activeOpacity={0.5}
+              >
+                <View style={styles.buttonIconStyle}>
+                  <SimpleLineIcons
+                    name="settings"
+                    size={18}
+                    color={colors.darkPink}
+                  />
+                </View>
 
-              <Text style={[{ color: colors.text }]}>Inställningar</Text>
-            </TouchableOpacity>
+                <Text style={[{ color: colors.text }]}>Inställningar</Text>
+              </TouchableOpacity>
+              {/* ------------------different button renders------------------------- */}
+              <TouchableOpacity
+                onPress={() => {
+                  setOpenModal(true);
+                  setCurrentHouseId(house.id);
+                }}
+                style={[
+                  styles.buttonStyle,
+                  { backgroundColor: colors.darkPink },
+                  { display: member?.isAdmin ? "none" : "flex" },
+                ]}
+                activeOpacity={0.5}
+              >
+                <View style={styles.buttonIconStyle}>
+                  <SimpleLineIcons
+                    name="exclamation"
+                    size={18}
+                    color={colors.surface}
+                  />
+                </View>
+
+                <Text style={[{ color: colors.surface }]}>Lämna hus</Text>
+              </TouchableOpacity>
+            </View>
           ) : null}
+          {openModal && (
+            <>
+              <Modal
+                // eslint-disable-next-line react/jsx-boolean-value
+                transparent={true}
+              >
+                <View style={styles.modalView}>
+                  <ConfirmLeaveHouseModal
+                    onClose={() => setOpenModal(false)}
+                    onDelete={() => setOpenModal(false)}
+                    houseId={currentHouseId}
+                  />
+                </View>
+              </Modal>
+            </>
+          )}
         </View>
       ))}
     </>
@@ -154,5 +197,16 @@ const styles = StyleSheet.create({
 
   toggleButtonText: {
     fontSize: 12,
+  },
+  modalView: {
+    position: "absolute",
+    top: 225,
+    height: "35%",
+    width: "95%",
+    marginHorizontal: 10,
+    marginVertical: 10,
+    borderRadius: 20,
+    padding: 15,
+    alignItems: "center",
   },
 });

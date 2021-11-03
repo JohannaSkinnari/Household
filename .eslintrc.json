@@ -29,7 +29,7 @@
     ],
     "linebreak-style": "off",
     "no-use-before-define": "off",
-    "eqeqeq":"off",
+    "eqeqeq": "off",
     "import/extensions": "off",
     "import/no-unresolved": "error",
     "import/no-cycle": "off",
@@ -60,7 +60,8 @@
     // "no-unused-vars": "off",
     "@typescript-eslint/no-namespace": "off",
     "import/no-mutable-exports": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "no-restricted-syntax": "off"
   },
   "settings": {
     "import/parsers": {

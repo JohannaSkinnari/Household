@@ -7,11 +7,17 @@ export const Listener = () => {
   const user = useAppSelector(u => u.userList);
   const members = useAppSelector(m => m.memberList);
   const dispatch = useAppDispatch();
+  // checks when a user is approved in members-section
+  useEffect(() => {
+    const interaval = setInterval(() => {
+      dispatch(loadData(user.activeUser));
+    }, 1000 * 10);
+
+    return () => clearInterval(interaval);
+  }, []);
+  // checks when a user has made a request to join.
   useEffect(() => {
     dispatch(loadData(user.activeUser));
   }, [members.loading == false]);
-  // where sats till som kollar på isAccepted / isActive eller vad den heter.
-  // i auth thunken.
-  // kanske lägga till något att att titta på istället för loading.
   return null;
 };

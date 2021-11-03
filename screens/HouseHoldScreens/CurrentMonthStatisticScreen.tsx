@@ -12,17 +12,17 @@ import {
 } from "../../redux/completedChores/completedChoreSelectors";
 import { useAppSelector } from "../../redux/reduxHooks";
 
-export default function CurrentWeekStatisticScreen({
+export default function CurrentMonthStatisticScreen({
   route,
-}: HouseholdStackScreenProps<"veckan">) {
+}: HouseholdStackScreenProps<"denna månaden">) {
   const { colors } = useTheme();
   const householdId = route.params.id;
 
   const totalMembersData = useAppSelector(
-    selectTotalMembersData(householdId, "currentWeek")
+    selectTotalMembersData(householdId, "currentMonth")
   );
   const choreMembersData = useAppSelector(
-    selectChoresMembersData(householdId, "currentWeek")
+    selectChoresMembersData(householdId, "currentMonth")
   );
   const houseChores = useAppSelector(selectChoresByHouseholdId(householdId));
   const houseCompletedChores = useAppSelector(
