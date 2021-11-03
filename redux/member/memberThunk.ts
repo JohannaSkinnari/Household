@@ -131,3 +131,11 @@ export const rejectMember = createAsyncThunk<string, IMember, ThunkApi>(
     return memberToReject.id;
   }
 );
+export const deleteHouseHoldMember = createAsyncThunk<string, string, ThunkApi>(
+  "member/deleteHouseHoldMember",
+  async memberId => {
+    await Firebase.firestore().collection("/member").doc(memberId).delete();
+
+    return memberId;
+  }
+);
