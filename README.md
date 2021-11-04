@@ -13,3 +13,58 @@ Our team have made a mobile-application with the purpose to make it easier to ge
 - Run `npm start` to startup the project
 - Install `Expo Go` from your `App-store`
 - Either scan the `QR-code` or start the project named `Hushållet`
+
+### ProductOwner
+
+<details>
+    <summary>Click to see Details of Product Owner</summary>
+    <p align="center">
+  <img src="https://media.discordapp.net/attachments/776094515315998722/905825265660362832/unknown.png" />
+</p>
+</details>
+
+---
+
+### Requirements Specifications
+
+Amount of requirements : **40.** <br>
+**G**: 20 (50%). <br>
+**VG**: 32 (80%).
+
+<details>
+    <summary>G requirements</summary>
+    <b>Overall-krav</b> <br>
+    1. &#9745; En logga, splashscreen och appikon ska designas och användas. * <br>
+    2. &#9745; Applikationen ska byggas med RN, Expo & TS. * <br>
+    3. &#9745; Designen av appen ska utgå ifrån befintliga skisser * <br>
+    <b>Hushåll</b> <br>
+    4. &#9745; Ett hushåll ska ha ett namn och en genererad (enkel) kod ,namnet ska gå att ändra. * <br>
+    <b>Konto</b> <br>
+    5. &#9745; En användare ska kunna logga in sig. * <br>
+    6. &#9745; En användare ska kunna skapa ett nytt hushåll. * <br>
+    7. &#9745; En användare ska kunna gå med i ett hushåll genom att ange hushållets kod. * <br>
+    <b>Profil</b> <br>
+    8. &#9745; En användare ska kunna ange sitt namn. * <br>
+    9. &#9745; En användare ska kunna välja en avatar (emoji-djur + färg) från en fördefinierad lista. * <br>
+    10. &#9745; Valda avatarer ska inte kunna väljas av andra användare i hushållet. * <br>
+    11. &#9745; Avataren ska användas i appen för att visa vad användaren har gjort. * <br>
+    <b>Sysslor</b> <br>
+    12. &#9745; En ägare ska kunna lägga till sysslor att göra i hemmet. *<br>
+    13. &#9745; En syssla ska ha ett namn, en beskrivning, hur ofta den görs (dagar), och en vikt*<br>
+    14. &#9745; En ägare ska kunna redigera en syssla. *<br>
+    15. &#9745; En ägare ska kunna ta bort en syssla. *<br>
+    <b>Dagsvyn</b> <br>
+    16. &#9745; Alla sysslor ska listas i en dagsvy och ge en översikt kring vad som behöver göras. * <br>
+    17. &#9745; Vem/vilka som har gjort sysslan visas, hur många dagar sedan sysslan gjordes /försenad.*<br>
+    18. &#9745; beskrivningen av sysslan visas och det ska även kunna markeras med ett tryck *<br>
+    <b>Statistik</b> <br>
+    19. &#9745; En användare ska kunna se fördelningen mellan användarna i sitt hushåll. *<br>
+    20. &#9745; Varje statistikvy ska visa den totala fördelningen samt fördelning av varje enskild syssla*<br>
+    21. &#9745; Det ska finnas en statistikvy över ”nuvarande vecka”. * <br>
+</details>
+<details>
+    <summary>VG requirements</summary>
+</details>
+<details>
+    <summary>Extra features</summary>
+</details>
