@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { loadData } from "../redux/auth/authThunk";
+import { loadBackgroundData, loadData } from "../redux/auth/authThunk";
 import { useAppSelector } from "../redux/reduxHooks";
 import { useAppDispatch } from "../redux/reduxStore";
 
@@ -11,7 +11,15 @@ export const Listener = () => {
   useEffect(() => {
     const interaval = setInterval(() => {
       dispatch(loadData(user.activeUser));
-    }, 1000 * 10);
+    }, 1000 * 30);
+
+    return () => clearInterval(interaval);
+  }, []);
+
+  useEffect(() => {
+    const interaval = setInterval(() => {
+      dispatch(loadBackgroundData(user.activeUser));
+    }, 1000 * 30);
 
     return () => clearInterval(interaval);
   }, []);
