@@ -26,7 +26,7 @@ export default function IntroScreen({
               source={require("../../assets/images/LogoHouse.png")}
             />
           </View>
-          <Text style={styles.subtitle}>
+          <Text style={[styles.subtitle, { color: colors.text }]}>
           Skapa egna hushåll, gå med i hushåll, bjud in medlemmar, skapa sysslor som alla kan ta en del av 
 och i slutändan få en statistisk övervy av dom slutförda sysslorna.   
           </Text>
@@ -35,8 +35,8 @@ och i slutändan få en statistisk övervy av dom slutförda sysslorna.
               navigation.navigate("Login");
             }}
           >
-            <View  style={[styles.button, { backgroundColor: colors.onSurface , justifyContent: "flex-end" }]}>
-              <Text style={{ color: "white" }}>Skippa intro</Text>
+            <View  style={[styles.button, { backgroundColor: colors.surface , justifyContent: "flex-end" }]}>
+              <Text style={{ color: colors.text }}>Skippa intro</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -48,7 +48,7 @@ och i slutändan få en statistisk övervy av dom slutförda sysslorna.
               source={require("../../assets/images/data.png")}
             />
           </View>
-          <Text style={styles.subtitle}>Ni kan tryggt lagra era hushåll och sysslor på en online databas för att dela dom med era medlemar. 
+          <Text style={[styles.subtitle, { color: colors.text }]}>Ni kan tryggt lagra era hushåll och sysslor på en online databas för att dela dom med era medlemar. 
           </Text>
         </View>
         <View key="3" style={[styles.page, { backgroundColor: colors.background }]}>
@@ -59,7 +59,7 @@ och i slutändan få en statistisk övervy av dom slutförda sysslorna.
               source={require("../../assets/images/darkMode.png")}
             />
           </View>
-          <Text style={styles.subtitle}>Ni kan använda appen bekvämt om natten med med en DarkMode 
+          <Text style={[styles.subtitle, { color: colors.text }]}>Ni kan använda appen bekvämt om natten med med en DarkMode 
           inställning som ni hittar på profilsidan.
           </Text>
         </View>
@@ -72,15 +72,16 @@ och i slutändan få en statistisk övervy av dom slutförda sysslorna.
               source={require("../../assets/images/Logo.png")}
             />
           </View>
-          <Text style={styles.subtitle}>Börja med att logga in med dina inloggnings uppgifter !
+          
+          <Text style={[styles.subtitle, { color: colors.text }]}>Börja med att logga in med dina inloggnings uppgifter !
           </Text>
           <TouchableWithoutFeedback
             onPress={async () => {
               navigation.navigate("Login");
             }}
           >
-            <View  style={[styles.button, { backgroundColor: colors.onSurface }]}>
-              <Text style={{ color: "white" }}>Till Inloggning</Text>
+            <View  style={[styles.button, { backgroundColor: colors.surface }]}>
+              <Text style={{ color: colors.text }}>Till Inloggning</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -91,9 +92,7 @@ och i slutändan få en statistisk övervy av dom slutförda sysslorna.
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: Constants.statusBarHeight + 10,
-    backgroundColor: "white",
+    flex: 1
   },
   pagerView: {
     flex: 1,
