@@ -1,3 +1,4 @@
+import moment from "moment";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
@@ -13,10 +14,9 @@ export default function LastCompletedView({ chore }: Props) {
   if (!chore.lastCompleted) {
     return null;
   }
-  const dateLastCompleted = new Date(chore.lastCompleted);
-  const today = new Date();
-  const daysSinceLastCompleted: number =
-    today.getDate() - dateLastCompleted.getDate();
+  const dateLastCompleted = moment(new Date(chore.lastCompleted));
+  const today = moment(new Date());
+  const daysSinceLastCompleted: number = today.diff(dateLastCompleted, "days");
 
   return (
     <View
