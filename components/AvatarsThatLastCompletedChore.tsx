@@ -20,7 +20,7 @@ export default function AvatarsThatLastCompletedChore({ choreId }: Props) {
 
   if (lastCompletedChores) {
     lastCompletedChores.forEach(c => {
-      const member = allMembers?.find(m => m.userId === c.memberId);
+      const member = allMembers?.find(m => m.id === c.memberId);
       const avatar = avatars.find(a => a.id === member?.avatarId);
       if (avatar) {
         memberAvatars.push(avatar);
