@@ -35,7 +35,7 @@ const InputField: FC<Props> = ({
       style={[
         styles.container,
         inputContainerStyle,
-        { backgroundColor: colors.textInput },
+        { backgroundColor: colors.surface },
       ]}
     >
       {leftIcon ? (
