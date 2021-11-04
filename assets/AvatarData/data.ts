@@ -1,9 +1,3 @@
-// interface Avatar {
-//   icon: any;
-//   id: number;
-//   color: keyof ReactNativePaper.ThemeColors;
-// }
-
 import { IAvatar } from "../../interfaces/IAvatar";
 
 export const avatars: IAvatar[] = [
