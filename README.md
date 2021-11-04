@@ -29,7 +29,9 @@ Our team have made a mobile-application with the purpose to make it easier to ge
 
 Amount of requirements : **40.** <br>
 **G**: 20 (50%). <br>
-**VG**: 32 (80%).
+**VG**: 32 (80%).<br>
+
+our total is _33_ requirements and 2 additionals that are up to productowner
 
 <details>
     <summary>G requirements</summary>
@@ -64,7 +66,28 @@ Amount of requirements : **40.** <br>
 </details>
 <details>
     <summary>VG requirements</summary>
+    <b>Overall</b> <br>
+    1. &#9745; All information ska kommuniceras till och från en server. <br>
+    <b>Hushåll</b> <br>
+    2. &#9745; Alla användare i ett hushåll ska kunna se vilka som tillhör ett hushåll<br>
+    3. &#9745; En ägare av ett hushåll ska kunna se förfrågningar om att gå med i hushållet.<br>
+    4. &#9745; En ägare ska kunna acceptera eller neka förfrågningar. <br>
+    5. &#9745; En ägare ska kunna göra andra till ägare<br>
+    6. &#9745; En ägare ska kunna pausa en användare och då tas det inte med i statistiken<br>
+    <b>Profil</b> <br>
+    7. &#9745; Om en användare tillhör två eller fler hushåll ska denne kunna välja att byta <br>
+    <b>Sysslor</b> <br>
+    8. &#9745; När en syssla tas bort ska användaren få en varning om att all statistik tas bort <br>
+    <b>Konto</b> <br>
+    9. &#9745; en ägare av hushållet först godkänna en ny användare. <br>
+    10. &#9745; En användare ska kunna lämna ett hushåll<br>
+    <b> Statestik </b> <br>
+    11. &#9745; Det ska finnas en statistikvy över ”förra vecka”.<br>
+    12. &#9745; Det ska finnas en statistikvy över ”förra månaden”. <br>
 </details>
 <details>
     <summary>Extra features</summary>
+    <b>Upp till produktägare att avgöra</b> <br>
+    1. &#9745; Onboarding slide efter ny användare registreras<br>
+    2. &#9745; Statistik vy för denna månaden<br>
 </details>
