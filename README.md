@@ -31,7 +31,7 @@ Amount of requirements : **40.** <br>
 **G**: 20 (50%). <br>
 **VG**: 32 (80%).<br>
 
-our total is _33_ requirements and 2 additionals that are up to productowner
+our total is _33_ requirements and 2 additionals that are up to productowner to decide on.
 
 <details>
     <summary>G requirements</summary>
@@ -90,4 +90,14 @@ our total is _33_ requirements and 2 additionals that are up to productowner
     <b>Upp till produktägare att avgöra</b> <br>
     1. &#9745; Onboarding slide efter ny användare registreras<br>
     2. &#9745; Statistik vy för denna månaden<br>
+</details>
+<details>
+<summary>Deviations</summary>
+<p align="center">
+  <img src="https://media.discordapp.net/attachments/776094515315998722/905843055578447882/unknown.png" />
+</p>
+<p align="center">
+  <img src="https://media.discordapp.net/attachments/776094515315998722/905843372562989206/unknown.png" />
+</p>
+We dicided to move the edit button from the daily chore view to a modal instead. Shown in the pictures. <br>
 </details>
