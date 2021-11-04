@@ -33,7 +33,7 @@ const choreValidation = yup.object().shape<ChoreValidationSchema>({
   name: yup
     .string()
     .required("Du behöver ett namn")
-    .max(18, "Namnet är för långt")
+    .max(16, "Namnet är för långt")
     .min(3, "Namnet är för kort"),
   description: yup
     .string()
