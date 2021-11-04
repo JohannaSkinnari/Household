@@ -15,6 +15,11 @@ export const createChore = createAsyncThunk<IChore, ThunkParam, ThunkApi>(
     const chore: IChore = {
       ...createData,
       id: "",
+      lastCompleted: new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate()
+      ).toString(),
     };
     await Firebase.firestore()
       .collection("/chore")
