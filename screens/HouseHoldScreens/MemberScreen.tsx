@@ -23,9 +23,7 @@ export default function MemberScreen({
       </ScrollView>
       {admin?.isAdmin && (
         <ScrollView>
-          <Text style={{ margin: 10, color: colors.text, width: 330 }}>
-            Förfrågan:
-          </Text>
+          <Text style={[styles.text, { color: colors.text }]}>Förfrågan:</Text>
           <ApproveView householdId={householdId} />
         </ScrollView>
       )}
@@ -78,5 +76,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     paddingTop: 5,
+  },
+  text: {
+    fontSize: 20,
+    width: 330,
+    margin: 10,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });

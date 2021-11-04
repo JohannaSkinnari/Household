@@ -23,17 +23,16 @@ export const selectLastCompletedChores =
       c => c.choreId === choreId
     );
 
-    if (!completedChores) {
-      return undefined;
-    }
-
-    completedChores.sort((a, b) => (b.completed > a.completed ? -1 : 1));
-
-    const lastThree = completedChores.slice(
-      Math.max(completedChores.length - 3, 0)
+    const today = moment();
+    const todaysChores = completedChores.filter(cc =>
+      moment(new Date(cc.completed)).isSame(today, "day")
     );
 
-    return lastThree;
+    const trunctatedList = todaysChores.slice(
+      Math.max(todaysChores.length - 5, 0)
+    );
+
+    return trunctatedList;
   };
 
 export const selectCompletedChoresByHouseholdIdAndActiveMembers =
