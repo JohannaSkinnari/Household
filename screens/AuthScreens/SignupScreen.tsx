@@ -132,12 +132,11 @@ export default function SignupScreen({
             {signupError ? <ErrorMessage error={signupError} visible /> : null}
 
             <View style={styles.buttonField}>
-              <CustomButton onPress={onHandleSignup} title="Registrera" />
-
-              <CustomButton
+            <CustomButton
                 onPress={() => navigation.navigate("Login")}
                 title="Logga in"
               />
+              <CustomButton onPress={onHandleSignup} title="Registrera" />
             </View>
 
             <View>

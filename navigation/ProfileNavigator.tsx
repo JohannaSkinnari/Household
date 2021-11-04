@@ -41,7 +41,7 @@ export default function ProfileNavigation() {
               const userName = user?.displayName;
               const { colors } = useTheme();
               return (
-                <View style={styles.header}>
+                <View  style={[styles.header, { backgroundColor: colors.surface }]}>
                   <FontAwesome name="user-circle-o" size={27} color="#c75267" />
                   <Text style={[styles.headerText, { color: colors.text }]}>
                     {userName}
