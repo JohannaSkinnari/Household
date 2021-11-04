@@ -54,7 +54,7 @@ export const selectCompletedChoresByHouseholdIdAndActiveMembers =
       };
       // eslint-disable-next-line consistent-return
       allMembers.forEach(am => {
-        if (am.member.userId === cc.memberId) {
+        if (am.member.id === cc.memberId) {
           filteredCc = cc;
         }
       });
@@ -83,7 +83,7 @@ export const selectTotalMembersData =
       );
 
       const avatar = allMembers.find(
-        aM => aM.member.userId === completedChore.memberId
+        aM => aM.member.id === completedChore.memberId
       )?.avatar?.id;
 
       if (!member) {
@@ -118,7 +118,7 @@ export const selectChoresMembersData =
         tcd => tcd.choreId === completedChore.choreId
       );
       const avatar = allMembers.find(
-        aM => aM.member.userId === completedChore.memberId
+        aM => aM.member.id === completedChore.memberId
       )?.avatar?.id;
 
       if (!chore) {
