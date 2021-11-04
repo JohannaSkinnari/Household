@@ -11,6 +11,19 @@ export const selectMembersByHouseholdId =
         member,
         avatar: avatars.find(avatar => avatar.id == member.avatarId),
       }));
+export const selectMembersByHouseholdIdAndActiveStatus =
+  (householdId: string) => (state: RootState) =>
+    state.memberList.householdMembers
+      .filter(
+        m =>
+          m.householdId == householdId &&
+          m.isApproved === true &&
+          m.isActive === true
+      )
+      .map(member => ({
+        member,
+        avatar: avatars.find(avatar => avatar.id == member.avatarId),
+      }));
 
 export const selectOwnerOfHousehold =
   (householdId: string) => (state: RootState) =>

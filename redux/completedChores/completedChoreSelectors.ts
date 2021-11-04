@@ -1,6 +1,9 @@
 import moment from "moment";
 import { ICompletedChore } from "../../interfaces/ICompletedChore";
-import { selectMembersByHouseholdId } from "../member/memberSelectors";
+import {
+  selectMembersByHouseholdId,
+  selectMembersByHouseholdIdAndActiveStatus,
+} from "../member/memberSelectors";
 import { RootState } from "../reduxStore";
 
 export interface MembersData {
@@ -32,18 +35,41 @@ export const selectLastCompletedChores =
     return trunctatedList;
   };
 
-export const selectCompletedChoresByHouseholdId =
-  (householdId: string) => (state: RootState) =>
-    state.completedChoresList.completedChores.filter(
-      c => c.householdId === householdId
-    );
+export const selectCompletedChoresByHouseholdIdAndActiveMembers =
+  (householdId: string) => (state: RootState) => {
+    const allMembers =
+      selectMembersByHouseholdIdAndActiveStatus(householdId)(state);
+    const completedChoresFromHousehold =
+      state.completedChoresList.completedChores.filter(
+        c => c.householdId === householdId
+      );
+    const choresFilteredByMembers = completedChoresFromHousehold.map(cc => {
+      let filteredCc: ICompletedChore = {
+        id: "",
+        choreId: "",
+        memberId: "",
+        householdId: "",
+        completed: "",
+        weight: 0,
+      };
+      // eslint-disable-next-line consistent-return
+      allMembers.forEach(am => {
+        if (am.member.id === cc.memberId) {
+          filteredCc = cc;
+        }
+      });
+      return filteredCc;
+    });
+    return choresFilteredByMembers;
+  };
 
 export const selectTotalMembersData =
   (householdId: string, period: string) => (state: RootState) => {
-    const allMembers = selectMembersByHouseholdId(householdId)(state);
+    const allMembers =
+      selectMembersByHouseholdIdAndActiveStatus(householdId)(state);
 
     const completedChores =
-      selectCompletedChoresByHouseholdId(householdId)(state);
+      selectCompletedChoresByHouseholdIdAndActiveMembers(householdId)(state);
 
     const filtredCompletedChores = filterCompletedChoresByPeriod(
       completedChores,
@@ -57,7 +83,7 @@ export const selectTotalMembersData =
       );
 
       const avatar = allMembers.find(
-        aM => aM.member.userId === completedChore.memberId
+        aM => aM.member.id === completedChore.memberId
       )?.avatar?.id;
 
       if (!member) {
@@ -79,7 +105,7 @@ export const selectChoresMembersData =
     const allMembers = selectMembersByHouseholdId(householdId)(state);
 
     const completedChores =
-      selectCompletedChoresByHouseholdId(householdId)(state);
+      selectCompletedChoresByHouseholdIdAndActiveMembers(householdId)(state);
 
     const filtredCompletedChores = filterCompletedChoresByPeriod(
       completedChores,
@@ -92,7 +118,7 @@ export const selectChoresMembersData =
         tcd => tcd.choreId === completedChore.choreId
       );
       const avatar = allMembers.find(
-        aM => aM.member.userId === completedChore.memberId
+        aM => aM.member.id === completedChore.memberId
       )?.avatar?.id;
 
       if (!chore) {

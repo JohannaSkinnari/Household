@@ -7,7 +7,7 @@ import { HouseholdStackScreenProps } from "../../navigation/HouseHoldNavigator";
 import { selectChoresByHouseholdId } from "../../redux/chore/choreSelectors";
 import {
   selectChoresMembersData,
-  selectCompletedChoresByHouseholdId,
+  selectCompletedChoresByHouseholdIdAndActiveMembers,
   selectTotalMembersData,
 } from "../../redux/completedChores/completedChoreSelectors";
 import { useAppSelector } from "../../redux/reduxHooks";
@@ -26,7 +26,7 @@ export default function CurrentWeekStatisticScreen({
   );
   const houseChores = useAppSelector(selectChoresByHouseholdId(householdId));
   const houseCompletedChores = useAppSelector(
-    selectCompletedChoresByHouseholdId(householdId)
+    selectCompletedChoresByHouseholdIdAndActiveMembers(householdId)
   );
 
   return (
@@ -77,7 +77,6 @@ export default function CurrentWeekStatisticScreen({
               key={item.choreId}
               widthAndHeight={100}
               series={item.membersData.map(m => m.totalWeight)}
-              // HÄR ÄR JAG!!!!!
               sliceColor={item.membersData.map(md => {
                 const avatarColor = avatars.find(
                   a => a.id === md.avatar
