@@ -48,7 +48,7 @@ export default function SignupScreen({
         name: userName,
       };
       await dispatch(signupUser(newUser));
-      navigation.navigate("Login");
+      navigation.navigate("Intro");
     } else {
       setSignupError("Fyll i alla fält");
     }
@@ -140,7 +140,7 @@ export default function SignupScreen({
 
             <View>
               <Text style={styles.footerText}>
-                När du registrerar dig kommer du samtidigt att loggas in !
+                Efter att du har registrerar dig kommer du till en kort intro, välj om du vill skippa den i nästa skärm !
               </Text>
             </View>
           </View>
