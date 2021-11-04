@@ -36,6 +36,7 @@ const CustomDarkTheme = {
   dark: true,
   colors: {
     ...NavigationDarkTheme.colors,
+    primary: "#C75267",
   },
 };
 
@@ -44,6 +45,7 @@ const CustomDefaultTheme = {
   dark: false,
   colors: {
     ...NavigationDefaultTheme.colors,
+    primary: "#CD5D6F",
   },
 };
 
