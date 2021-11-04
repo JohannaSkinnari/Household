@@ -39,12 +39,12 @@ export default function ProfileScreen({
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={[styles.header, { backgroundColor: colors.background }]}>
+      <View  style={[styles.header, { backgroundColor: colors.surface }]}>
         <TouchableOpacity
           onPress={toggleEnableSetup}
           style={[
             styles.buttonStyle,
-            { borderColor: colors.darkPink, borderWidth: 0.5 },
+            { borderColor: colors.darkPink},
           ]}
           activeOpacity={0.5}
         >
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     elevation: 20,
     shadowOffset: { width: 3, height: 3 },
     justifyContent: "space-between",
+    borderLeftWidth:0,borderRightWidth:0, borderTopWidth:0, borderBottomWidth: 1,
   },
 
   userNameContainer: {
