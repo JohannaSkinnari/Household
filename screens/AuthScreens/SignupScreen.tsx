@@ -61,19 +61,21 @@ export default function SignupScreen({
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View
-          style={[
-            styles.innerContainer,
-            { backgroundColor: colors.background },
-          ]}
+          style={[styles.innerContainer, { backgroundColor: colors.surface }]}
         >
           <View style={styles.logoContainer}>
             <Logo />
           </View>
 
           <View
-            style={[styles.authContainer, { backgroundColor: colors.background }]}
+            style={[
+              styles.authContainer,
+              { backgroundColor: colors.background },
+            ]}
           >
-            <Text style={styles.title}>Registrera nytt konto</Text>
+            <Text style={[styles.title, { color: colors.darkPink }]}>
+              Registrera nytt konto
+            </Text>
 
             <InputField
               inputContainerStyle={{
@@ -139,8 +141,9 @@ export default function SignupScreen({
             </View>
 
             <View>
-              <Text style={styles.footerText}>
-                Efter att du har registrerar dig kommer du till en kort intro, välj om du vill skippa den i nästa skärm !
+              <Text style={[styles.footerText, { color: colors.darkPink }]}>
+                Efter att du har registrerar dig kommer du till en kort intro,
+                välj om du vill skippa den i nästa skärm !
               </Text>
             </View>
           </View>
@@ -156,8 +159,10 @@ const styles = StyleSheet.create({
   },
 
   innerContainer: {
+    flex: 1,
     paddingHorizontal: 12,
     paddingTop: 50,
+    paddingBottom: 30,
     justifyContent: "space-around",
   },
 
@@ -176,7 +181,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "600",
-    color: "#c75267",
     alignSelf: "center",
     paddingBottom: 24,
   },
@@ -184,7 +188,6 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#c75267",
     alignSelf: "center",
     marginHorizontal: 15,
     marginVertical: 20,
