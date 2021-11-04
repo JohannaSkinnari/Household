@@ -12,10 +12,13 @@ export const createCompletedChore = createAsyncThunk<
   ThunkApi
 >("chore/createCompletedChore", async (createData, { getState }) => {
   const state = getState();
+  const member = state.memberList.members.find(
+    s => s.householdId === createData.householdId
+  );
   const completedChore: ICompletedChore = {
     id: "",
     choreId: createData.id,
-    memberId: state.userList.activeUser?.uid as string,
+    memberId: member?.id as string,
     householdId: createData.householdId,
     completed: new Date(
       new Date().getFullYear(),
