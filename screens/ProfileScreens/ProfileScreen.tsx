@@ -69,8 +69,7 @@ export default function ProfileScreen({
         </TouchableOpacity>
       </View>
 
-      <View style={{ flex: 1 }} />
-      <View style={[styles.houseList, { flex: 6 }]}>
+      <View style={[styles.houseList]}>
         <ScrollView>
           <HouseHoldView
             onSelectedHouse={navigateToHousehold}
@@ -142,11 +141,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     fontSize: 13,
   },
-
-  root: {
-    flex: 1,
-  },
   houseList: {
+    paddingTop: 10,
     justifyContent: "flex-start",
     alignItems: "center",
   },

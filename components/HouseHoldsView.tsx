@@ -118,10 +118,10 @@ export default function HouseHoldView({
 const styles = StyleSheet.create({
   householdCard: {
     margin: 10,
-    height: 50,
+    height: 60,
     width: 330,
     borderRadius: 12,
-    paddingLeft: 5,
+    paddingHorizontal: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
