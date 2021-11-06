@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, View, Text, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
 
 interface Props {
@@ -77,7 +77,6 @@ export default function WeightPicker({ selectPickerWeightValue }: Props) {
 const styles = StyleSheet.create({
   input: {
     width: "100%",
-    // marginTop: 15,
     borderBottomWidth: 0,
     fontSize: 18,
     borderRadius: 10,
@@ -97,17 +96,13 @@ const styles = StyleSheet.create({
     height: 80,
   },
   valueContainer: {
-    // borderLeftWidth: 0.5,
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: "100%",
-    // borderRightColor: "red",
-    // borderRightWidth: 0.5,
     padding: 0,
     height: "100%",
   },
   valueInnerContainer: {
-    // borderRightWidth: 0.5,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -119,7 +114,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 48,
     height: 48,
-    // backgroundColor: colors.disabled,
     justifyContent: "center",
     alignItems: "center",
   },

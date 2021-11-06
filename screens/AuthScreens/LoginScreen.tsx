@@ -1,4 +1,3 @@
-import { useTheme } from "react-native-paper";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -10,12 +9,13 @@ import {
   View,
 } from "react-native";
 import firebase from "firebase";
+import { useTheme } from "react-native-paper";
 import { ErrorMessage, InputField } from "../../components";
 import CustomButton from "../../components/common/CustomButton";
 import Logo from "../../components/Logo";
 import { ILoginData } from "../../interfaces/ILoginData";
 import { RootStackScreenProps } from "../../navigation/RootNavigation";
-import { useAppDispatch } from "../../redux/reduxStore";
+import { useAppDispatch } from "../../redux/reduxHooks";
 import { loginUser } from "../../redux/user/userThunk";
 
 export default function LoginScreen({
@@ -88,7 +88,6 @@ export default function LoginScreen({
               onChangeText={(text: string) => setEmail(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              
             />
             <InputField
               inputContainerStyle={{

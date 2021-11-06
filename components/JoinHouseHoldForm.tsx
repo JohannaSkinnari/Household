@@ -3,7 +3,6 @@ import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import * as yup from "yup";
-import { useAppSelector } from "../redux/reduxHooks";
 import CustomButton from "./common/CustomButton";
 
 type RootValidationSchema = Record<keyof FormData, yup.AnySchema>;
@@ -55,7 +54,6 @@ export default function CreateHouseHoldForm({ onSubmitSuccess }: Props) {
               placeholder="Ange Hushållskod"
               onChangeText={handleChange("houseHoldCode")}
               onBlur={handleBlur("houseHoldCode")}
-              // value={String(values.houseHoldCode)}
               clearTextOnFocus
             />
             {errors.houseHoldCode && touched.houseHoldCode && (

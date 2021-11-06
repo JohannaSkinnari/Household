@@ -1,4 +1,3 @@
-import { useTheme } from "react-native-paper";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -10,6 +9,7 @@ import {
   View,
 } from "react-native";
 import firebase from "firebase";
+import { useTheme } from "react-native-paper";
 import { ErrorMessage, InputField } from "../../components";
 import CustomButton from "../../components/common/CustomButton";
 import Logo from "../../components/Logo";
@@ -49,7 +49,6 @@ export default function SignupScreen({
           password,
           name: userName,
         };
-        await auth.createUserWithEmailAndPassword(email, password); 
         await dispatch(signupUser(newUser)); 
         navigation.navigate("Intro");
       }

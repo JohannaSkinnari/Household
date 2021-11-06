@@ -52,7 +52,7 @@ export const selectCompletedChoresByHouseholdIdAndActiveMembers =
         completed: "",
         weight: 0,
       };
-      // eslint-disable-next-line consistent-return
+
       allMembers.forEach(am => {
         if (am.member.id === cc.memberId) {
           filteredCc = cc;
@@ -122,7 +122,7 @@ export const selectChoresMembersData =
       )?.avatar?.id;
 
       if (!chore) {
-        // Om sysslan inte finns så skapar vi ett nytt objekt med medlemmslistan initierad
+        // If chore doesn't exist, create a new object with initiated membersData
         choresMembersData.push({
           choreId: completedChore.choreId,
           membersData: [
@@ -134,19 +134,19 @@ export const selectChoresMembersData =
           ],
         });
       } else {
-        // Om sysslan finns så kollar vi vidare om medlemmen finns.
+        // If chore exist, check if member exist
         const choreMember = chore.membersData.find(
           tcd => tcd.memberId === completedChore.memberId
         );
         if (!choreMember) {
-          // Om medlemmen inte finns så läggs den till i listan
+          // If member doesn't exist add it to array
           chore.membersData.push({
             memberId: completedChore.memberId,
             totalWeight: completedChore.weight,
             avatar,
           });
         } else {
-          // Om medlemmen finns så ökas endast denns totala vikt
+          // If member exist add to members totalWeight
           choreMember.totalWeight += completedChore.weight;
         }
       }

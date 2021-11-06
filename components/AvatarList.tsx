@@ -8,7 +8,6 @@ interface Props {
   dataArray: IAvatar[];
   onChange: (id: string) => void;
 }
-// Should the value be used?? do we need it??
 export default function AvatarList({
   value: unused,
   onChange,

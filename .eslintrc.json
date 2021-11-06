@@ -56,12 +56,11 @@
     "react/style-prop-object": "off",
     "no-unused-expressions": "off",
     "implicit-arrow-linebreak": "off",
-    // "react/no-unused-prop-types": "off",
-    // "no-unused-vars": "off",
     "@typescript-eslint/no-namespace": "off",
     "import/no-mutable-exports": "off",
     "react/no-array-index-key": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "consistent-return": "off"
   },
   "settings": {
     "import/parsers": {
