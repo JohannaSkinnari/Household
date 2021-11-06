@@ -1,6 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Firebase from "../../database/config";
-import { ICreateHouseHold, IEditHouseHold, IHouseHold } from "../../interfaces/IHouseHold";
+import {
+  ICreateHouseHold,
+  IEditHouseHold,
+  IHouseHold,
+} from "../../interfaces/IHouseHold";
 import { ICreateMember } from "../../interfaces/IMember";
 import { createOwner } from "../member/memberThunk";
 import { ThunkApi } from "../reduxStore";
@@ -35,19 +39,19 @@ export const createHouseHold = createAsyncThunk<
 });
 
 export const editHouseHold = createAsyncThunk<
-  IEditHouseHold, 
+  IEditHouseHold,
   IEditHouseHold,
   ThunkApi
->("household/editHouseHold", async (updateData) => {  
+>("household/editHouseHold", async updateData => {
   const household: IEditHouseHold = {
-    ...updateData,  
-      
+    ...updateData,
   };
   await Firebase.firestore()
-  .collection("/household")
-  .doc(updateData.id).update({    
-    id: updateData.id ,
-    name: updateData.name,
-  })
+    .collection("/household")
+    .doc(updateData.id)
+    .update({
+      id: updateData.id,
+      name: updateData.name,
+    });
   return household;
 });

@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   cardContent: {
-    // height: "76%",
     justifyContent: "space-evenly",
     paddingHorizontal: 0,
     marginVertical: 10,

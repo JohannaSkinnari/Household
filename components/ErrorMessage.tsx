@@ -14,7 +14,6 @@ const ErrorMessage: React.FC<ErrorProps> = ({ error, visible }) => {
   }
 
   return (
-    
     <Text style={[styles.errorText, { color: colors.darkPink }]}>
       ⚠️
       {error}

@@ -4,10 +4,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import { IMember } from "../interfaces/IMember";
-import {
-  selectMembersByHouseholdId,
-  selectOwnerOfHousehold,
-} from "../redux/member/memberSelectors";
+import { selectMembersByHouseholdId } from "../redux/member/memberSelectors";
 import {
   activateMember,
   makeOwner,

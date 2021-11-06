@@ -87,14 +87,11 @@ export default function ApproveView({ householdId }: Props) {
 const styles = StyleSheet.create({
   householdCard: {
     margin: 10,
-    // height: 60,
     width: 330,
     borderRadius: 12,
     paddingHorizontal: 15,
-    // flexDirection: "row",
     flexDirection: "column",
     justifyContent: "space-around",
-    // alignItems: "center",
     shadowOffset: {
       width: 0,
       height: 3,

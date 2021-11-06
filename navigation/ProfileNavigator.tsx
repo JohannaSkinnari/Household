@@ -41,7 +41,9 @@ export default function ProfileNavigation() {
               const userName = user?.displayName;
               const { colors } = useTheme();
               return (
-                <View  style={[styles.header, { backgroundColor: colors.surface }]}>
+                <View
+                  style={[styles.header, { backgroundColor: colors.surface }]}
+                >
                   <FontAwesome name="user-circle-o" size={27} color="#c75267" />
                   <Text style={[styles.headerText, { color: colors.text }]}>
                     {userName}
@@ -71,8 +73,7 @@ export default function ProfileNavigation() {
           name="Household"
           component={HouseholdNavigator}
           options={{
-            title:
-              "Sysslor" /** peta in state/prop här för att visa korrekt hushållsnamn */,
+            title: "Sysslor",
             headerLeft: () => null,
           }}
         />

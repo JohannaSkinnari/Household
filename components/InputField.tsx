@@ -11,13 +11,7 @@ interface Props {
   inputContainerStyle: TextStyle;
   leftIcon?: any;
   rightIcon?: any;
-  // autoCapitalize: string;
-  // keyboardType: string;
-  // textContentType: string;
-  // autoFocus: boolean;
-  // value: any;
   handlePasswordVisibility?: any;
-  // autoCorrect: boolean;
 }
 
 const InputField: FC<Props> = ({

@@ -1,4 +1,3 @@
-import { useTheme } from "react-native-paper";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -9,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import { useTheme } from "react-native-paper";
 import { ErrorMessage, InputField } from "../../components";
 import CustomButton from "../../components/common/CustomButton";
 import Logo from "../../components/Logo";
@@ -83,15 +83,9 @@ export default function SignupScreen({
               }}
               leftIcon="email"
               placeholder="Email"
-              // autoCapitalize="none"
-              // keyboardType="email-address"
-              // textContentType="emailAddress"
-              // autoFocus
-              // value={email}
               onChangeText={(text: string) => setEmail(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              // autoCorrect={false}
             />
 
             <InputField
@@ -100,15 +94,9 @@ export default function SignupScreen({
               }}
               leftIcon="account"
               placeholder="Användarnamn"
-              // autoCapitalize="none"
-              // keyboardType=""
-              // textContentType="userName"
-              // autoFocus={false}
-              // value={userName}
               onChangeText={(text: string) => setUserName(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              // autoCorrect={false}
             />
 
             <InputField
@@ -117,22 +105,16 @@ export default function SignupScreen({
               }}
               leftIcon="lock"
               placeholder="Lösenord"
-              // autoCapitalize="none"
-              // autoCorrect={false}
               secureTextEntry={passwordVisibility}
-              // textContentType="password"
               rightIcon={rightIcon}
-              // value={password}
               onChangeText={(text: string) => setPassword(text)}
               handlePasswordVisibility={handlePasswordVisibility}
-              // keyboardType=""
-              // autoFocus={false}
             />
 
             {signupError ? <ErrorMessage error={signupError} visible /> : null}
 
             <View style={styles.buttonField}>
-            <CustomButton
+              <CustomButton
                 onPress={() => navigation.navigate("Login")}
                 title="Logga in"
               />
