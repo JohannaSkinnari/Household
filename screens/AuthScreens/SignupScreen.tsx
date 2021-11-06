@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import firebase from "firebase";
 import { ErrorMessage, InputField } from "../../components";
 import CustomButton from "../../components/common/CustomButton";
 import Logo from "../../components/Logo";
@@ -27,7 +28,7 @@ export default function SignupScreen({
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState("eye");
   const [signupError, setSignupError] = useState("");
-
+  const auth = firebase.auth();
   const dispatch = useAppDispatch();
 
   const handlePasswordVisibility = () => {
@@ -41,16 +42,20 @@ export default function SignupScreen({
   };
 
   const onHandleSignup = async () => {
-    if (email !== "" && userName !== "" && password !== "") {
-      const newUser: ISignUpData = {
-        email,
-        password,
-        name: userName,
-      };
-      await dispatch(signupUser(newUser));
-      navigation.navigate("Intro");
-    } else {
-      setSignupError("Fyll i alla fält");
+    try {
+      if (email !== "" && userName !== "" && password !== "") {
+        const newUser: ISignUpData = {
+          email,
+          password,
+          name: userName,
+        };
+        await auth.createUserWithEmailAndPassword(email, password);
+        await dispatch(signupUser(newUser));
+        navigation.navigate("Intro");
+      }
+    } catch (error: unknown) {
+      const er = error as Error;
+      setSignupError(er.message);
     }
   };
 
@@ -83,15 +88,9 @@ export default function SignupScreen({
               }}
               leftIcon="email"
               placeholder="Email"
-              // autoCapitalize="none"
-              // keyboardType="email-address"
-              // textContentType="emailAddress"
-              // autoFocus
-              // value={email}
               onChangeText={(text: string) => setEmail(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              // autoCorrect={false}
             />
 
             <InputField
@@ -100,15 +99,9 @@ export default function SignupScreen({
               }}
               leftIcon="account"
               placeholder="Användarnamn"
-              // autoCapitalize="none"
-              // keyboardType=""
-              // textContentType="userName"
-              // autoFocus={false}
-              // value={userName}
               onChangeText={(text: string) => setUserName(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              // autoCorrect={false}
             />
 
             <InputField
@@ -117,25 +110,15 @@ export default function SignupScreen({
               }}
               leftIcon="lock"
               placeholder="Lösenord"
-              // autoCapitalize="none"
-              // autoCorrect={false}
               secureTextEntry={passwordVisibility}
-              // textContentType="password"
               rightIcon={rightIcon}
-              // value={password}
               onChangeText={(text: string) => setPassword(text)}
               handlePasswordVisibility={handlePasswordVisibility}
-              // keyboardType=""
-              // autoFocus={false}
             />
 
             {signupError ? <ErrorMessage error={signupError} visible /> : null}
 
             <View style={styles.buttonField}>
-            <CustomButton
-                onPress={() => navigation.navigate("Login")}
-                title="Logga in"
-              />
               <CustomButton onPress={onHandleSignup} title="Registrera" />
             </View>
 
@@ -197,7 +180,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     flexDirection: "row",
     alignItems: "baseline",
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
 
   logoContainer: {

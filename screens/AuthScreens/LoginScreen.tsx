@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import firebase from "firebase";
 import { ErrorMessage, InputField } from "../../components";
 import CustomButton from "../../components/common/CustomButton";
 import Logo from "../../components/Logo";
@@ -27,6 +28,7 @@ export default function LoginScreen({
   const [rightIcon, setRightIcon] = useState("eye");
   const [loginError, setLoginError] = useState("");
   const dispatch = useAppDispatch();
+  const auth = firebase.auth();
 
   const handlePasswordVisibility = () => {
     if (rightIcon === "eye") {
@@ -44,6 +46,7 @@ export default function LoginScreen({
           email,
           password,
         };
+        await auth.signInWithEmailAndPassword(email, password);
         await dispatch(loginUser(user));
         setEmail("");
         setPassword("");
@@ -82,15 +85,10 @@ export default function LoginScreen({
               }}
               leftIcon="email"
               placeholder="Email"
-              // autoCapitalize="none"
-              // keyboardType="email-address"
-              // textContentType="emailAddress"
-              // autoFocus
-              // value={email}
               onChangeText={(text: string) => setEmail(text)}
               rightIcon={undefined}
               handlePasswordVisibility={undefined}
-              // autoCorrect={false}
+              
             />
             <InputField
               inputContainerStyle={{
@@ -98,16 +96,10 @@ export default function LoginScreen({
               }}
               leftIcon="lock"
               placeholder="Lösenord"
-              // autoCapitalize="none"
-              // autoCorrect={false}
               secureTextEntry={passwordVisibility}
-              // textContentType="password"
               rightIcon={rightIcon}
-              // value={password}
               onChangeText={(text: string) => setPassword(text)}
               handlePasswordVisibility={handlePasswordVisibility}
-              // keyboardType=""
-              // autoFocus={false}
             />
 
             {loginError ? <ErrorMessage error={loginError} visible /> : null}
