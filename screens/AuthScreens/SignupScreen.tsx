@@ -49,8 +49,8 @@ export default function SignupScreen({
           password,
           name: userName,
         };
-        await auth.createUserWithEmailAndPassword(email, password);
-        await dispatch(signupUser(newUser));
+        await auth.createUserWithEmailAndPassword(email, password); 
+        await dispatch(signupUser(newUser)); 
         navigation.navigate("Intro");
       }
     } catch (error: unknown) {

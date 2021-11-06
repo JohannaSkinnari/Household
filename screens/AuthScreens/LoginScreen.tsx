@@ -46,7 +46,7 @@ export default function LoginScreen({
           email,
           password,
         };
-        await auth.signInWithEmailAndPassword(email, password);
+        await auth.signInWithEmailAndPassword(email, password); 
         await dispatch(loginUser(user));
         setEmail("");
         setPassword("");
