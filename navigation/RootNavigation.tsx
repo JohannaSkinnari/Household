@@ -21,10 +21,11 @@ const Stack = createStackNavigator<RootStackParamList>();
 export default function RootNavigation() {
   return (
     <Stack.Navigator
-    initialRouteName="Login" // initial screen
-    screenOptions={{
-      headerShown: false,
-    }}>
+      initialRouteName="Login"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen name="Intro" component={IntroScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="SignUp" component={SignupScreen} />

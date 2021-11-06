@@ -1,13 +1,12 @@
-// ifall vi behöver customize:a mer med defaultheme från navigator
 import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
 } from "@react-navigation/native";
-import {
-  DefaultTheme as PaperDefaultTheme,
-  DarkTheme as PaperDarkTheme,
-} from "react-native-paper";
 import merge from "deepmerge";
+import {
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+} from "react-native-paper";
 
 declare global {
   namespace ReactNativePaper {
@@ -30,7 +29,6 @@ declare global {
   }
 }
 
-// för navigationen
 const CustomDarkTheme = {
   ...NavigationDarkTheme,
   dark: true,
@@ -49,7 +47,6 @@ const CustomDefaultTheme = {
   },
 };
 
-// för Paper componenter
 const CustomPaperDarkTheme: ReactNativePaper.Theme = {
   ...PaperDarkTheme,
   dark: true,

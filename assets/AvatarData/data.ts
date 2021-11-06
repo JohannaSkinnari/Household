@@ -1,10 +1,6 @@
-interface Avatar {
-  icon: any;
-  id: number;
-  color: keyof ReactNativePaper.ThemeColors;
-}
+import { IAvatar } from "../../interfaces/IAvatar";
 
-export const avatars: Avatar[] = [
+export const avatars: IAvatar[] = [
   { icon: require("../images/chicken.png"), id: 1, color: "yellow" },
   { icon: require("../images/dolphin.png"), id: 2, color: "blue" },
   { icon: require("../images/fox.png"), id: 3, color: "orange" },

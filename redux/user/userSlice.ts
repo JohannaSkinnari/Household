@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../../interfaces/IUser";
 import { initialState } from "./userState";
-import { signupUser, loginUser } from "./userThunk";
+import { loginUser, signupUser } from "./userThunk";
 
 const userSlice = createSlice({
   name: "users",

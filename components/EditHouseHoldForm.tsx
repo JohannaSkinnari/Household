@@ -1,8 +1,8 @@
 import { Formik } from "formik";
 import React from "react";
-import * as yup from "yup";
-import { StyleSheet, TextInput, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { useTheme } from "react-native-paper";
+import * as yup from "yup";
 import { editHouseHold } from "../redux/houseHold/houseHoldThunk";
 import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 import CustomButton from "./common/CustomButton";
@@ -70,7 +70,6 @@ export default function EditHouseHoldForm({ onSubmitSuccess, houseId }: Props) {
                   { backgroundColor: colors.surface, color: colors.onSurface },
                 ],
               ]}
-              // ={"Ändra namn"}
               placeholderTextColor={colors.placeholder}
               placeholder={values.name}
               onChangeText={handleChange("name")}

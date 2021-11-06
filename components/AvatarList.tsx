@@ -1,18 +1,13 @@
 import React, { useState } from "react";
 import { FlatList, Image, Pressable, View } from "react-native";
 import { useTheme } from "react-native-paper";
-
-interface IAvatar {
-  icon: any;
-  id: number;
-}
+import { IAvatar } from "../interfaces/IAvatar";
 
 interface Props {
   value: number;
   dataArray: IAvatar[];
   onChange: (id: string) => void;
 }
-// Should the value be used?? do we need it??
 export default function AvatarList({
   value: unused,
   onChange,

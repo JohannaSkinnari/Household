@@ -1,11 +1,11 @@
-import { useTheme } from "react-native-paper";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useTheme } from "react-native-paper";
 import EditHouseHoldForm from "../../components/EditHouseHoldForm";
+import OwnerSettingsView from "../../components/OwnerSettingsView";
 import { ProfileStackScreenProps } from "../../navigation/ProfileNavigator";
 import { useAppSelector } from "../../redux/reduxHooks";
-import OwnerSettingsView from "../../components/OwnerSettingsView";
 
 export default function HouseholdSettingsScreen({
   navigation,

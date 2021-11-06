@@ -16,7 +16,8 @@ import { removeChoreState } from "./redux/chore/choreSlice";
 import { removeCompletedChoreState } from "./redux/completedChores/completedChoreSlice";
 import { removeHouseholdState } from "./redux/houseHold/houseHoldSlice";
 import { removeMemberState } from "./redux/member/memberSlice";
-import store, { useAppDispatch } from "./redux/reduxStore";
+import { useAppDispatch } from "./redux/reduxHooks";
+import store from "./redux/reduxStore";
 import { removeUser, setUser } from "./redux/user/userSlice";
 
 LogBox.ignoreLogs(["Setting a timer"]);

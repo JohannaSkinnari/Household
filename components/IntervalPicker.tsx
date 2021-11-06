@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, View, Text, StyleSheet, FlatList } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { intervalData } from "../assets/intervalData/intervalData";
 
