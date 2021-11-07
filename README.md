@@ -14,6 +14,10 @@ Our team have made a mobile-application with the purpose to make it easier to ge
 - Install `Expo Go` from your `App-store`
 - Either scan the `QR-code` or start the project named `Hushållet`
 
+### Usage
+
+You can login with<br> email: Jonna@gmail.com <br> password: 123456 <br> or create your own account
+
 ### ProductOwner
 
 <details>
@@ -100,4 +104,13 @@ our total is _33_ requirements and 2 additionals that are up to productowner to 
   <img src="https://media.discordapp.net/attachments/776094515315998722/905843372562989206/unknown.png" />
 </p>
 We dicided to move the edit button from the daily chore view to a modal instead. Shown in the pictures. <br>
+<br>
+<br>
+<p align="center">
+  <img src="https://cdn.discordapp.com/attachments/776094515315998722/906575507758395412/unknown.png" />
+</p>
+<p align="center">
+  <img src="https://media.discordapp.net/attachments/776094515315998722/906575782258810960/unknown.png" />
+</p>
+Instead of having the images inside the piechart, we decided to relocate them below the main chart.
 </details>
