@@ -97,6 +97,7 @@ our total is _33_ requirements and 2 additionals that are up to productowner to 
 </details>
 <details>
 <summary>Deviations</summary>
+  <b>Only built for Android</b>
 <p align="center">
   <img src="https://media.discordapp.net/attachments/776094515315998722/905843055578447882/unknown.png" />
 </p>
